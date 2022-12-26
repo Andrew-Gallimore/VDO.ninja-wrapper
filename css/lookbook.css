@@ -89,11 +89,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--main-bg);
+    /* background: var(--main-bg); */
+    background: green;
 }
 
 #body {
-    background: var(--main-bg);
+    /* background: var(--main-bg); */
+    background: yellow;
     min-height: 100vh;
     width: 900px;
     padding-left: 10px;
