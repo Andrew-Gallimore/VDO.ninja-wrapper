@@ -1,0 +1,283 @@
+/* 
+Author(s):
+Andrew
+
+Description:
+This file covers the general css for modals and dialogs, of which dialogs are built
+ontop of popper.js. There are very few specifics in this CSS, just general baslines
+so that other files can just worry about the specific content inside.
+
+Created:
+6/17/2022
+*/
+
+/* ------------------- */
+/* ---- Modal CSS ---- */
+/* ------------------- */
+
+.modal-wrapper {
+    position: absolute;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+.modal-wrapper.clickable {
+    pointer-events: unset;
+}
+.modal-wrapper .background{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100.1vw;
+    height: 100.1vh;
+    pointer-events: none;
+}
+.modal-wrapper .modals {
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+.modal-wrapper.clickable .background {
+    background: rgba(29, 29, 29, 0.525);
+}
+.modal-wrapper.clickable.darker .background {
+    background: rgba(16, 16, 16, 0.778);
+}
+.modal:not(.display) {
+    display: none !important;
+}
+.modal.display {
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    overflow: hidden;
+    pointer-events: all;
+}
+.modal .content-wrapper {
+    flex-grow: 100;
+    padding: 6px 12px;
+    display: grid;
+    grid-template-rows: min-content auto min-content;
+}
+.modal .content-wrapper .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+.modal {
+    position: absolute;
+    z-index: 2000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.modal .close-btn {
+    background: none;
+    border: none;
+    padding: 6px;
+    margin-right: 0;
+    margin-left: auto;
+    cursor: pointer;
+}
+.modal .cta-close-btn {
+    margin-right: 0;
+    margin-left: 10px;
+}
+.modal .cta-close-btn:first-child {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+/* Modal Sizing */
+.modal.large {
+    max-height: 900px;
+    min-height: 450px;
+    min-width: 650px;
+    max-width: 1600px;
+    width: 95%;
+    height: 95%;
+}
+/* Width */
+@media only screen and (max-width: 650px) {
+    .modal.large {
+        width: 100%;
+        min-width: 0;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .modal.large {
+        width: 400px;
+    }
+}
+
+/* Height */
+@media only screen and (max-height: 450px) {
+    .modal.large {
+        height: 100%;
+        min-height: 0;
+    }
+}
+@media only screen and (max-height: 300px) {
+    .modal.large {
+        height: 300px;
+        min-height: 0;
+    }
+}
+
+
+.modal.mid {
+    max-height: 600px;
+    min-height: 335px;
+    min-width: 550px;
+    max-width: 900px;
+    width: 70%;
+    height: 75%;
+}
+/* Width */
+@media only screen and (max-width: 550px) {
+    .modal.mid {
+        width: 100%;
+        min-width: 0;
+    }
+}
+@media only screen and (max-width: 300px) {
+    .modal.mid {
+        width: 300px;
+    }
+}
+
+/* Height */
+@media only screen and (max-height: 335px) {
+    .modal.mid {
+        height: 100%;
+        min-height: 0;
+    }
+}
+@media only screen and (max-height: 200px) {
+    .modal.mid {
+        height: 200px;
+        min-height: 0;
+    }
+}
+
+
+.modal.small {
+    max-height: 450px;
+    min-height: 300px;
+    min-width: 350px;
+    max-width: 500px;
+    width: 55%;
+    height: 70%;
+}
+/* Width */
+@media only screen and (max-width: 350px) {
+    .modal.small {
+        width: 100%;
+        min-width: 0;
+    }
+}
+@media only screen and (max-width: 200px) {
+    .modal.small {
+        width: 200px;
+    }
+}
+/* Height */
+@media only screen and (max-height: 300px) {
+    .modal.small {
+        height: 100%;
+        min-height: 0;
+    }
+}
+@media only screen and (max-height: 120px) {
+    .modal.small {
+        height: 120px;
+        min-height: 0;
+    }
+}
+
+
+
+
+
+
+
+/* -------------------- */
+/* ---- Dialog CSS ---- */
+/* -------------------- */
+
+.dialogs .dialog {
+    z-index: 2000;
+    background: rgb(21, 21, 21);
+    color: white;
+}
+
+
+/* Popups with popper (part of the dialog system) */
+#tooltip {
+    padding: 0;
+}
+#tooltip .tooltip-content {
+    position: relative;
+    background: var(--popup2-main-background);
+    border: solid 1px var(--popup2-main-border);
+    color: white;
+    padding: 5px 20px;
+}
+#tooltip[data-popper-placement^='top'] .tooltip-content {
+    margin-bottom: 10px;
+}
+#tooltip[data-popper-placement^='bottom'] .tooltip-content {
+    margin-top: 10px;
+}
+#tooltip[data-popper-placement^='left'] .tooltip-content {
+    margin-right: 10px;
+}
+#tooltip[data-popper-placement^='right'] .tooltip-content {
+    margin-left: 10px;
+}
+
+
+.dialog:not([data-show]) {
+    display: none !important;
+}
+.dialog[data-show] {
+    display: block;
+}
+
+
+.dialog[data-popper-placement^='top'] .arrow {
+    bottom: -5px;
+}
+.dialog[data-popper-placement^='bottom'] .arrow {
+    top: -5px;
+}
+.dialog[data-popper-placement^='left'] .arrow {
+    right: -5px;
+}
+.dialog[data-popper-placement^='right'] .arrow {
+    left: -5px;
+}
+.dialog .arrow,
+.dialog .arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-left: solid 1px var(--popup2-arrow-border);
+  background: inherit;
+}
+
+.dialog .arrow {
+  visibility: hidden;
+}
+
+.dialog .arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
+}

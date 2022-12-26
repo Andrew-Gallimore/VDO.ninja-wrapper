@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VDO Test Directors View 2</title>
+    <link rel="icon" href="img/Temp-Icon.png">
+
+    <!-- Custom CSS Libraries -->
+    <link rel="stylesheet" href="css/lib/inputs.css">
+    <link rel="stylesheet" href="css/lib/popups.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/repeats.css">
+    <link rel="stylesheet" href="css/modalsDialogs.css">
+
+    <!-- Line Awesome -->
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+</head>
+<body>
+    <div class="modal-wrapper">
+        <div class="background"></div>
+        <div class="modals">
+            <div data-includes-sliders class="modal mid" id="settings">
+                <div class="content-wrapper">
+                    <div class="header">
+                        <button onclick="closeModal(this)" class="close-btn">
+                            <i class="las la-times"></i>
+                        </button>
+                    </div>
+                    <div class="content">
+                        <div data-auto-height="100" class="menu">
+                            <h1>Settings</h1>
+                            <div class="scroll">
+                                <div class="item" onclick="loadPage(this, this.parentNode, '#settings .presets', '#settings .pages'); updateSliderChildren('#settings .presets');">
+                                    <p>Load Preset</p>
+                                    <div class="icon">
+                                        <i class="las la-tags"></i>
+                                    </div>
+                                </div>
+                                <div class="item" onclick="loadPage(this, this.parentNode, '#settings .complexity', '#settings .pages'); updateSliderChildren('#settings .complexity');">
+                                    <p>Complexity</p>
+                                    <div class="icon">
+                                        <!-- <i class="las la-certificate"></i> -->
+                                        <i class="las la-sitemap"></i>
+                                    </div>
+                                </div>
+                                <div data-original-active class="item parent rooms" data-children="rooms" onclick="loadPage(this, this.parentNode, '#settings .room_7', '#settings .pages'); updateSliderChildren('#settings .room');">
+                                    <p>Rooms</p>
+                                    <div class="icon">
+                                        <i class="las la-th-large"></i>
+                                    </div>
+                                </div>
+                                <div class="sub-items rooms">
+                                    <div class="template">
+                                        <div data-parent="rooms" class="item sub">
+                                            <p>Main</p>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="item sub" onclick="loadPage(this, this.parentNode, '#settings .room_1', '#settings .pages'); updateSliderChildren('#settings .room_1');">
+                                        <p>Main</p>
+                                    </div> -->
+                                </div>
+                                <div class="item parent" onclick="loadPage(this, this.parentNode, '#settings .group', '#settings .pages'); updateSliderChildren('#settings .group');">
+                                    <p>Groups</p>
+                                    <div class="icon">
+                                        <i class="lar la-id-badge"></i>
+                                    </div>
+                                </div>
+                                <div class="sub-items">
+                                    <div class="item sub">
+                                        <p>Talent</p>
+                                    </div>
+                                    <div class="item sub">
+                                        <p>Group 2</p>
+                                    </div>
+                                </div>
+                                <div class="item" onclick="loadPage(this, this.parentNode, '#settings .filters', '#settings .pages'); updateSliderChildren('#settings .filters');">
+                                    <p>Filters</p>
+                                    <div class="icon">
+                                        <i class="las la-filter"></i>
+                                    </div>
+                                </div>
+                                <div class="item" onclick="loadPage(this, this.parentNode, '#settings .integration', '#settings .pages'); updateSliderChildren('#settings .integration');">
+                                    <p>Integration</p>
+                                    <div class="icon">
+                                        <i class="las la-laptop-code"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pages">
+                            <div class="page presets">
+                                <div class="presets-box">
+                                    <p>presets</p>
+                                </div>
+                            </div>
+                            <div class="page complexity">
+                                <div class="page-content">
+                                    <div class="label">
+                                        <h1 class="page-title">Complexity</h1>
+                                    </div>
+                                    <div class="item">
+                                        <p>Only one room</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="onlyOneRoom"
+                                        data-setting-type="boolean">
+
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                            <span class="switch-slider round"></span>
+                                            
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Seperate Views and Rooms</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="seperateViewRoom"
+                                        data-setting-type="boolean">
+
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Activate Audio Views</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="activateAudioView"
+                                        data-setting-type="boolean">
+                                            
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+                                            
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Activate groups</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="activateGroups"
+                                        data-setting-type="boolean">
+
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                            <span class="switch-slider round"></span>
+
+                                        </label>
+                                    </div>
+                                    <!-- <div class="item">
+                                        <p>Resolution (Width)</p>
+                                    </div>
+                                    <div class="option">
+                                        <div class="input-slider">
+                                            <div class="values">
+                                                <p class="first">Err</p>
+                                                <p class="last">Err</p>
+                                                <p class="moving">0</p>
+                                                <input class="moving-input" type="text">
+                                            </div>
+                                            <div class="control">
+                                                <input data-slider-id="AAA" data-slider-preload type="range" min="0" max="3840" value="1920" autocomplete="off">
+                                            </div>
+                                            <div class="pills">
+
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="page-template room">
+                                <div class="page">
+                                    <div data-setting-skip class="page-content">
+                                        <div class="label">
+                                            <h1 class="page-title">Hey, a label</h1>
+                                        </div>
+                                        <div class="item">
+                                            <p>Require password</p>
+                                        </div>
+                                        <div class="option">
+                                            <label class="switch"
+                                            data-setting="requirePassword1234"
+                                            data-setting-type="boolean">
+                                            
+                                                <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                                <span class="switch-slider round"></span>
+    
+                                            </label>
+                                        </div>
+                                        <div class="option">
+                                            <!--if guestLimit > 20, grey; -->
+                                            <div class="text-with-dropdown"
+                                            data-setting="password1234"
+                                            data-setting-type="string"
+                                            data-limiters="
+                                            if requirePassword == false, hide;">
+    
+                                                <div class="input-suggestion">
+                                                    <input data-setting-input onenter="updateSetting(this)" onblur="updateSetting(this)" class="text-input" type="text" value="" placeholder="Input Password..." autocomplete="off">
+                                                </div>
+                                                <button data-dialog-id="ExithefHZtDTQvJNC" class="icon-btn-input" onclick="inputingPassword(this, this.parentNode.querySelector('input[type=text]'))">
+                                                    <i class="las la-recycle"></i>
+                                                </button>
+    
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <p>Limit guests to</p>
+                                        </div>
+                                        <div class="option">
+                                            <div class="input-slider"
+                                            data-setting="guestLimit"
+                                            data-setting-type="number">
+                                                <div class="values">
+                                                    <p class="first">Err</p>
+                                                    <p class="last">Err</p>
+                                                    <p class="moving">0</p>
+                                                    <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                                                </div>
+                                                <div class="control">
+                                                    <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="30" value="10" autocomplete="off">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <p>Quality of Room for Guests</p>
+                                        </div>
+                                        <div class="option">
+                                            <div class="input-slider">
+                                                <div class="values">
+                                                    <p class="first">Err</p>
+                                                    <p class="last">Err</p>
+                                                    <p class="moving">0</p>
+                                                    <input class="moving-input" type="text">
+                                                </div>
+                                                <div class="control">
+                                                    <input data-slider-id="AAB" data-slider-preload type="range" min="0" max="4000" value="500" autocomplete="off">
+                                                </div>
+                                                <div class="pills">
+    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <p>Guests only see director</p>
+                                        </div>
+                                        <div class="option">
+                                            <label class="switch"
+                                            data-setting="onlySeeDirector"
+                                            data-setting-type="boolean">
+    
+                                                <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                                <span class="switch-slider round"></span>
+    
+                                            </label>
+                                        </div>
+                                        <div class="item">
+                                            <p>Guests can see others in Room</p>
+                                        </div>
+                                        <div class="option">
+                                            <label class="switch"
+                                            data-setting="roomSeeRoom"
+                                            data-setting-type="boolean"
+                                            data-limiters="
+                                            if onlySeeDirector == true, grey;
+                                            if onlySeeDirector == true, limit to false;">
+                                                <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                                <span class="switch-slider round"></span>
+                                            </label>
+                                        </div>
+                                        <div class="item">
+                                            <p>Guests can see people also in Groups</p>
+                                        </div>
+                                        <div class="option">
+                                            <label class="switch"
+                                            data-setting="roomSeeGroup"
+                                            data-setting-type="boolean"
+                                            data-limiters="
+                                            if onlySeeDirector == true, grey;
+                                            if onlySeeDirector == true, limit to false;">
+                                                <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                                <span class="switch-slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page room active">
+                                <!-- data-setting-alt="1" -->
+                                <div data-setting-alt="081234" class="page-content">
+                                    <div class="item">
+                                        <p>Require password</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="requirePassword1234"
+                                        data-setting-type="boolean">
+                                        
+                                            <input onchange="updateSetting(this)" data-setting-input checked type="checkbox" autocomplete="off">
+                                            <span class="switch-slider round"></span>
+
+                                        </label>
+                                    </div>
+                                    <div class="option">
+                                        <div class="text-with-dropdown"
+                                        data-setting="password1234"
+                                        data-setting-type="string"
+                                        data-limiters="
+                                        if requirePassword == false, hide;
+                                        if guestLimit > 20, grey;">
+
+                                            <div class="input-suggestion">
+                                                <input data-setting-input onenter="updateSetting(this)" onblur="updateSetting(this)" class="text-input" type="text" value="asicubwafcib" autocomplete="off">
+                                            </div>
+                                            <button data-dialog-id="ExithefHZtDTQvJNC" class="icon-btn-input" onclick="inputingPassword(this, this.parentNode.querySelector('input[type=text]'))">
+                                                <i class="las la-recycle"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <p>Limit guests to</p>
+                                    </div>
+                                    <div class="option">
+                                        <div class="input-slider"
+                                        data-setting="guestLimit"
+                                        data-setting-type="number">
+                                            <div class="values">
+                                                <p class="first">Err</p>
+                                                <p class="last">Err</p>
+                                                <p class="moving">0</p>
+                                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                                            </div>
+                                            <div class="control">
+                                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="30" value="10" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <p>Quality of Room for Guests</p>
+                                    </div>
+                                    <div class="option">
+                                        <div class="input-slider">
+                                            <div class="values">
+                                                <p class="first">Err</p>
+                                                <p class="last">Err</p>
+                                                <p class="moving">0</p>
+                                                <input class="moving-input" type="text">
+                                            </div>
+                                            <div class="control">
+                                                <input data-slider-id="AAB" data-slider-preload type="range" min="0" max="4000" value="500" autocomplete="off">
+                                            </div>
+                                            <div class="pills">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <p>Guests only see director</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="onlySeeDirector"
+                                        data-setting-type="boolean">
+
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                            <span class="switch-slider round"></span>
+
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Guests can see others in Room</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="roomSeeRoom"
+                                        data-setting-type="boolean"
+                                        data-limiters="
+                                        if onlySeeDirector == true, grey;
+                                        if onlySeeDirector == true, limit to false;">
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Guests can see people also in Groups</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="roomSeeGroup"
+                                        data-setting-type="boolean"
+                                        data-limiters="
+                                        if onlySeeDirector == true, grey;
+                                        if onlySeeDirector == true, limit to false;">
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div data-setting-alt="3082345" class="page-content">
+                                    <div class="item">
+                                        <p>Require password</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="requirePassword1234"
+                                        data-setting-type="boolean">
+                                        
+                                            <input onchange="updateSetting(this)" data-setting-input checked type="checkbox" autocomplete="off">
+                                            <span class="switch-slider round"></span>
+
+                                        </label>
+                                    </div>
+                                    <div class="option">
+                                        <div class="text-with-dropdown"
+                                        data-setting="password1234"
+                                        data-setting-type="string"
+                                        data-limiters="
+                                        if requirePassword == false, hide;
+                                        if guestLimit > 20, grey;">
+
+                                            <div class="input-suggestion">
+                                                <input data-setting-input onenter="updateSetting(this)" onblur="updateSetting(this)" class="text-input" type="text" value="asicubwafcib" autocomplete="off">
+                                            </div>
+                                            <button data-dialog-id="ExithefHZtDTQvJNC" class="icon-btn-input" onclick="inputingPassword(this, this.parentNode.querySelector('input[type=text]'))">
+                                                <i class="las la-recycle"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <p>Limit guests to</p>
+                                    </div>
+                                    <div class="option">
+                                        <div class="input-slider"
+                                        data-setting="guestLimit"
+                                        data-setting-type="number">
+                                            <div class="values">
+                                                <p class="first">Err</p>
+                                                <p class="last">Err</p>
+                                                <p class="moving">0</p>
+                                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                                            </div>
+                                            <div class="control">
+                                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="30" value="10" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <p>Quality of Room for Guests</p>
+                                    </div>
+                                    <div class="option">
+                                        <div class="input-slider">
+                                            <div class="values">
+                                                <p class="first">Err</p>
+                                                <p class="last">Err</p>
+                                                <p class="moving">0</p>
+                                                <input class="moving-input" type="text">
+                                            </div>
+                                            <div class="control">
+                                                <input data-slider-id="AAB" data-slider-preload type="range" min="0" max="4000" value="500" autocomplete="off">
+                                            </div>
+                                            <div class="pills">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <p>Guests only see director</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="onlySeeDirector"
+                                        data-setting-type="boolean">
+
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                            <span class="switch-slider round"></span>
+
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Guests can see others in Room</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="roomSeeRoom"
+                                        data-setting-type="boolean"
+                                        data-limiters="
+                                        if onlySeeDirector == true, grey;
+                                        if onlySeeDirector == true, limit to false;">
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Guests can see people also in Groups</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="roomSeeGroup"
+                                        data-setting-type="boolean"
+                                        data-limiters="
+                                        if onlySeeDirector == true, grey;
+                                        if onlySeeDirector == true, limit to false;">
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page group">
+                                <div class="labels">
+                                    <div class="item">
+                                        <p>Can't see their room</p>
+                                    </div>
+                                    <div class="item">
+                                        <p>Can't see others in group</p>
+                                    </div>
+                                    <div class="item">
+                                        <p>Total quality limit</p>
+                                    </div>
+                                    <div class="item">
+                                        <p>Limit guests</p>
+                                    </div>
+                                </div>
+                                <div class="options">
+
+                                </div>
+                            </div>
+                            <div class="page filters">
+                                <div class="labels">
+                                    <div class="item">
+                                        <p>Chat filter</p>
+                                        <!-- On / Off -->
+                                    </div>
+                                    <div class="item">
+                                        <p>Filter rigidity</p>
+                                    </div>
+                                    <div class="item">
+                                        <p>Custom words</p>
+                                    </div>
+                                    <div class="item">
+                                        <p>Warn person after</p>
+                                        <!-- # of bad words -->
+                                    </div>
+                                </div>
+                                <div class="options">
+
+                                </div>
+                            </div>
+                            <div class="page integration">
+                                <div class="labels">
+                                    <div class="integration-box">
+                                        <p>custom integrations</p>
+                                        <!-- Streamdeck, etc. -->
+                                    </div>
+                                </div>
+                                <div class="options">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <button class="cta-close-btn" onclick="closeModal(this)">Close</button>
+                    </div>
+                </div>
+            </div>
+            <!-- data-modal-open -->
+            <div class="modal" id="links">
+                <div>
+                    <h1 class="acenter">Links for different rooms/views</h1>
+                    <p>This needs to include different direct links to different rooms, links for main access (would likely have a nice url and be set up to take them to a waiting room), links for obs views, and links for directors</p>
+                </div>
+                <div class="aflex">
+                    <button class="abtn-primary cta-close-btn" onclick="closeModal('#links')">Close</button>
+                </div>
+            </div>
+            <div class="modal" id="createRoom">
+                <div>
+                    <h1 class="acenter">Create Room Prompt</h1>
+                    <p>You should be able to edit the rooms' settings, and maybe routing settings</p>
+                </div>
+                <div class="aflex">
+                    <button class="abtn-primary cta-close-btn" onclick="closeModal('#createRoom')">Create</button>
+                    <button class="abtn-primary cta-close-btn" onclick="closeModal('#createRoom')">Cancel</button>
+                </div>
+            </div>
+            <div class="modal" id="mainNAVmenu">
+                <div class="background">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="top maga-pages main-menu">
+            <div class="page maga-page content-menu rooms active">
+                <div class="main-buttons">
+                    <button>
+                        <i class="las la-th-large"></i>
+                    </button>
+                </div>
+                <div class="left menu-wrapper">
+                    <button onclick="showHideElement(this, '.maga-page.rooms .room-data')" class="active">
+                        <h4>Room-Data</h4>
+                    </button>
+                    <!-- onclick="loadPage(this, this.parentNode, '#main .pannel-section-1 .page.rooms', '.pannel-section-1 .pages')" -->
+                    <button class="">
+                        <h4>Preview</h4>
+                    </button>
+                </div>
+                <div class="right menu-wrapper">
+                    <button onclick="loadPage(this, this.parentNode, '#main .maga-page.rooms .right-side-wrapper .page.meshcast', '.maga-page.rooms .right-side-wrapper .pages', '.active', '.active', '.maga-page.rooms .right-side-wrapper')" class="">
+                        <h4>Meshcast</h4>
+                    </button>
+                    <button onclick="loadPage(this, this.parentNode, '#main .maga-page.rooms .right-side-wrapper .page.join-links', '.maga-page.rooms .right-side-wrapper .pages', '.active', '.active', '.maga-page.rooms .right-side-wrapper')" class="active">
+                        <h4>Links</h4>
+                    </button>
+                </div>
+            </div>
+            <div class="page maga-page content-menu scenes">
+                <div class="main-buttons">
+                    <button>
+                        <i class="las la-th-large"></i>
+                    </button>
+                </div>
+                <div class="left menu-wrapper">
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-1 .page.audio', '.pannel-section-1 .pages', '.active', '.active', '#main .pannel-section-1')">
+                        <h4>Audio</h4>
+                    </button>
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-1 .page.scenes', '.pannel-section-1 .pages', '.active', '.active', '#main .pannel-section-1')" class="active">
+                        <h4>Scenes</h4>
+                    </button>
+                </div>
+                <div class="right menu-wrapper">
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-2 .page.inspector', '.pannel-section-2 .pages', '.active', '.active', '#main .pannel-section-2')" class="active">
+                        <h4>Custom Controls</h4>
+                    </button>
+                </div>
+            </div>
+            <div class="page maga-page content-menu control">
+                <div class="main-buttons">
+                    <button>
+                        <i class="las la-th-large"></i>
+                    </button>
+                </div>
+                <div class="left menu-wrapper">
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-1 .page.audio', '.pannel-section-1 .pages', '.active', '.active', '#main .pannel-section-1')">
+                        <h4>Audio</h4>
+                    </button>
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-1 .page.scenes', '.pannel-section-1 .pages', '.active', '.active', '#main .pannel-section-1')">
+                        <h4>Scenes</h4>
+                    </button>
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-1 .page.rooms', '.pannel-section-1 .pages', '.active', '.active', '#main .pannel-section-1')">
+                        <h4>Rooms</h4>
+                    </button>
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-1 .page.controls', '.pannel-section-1 .pages', '.active', '.active', '#main .pannel-section-1')" class="active">
+                        <h4>Controls</h4>
+                    </button>
+                </div>
+                <div class="right menu-wrapper">
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-2 .page.inspector', '.pannel-section-2 .pages', '.active', '.active', '#main .pannel-section-2')" class="active">
+                        <h4>Inspector</h4>
+                    </button>
+                    <button onclick="loadPage(this, this.parentNode, '#main .pannel-section-2 .page.chat', '.pannel-section-2 .pages', '.active', '.active', '#main .pannel-section-2')">
+                        <h4>Chat</h4>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="maga-pages main-contents">
+            <div class="page maga-page content rooms">
+                
+                <div class="side-wrapper rooms">
+                    <div class="lists style1">
+                        <div class="room-list">
+
+                            <div class="template">
+                                <div class="item option" onclick="roomButtonClickedRooms(this);">
+                                    <div class="mainbox">
+                                        <div class="content">
+                                            <h3 class="room-title">ERR</h3>
+                                            <div class="data">
+                                                <p>Audio-Only</p>
+                                                <p>3<i class="las la-user-ninja"></i></p>
+                                            </div>
+                                        </div>
+                                        <div class="badges">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scroll">
+                                <div class="item label">
+                                    <h1>Rooms</h1>
+                                </div>
+                                <div class="flex-group">
+                                    <div class="item option active">
+                                        <div class="mainbox">
+                                            <div class="content">
+                                                <h3>Main Room</h3>
+                                                <div class="data">
+                                                    <p>Injest</p>
+                                                    <p>Solo-Director</p>
+                                                    <p>4 / 7<i class="las la-user-ninja"></i></p>
+                                                </div>
+                                            </div>
+                                            <div class="badges">
+                                                <!-- <div class="badge">
+                                                    <i class="las la-angle-double-down"></i>
+                                                </div>
+                                                <div class="badge">
+                                                    <i class="las la-user-shield"></i>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <!-- <div class="subbox">
+                                            <div class="buttons">
+                                                <button>
+                                                    <i class="las la-paperclip"></i>
+                                                    <p>Copy Link</p>
+                                                </button>
+                                                <div class="second-layer">
+                                                    <button class="break">
+                                                        <i class="las la-eye"></i>
+                                                        <p>Preview Link</p>
+                                                    </button>
+                                                    <button class="break">
+                                                        <i class="las la-cog"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="item option">
+                                        <div class="mainbox">
+                                            <div class="content">
+                                                <h3>Talent Room</h3>
+                                                <div class="data">
+                                                    <p>2 / 2<i class="las la-user-ninja"></i></p>
+                                                </div>
+                                            </div>
+                                            <div class="badges">
+    
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item option">
+                                        <div class="mainbox">
+                                            <div class="content">
+                                                <h3>Chat Room</h3>
+                                                <div class="data">
+                                                    <p>Audio-Only</p>
+                                                    <p>3<i class="las la-user-ninja"></i></p>
+                                                </div>
+                                            </div>
+                                            <div class="badges">
+    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="create-button style3">
+                        <div class="content">
+                            <button>
+                                <h2>Create Room</h2>
+                                <div class="icon">
+                                    <i class="las la-plus"></i>
+                                </div>
+                            </button>
+                            <p>Because the more the merrier!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="room-content">
+                    <div class="room-data active hide">
+                        <div class="list">
+                            <div class="group">
+                                <div class="item">
+                                    <h1 class="room-title">Err</h1>
+                                </div>
+                                <div class="item">
+                                    <p>Guests View:</p>
+                                    <h4 class="solo-director">Solo-Director</h4>
+                                </div>
+                                <div class="item">
+                                    <p>P2P Bandwidth:</p>
+                                    <h4>500kbs</h4>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="item">
+                                    <p>User Access:</p>
+                                    <h4 class="injest">Injest</h4>
+                                </div>
+                                <div class="item">
+                                    <p>Password:</p>
+                                    <h4 class="password">"Password123"</h4>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="item">
+                                    <p>User Count: 4<i class="las la-user-ninja"></i></p>
+                                </div>
+                                <div class="item">
+                                    <p>Max Users: 7</p>
+                                </div>
+                                <div class="item">
+                                    <p>Directors Live: 0</p>
+                                </div>
+                                <div class="item">
+                                    <p>Directors Viewing: 1</p>
+                                </div>
+                                <div class="item">
+                                    <p>Directors Viewing: 1</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="other-content">
+                        <div class="side-wrapper scrollbar--dark style4">
+                            <div class="select-overlay">
+                                <h4>Select a room to edit its settings...</h4>
+                            </div>
+                            <div class="menu-wrapper style2 style3">
+                                <div class="menu">
+                                    <!-- <div class="buttons">
+                                        <button>
+                                            <i class="las la-paperclip"></i>
+                                            <p>Copy Link</p>
+                                        </button>
+                                        <button>
+                                            <i class="las la-eye"></i>
+                                            <p>Preview Link</p>
+                                        </button>
+                                    </div> -->
+                                    <div class="wide name">
+                                        <h2 class="room-title">Err</h2>
+                                        <button>
+                                            <i class="las la-edit"></i>
+                                        </button>
+                                    </div>
+                                    <div class="item">
+                                        <p>Guests solo Director's Feed</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="soloDirector"
+                                        data-setting-type="boolean">
+                                        
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+        
+                                        </label>
+                                    </div>
+
+                                    <div class="item">
+                                        <p>Room Mode</p>
+                                    </div>
+                                    <div class="option wide buttons">
+                                        <button>
+                                            <i class="las la-microphone-alt"></i>
+                                            <p>Audio ONLY</p>
+                                        </button>
+                                        <button class="active">
+                                            <i class="las la-photo-video"></i>
+                                            <p>Audio/Video</p>
+                                        </button>
+                                    </div>
+
+                                    <div class="spacer"></div>
+
+                                    <!-- <div class="item">
+                                        <p>Room type</p>
+                                    </div>
+                                    <div class="option">
+                                        <div class="input-dropdown"
+                                        data-setting="guestLimit"
+                                        data-setting-type="string">
+                                            <button class="main">
+                                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="30" value="10" autocomplete="off">
+                                            </button>
+                                            <div class="dropdown">
+                                                <div class="list">
+                                                    <div class="item">
+                                                        <input name="IgmdWa5ik" type="radio" data-setting-input>
+                                                        <label class="container">
+                                                            <p>Injest</p>
+                                                            <input type="radio" name="radio">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="item">
+                                        <p>Make injest room</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="injestRoom"
+                                        data-setting-type="boolean">
+                                        
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+        
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Transfer Only</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="transferOnlyInjest"
+                                        data-setting-type="boolean"
+                                        data-limiters="
+                                        if injestRoom == true, grey;
+                                        if injestRoom == true, limit to false;">
+                                        
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                            <span class="switch-slider round"></span>
+        
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Director OKs guests joining</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="directorOKs"
+                                        data-setting-type="boolean">
+                                        
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                            <span class="switch-slider round"></span>
+        
+                                        </label>
+                                    </div>
+                                    <div class="item">
+                                        <p>Require password</p>
+                                    </div>
+                                    <div class="option">
+                                        <label class="switch"
+                                        data-setting="requirePassword"
+                                        data-setting-type="boolean">
+                                        
+                                            <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                            <span class="switch-slider round"></span>
+
+                                        </label>
+                                    </div>
+                                    <div class="option wide">
+                                        <!--if guestLimit > 20, grey; -->
+                                        <div class="text-with-dropdown"
+                                        data-setting="password"
+                                        data-setting-type="string"
+                                        data-limiters="
+                                        if requirePassword == false, hide;">
+
+                                            <div class="input-suggestion">
+                                                <input data-setting-input onenter="updateSetting(this)" onblur="updateSetting(this)" class="text-input" type="text" value="Password123" placeholder="Input Password..." autocomplete="off">
+                                            </div>
+                                            <button data-dialog-id="ExithefHZtDTQvJNC" class="icon-btn-input" onclick="inputingPassword(this, this.parentNode.querySelector('input[type=text]'))">
+                                                <i class="las la-recycle"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="spacer"></div>
+
+                                    <div class="item">
+                                        <p>Limit guests to</p>
+                                    </div>
+                                    <div class="option wide">
+                                        <div class="input-slider"
+                                        data-setting="guestLimit"
+                                        data-setting-type="number">
+                                            <div class="values">
+                                                <p class="first">Err</p>
+                                                <p class="last">Err</p>
+                                                <div class="moving-background"></div>
+                                                <p class="moving">0</p>
+                                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                                            </div>
+                                            <div class="control">
+                                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="30" value="10" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="item">
+                                        <p>P2P Quality</p>
+                                    </div>
+                                    <div class="option wide">
+                                        <div class="input-slider">
+                                            <div class="values">
+                                                <p class="first">Err</p>
+                                                <p class="last">Err</p>
+                                                <div class="moving-background"></div>
+                                                <p class="moving">0</p>
+                                                <input class="moving-input" type="text">
+                                            </div>
+                                            <div class="control">
+                                                <input data-slider-id="AAB" data-slider-preload type="range" min="0" max="4000" value="500" autocomplete="off">
+                                            </div>
+                                            <div class="pills">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="spacer"></div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right-side-wrapper">
+                            <div class="pages">
+                                <div class="page meshcast">
+                                    <div class="card-wrapper">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h1>Meshcast</h1>
+                                            </div>
+                                            <div class="body">
+                                                
+                                            </div>
+                                            <div class="links">
+                                                <!-- <button class="primary">
+                                                    <p>View All Links</p>
+                                                </button>
+                                                <button class="secondary">
+                                                    <p>Edit Links</p>
+                                                </button> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page active join-links">
+                                    <!-- <div class="card-wrapper2">
+                                        <div class="header">
+                                            <h1>Join Links</h1>
+                                        </div>
+                                        <div class="body">
+                                            <div class="blurb">
+
+                                            </div>
+                                            <div class="link-list">
+                                                <div class="item">
+                                                    <p>General Guest Join</p>
+                                                    <a href="">https://vdo.ninja/?room=test</a>
+                                                </div>
+                                                <div class="item">
+                                                    <p>[MOD] Guest Join</p>
+                                                    <a href="">https://vdo.ninja/?room=test</a>
+                                                </div>
+                                                <div class="item">
+                                                    <p>Join under Group 1</p>
+                                                    <a href="">https://vdo.ninja/?room=test</a>
+                                                </div>
+                                                <div class="item">
+                                                    <p>Join under Group 2</p>
+                                                    <a href="">https://vdo.ninja/?room=test</a>
+                                                </div>
+                                            </div>
+                                            <div class="menu">
+                                                <button>Edit Links</button>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="card-wrapper">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h1>Main Room</h1>
+                                                <h1>Join Links</h1>
+                                            </div>
+                                            <div class="body">
+                                                <div class="menu">
+                                                    <div class="filters">
+                                                        <div class="label">
+                                                            <h3>Filters</h3>
+                                                        </div>
+                                                        <label class="custom-checkbox-2">
+                                                            <input type="checkbox" autocomplete="off">
+                                                            <div class="check-box">
+                                                                <span class="checkmark"></span>
+                                                            </div>
+                                                            <p>Director</p>
+                                                        </label>
+                                                        <label class="custom-checkbox-2">
+                                                            <input type="checkbox" checked autocomplete="off">
+                                                            <div class="check-box">
+                                                                <span class="checkmark"></span>
+                                                            </div>
+                                                            <p>General</p>
+                                                        </label>
+                                                        <label class="custom-checkbox-2">
+                                                            <input type="checkbox" checked autocomplete="off">
+                                                            <div class="check-box">
+                                                                <span class="checkmark"></span>
+                                                            </div>
+                                                            <p>Admin</p>
+                                                        </label>
+                                                        
+                                                        <label class="custom-checkbox-2">
+                                                            <input type="checkbox" autocomplete="off">
+                                                            <div class="check-box">
+                                                                <span class="checkmark"></span>
+                                                            </div>
+                                                            <p>Groups</p>
+                                                        </label>
+                                                        
+                                                        <label class="custom-checkbox-2">
+                                                            <input type="checkbox" autocomplete="off">
+                                                            <div class="check-box">
+                                                                <span class="checkmark"></span>
+                                                            </div>
+                                                            <p>Scenes</p>
+                                                        </label>
+                                                        <label class="custom-checkbox-2">
+                                                            <input type="checkbox" checked autocomplete="off">
+                                                            <div class="check-box">
+                                                                <span class="checkmark"></span>
+                                                            </div>
+                                                            <p>Custom</p>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="scroll">
+                                                    <div class="link-list">
+                                                        <div class="label">
+                                                            <p>Director Control Room</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="label">
+                                                            <p>Director joins as Guest</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="spacer"></div>
+
+                                                        <div class="label">
+                                                            <p>General Guest</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="label">
+                                                            <p>Viewer-Only Guest</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="spacer"></div>
+
+                                                        <div class="label">
+                                                            <p>[MOD] Guest</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="label">
+                                                            <p>[ADMIN] Guest</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="spacer"></div>
+
+                                                        <div class="label">
+                                                            <p>Join under Group 1</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="label">
+                                                            <p>Join under Group 2</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="label">
+                                                            <p>Join under Group 3</p>
+                                                        </div>
+                                                        <div class="URL">
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                </button>
+                                                                <button>
+                                                                    <i class="las la-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="item">
+                                                            <p>[MOD] Guest Join</p>
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                        </div>
+                                                        <div class="item">
+                                                            <p>Join under Group 1</p>
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                        </div> -->
+                                                        <!-- <div class="item">
+                                                            <p>Join under Group 2</p>
+                                                            <a href="">https://vdo.ninja/?room=test</a>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="links">
+                                                <button class="primary">
+                                                    <p>View All Links</p>
+                                                </button>
+                                                <button class="secondary">
+                                                    <p>Edit Links</p>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page maga-page content scenes">
+                <h1>Scenes</h1>
+            </div>
+            <div class="page maga-page content control active">
+                <div id="#split-0" class="side-wrapper one">
+                    <div class="side pannel-section-1">
+                        <!-- <div class="pills">
+                            <button onclick="loadPage(this, this.parentNode, '#main .page.edit-views', '.pannel-section-1 .pages')">
+                                <p>Edit Views</p>
+                            </button>
+                            <button onclick="loadPage(this, this.parentNode, '#main .page.audio-views', '.pannel-section-1 .pages')">
+                                <p>Audio</p>
+                            </button>
+                            <button onclick="loadPage(this, this.parentNode, '#main .page.rooms', '.pannel-section-1 .pages')" class="active">
+                                <p>Rooms</p>
+                            </button>
+                        </div> -->
+                        <div class="pannel-content">
+                            <div class="pages">
+                                <div class="page audio">
+                                    <h2>Manage Audio</h2>
+                                </div>
+                                <div class="page scenes">
+                                    <div class="style1">
+                                        <div class="scene-list">
+                                            <div class="scroll">
+                                                <div class="item label">
+                                                    <h1>Scenes</h1>
+                                                </div>
+                                                <div class="flex-group">
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Team A</h3>
+                                                                <div class="data">
+                                                                    <p>Adjustable</p>
+                                                                    <p>3<i class="las la-user-ninja"></i></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                        <div class="subbox">
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                    <p>Copy Link</p>
+                                                                </button>
+                                                                <div class="second-layer">
+                                                                    <button class="break">
+                                                                        <i class="las la-eye"></i>
+                                                                        <p>Preview Link</p>
+                                                                    </button>
+                                                                    <button class="break">
+                                                                        <i class="las la-cog"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Team B</h3>
+                                                                <div class="data">
+                                                                    <p>Adjustable</p>
+                                                                    <p>3<i class="las la-user-ninja"></i></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                        <div class="subbox">
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                    <p>Copy Link</p>
+                                                                </button>
+                                                                <div class="second-layer">
+                                                                    <button class="break">
+                                                                        <i class="las la-eye"></i>
+                                                                        <p>Preview Link</p>
+                                                                    </button>
+                                                                    <button class="break">
+                                                                        <i class="las la-cog"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Judge with teams</h3>
+                                                                <div class="data">
+                                                                    <p>Adjustable</p>
+                                                                    <p>Slotted</p>
+                                                                    <p>7<i class="las la-user-ninja"></i></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                        <div class="subbox">
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                    <p>Copy Link</p>
+                                                                </button>
+                                                                <div class="second-layer">
+                                                                    <button class="break">
+                                                                        <i class="las la-eye"></i>
+                                                                        <p>Preview Link</p>
+                                                                    </button>
+                                                                    <button class="break">
+                                                                        <i class="las la-cog"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="style2 style3">
+                                        <div class="select-overlay">
+                                            <h4>Select a scene to edit its settings...</h4>
+                                        </div>
+                                        <div class="menu">
+                                            <div class="wide buttons">
+                                                <button>
+                                                    <i class="las la-paperclip"></i>
+                                                    <p>Copy Link</p>
+                                                </button>
+                                                <button>
+                                                    <i class="las la-eye"></i>
+                                                    <p>Preview Link</p>
+                                                </button>
+                                            </div>
+                                            <div class="wide name">
+                                                <h2>Team A</h2>
+                                                <button>
+                                                    <i class="las la-edit"></i>
+                                                </button>
+                                            </div>
+                                            <div class="item">
+                                                <p>Adjustable</p>
+                                            </div>
+                                            <div class="option">
+                                                <label class="switch"
+                                                data-setting="requirePassword1234"
+                                                data-setting-type="boolean">
+                                                
+                                                    <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                                    <span class="switch-slider round"></span>
+        
+                                                </label>
+                                            </div>
+                                            <div class="item">
+                                                <p>Slotted</p>
+                                            </div>
+                                            <div class="option">
+                                                <label class="switch"
+                                                data-setting="requirePassword1234"
+                                                data-setting-type="boolean">
+                                                
+                                                    <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                                    <span class="switch-slider round"></span>
+        
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page rooms">
+                                    <div class="lists style1">
+                                        <div class="room-list">
+                                            <div class="scroll">
+                                                <div class="item label">
+                                                    <h1>Rooms</h1>
+                                                </div>
+                                                <div class="flex-group">
+                                                    <div class="item option active">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Main Room</h3>
+                                                                <div class="data">
+                                                                    <p>Injest</p>
+                                                                    <p>Solo-Director</p>
+                                                                    <p>4 / 7<i class="las la-user-ninja"></i></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                                                                <!-- <div class="badge">
+                                                                    <i class="las la-angle-double-down"></i>
+                                                                </div>
+                                                                <div class="badge">
+                                                                    <i class="las la-user-shield"></i>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="subbox">
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                    <p>Copy Link</p>
+                                                                </button>
+                                                                <div class="second-layer">
+                                                                    <button class="break">
+                                                                        <i class="las la-eye"></i>
+                                                                        <p>Preview Link</p>
+                                                                    </button>
+                                                                    <button class="break">
+                                                                        <i class="las la-cog"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Talent Room</h3>
+                                                                <div class="data">
+                                                                    <p>2 / 2<i class="las la-user-ninja"></i></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Chat Room</h3>
+                                                                <div class="data">
+                                                                    <p>Audio-Only</p>
+                                                                    <p>3<i class="las la-user-ninja"></i></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="style2 style3 viewing">
+                                        <div class="select-overlay">
+                                            <h4>Select a room to edit its settings...</h4>
+                                        </div>
+                                        <div class="menu">
+                                            <div class="wide buttons">
+                                                <button>
+                                                    <i class="las la-paperclip"></i>
+                                                    <p>Copy Link</p>
+                                                </button>
+                                                <button>
+                                                    <i class="las la-eye"></i>
+                                                    <p>Preview Link</p>
+                                                </button>
+                                            </div>
+                                            <div class="wide name">
+                                                <h2>Main Room</h2>
+                                                <button>
+                                                    <i class="las la-edit"></i>
+                                                </button>
+                                            </div>
+                                            <div class="item">
+                                                <p>Solo-Director</p>
+                                            </div>
+                                            <div class="option">
+                                                <label class="switch"
+                                                data-setting="requirePassword1234"
+                                                data-setting-type="boolean">
+                                                
+                                                    <input onchange="updateSetting(this)" data-setting-input type="checkbox" checked autocomplete="off">
+                                                    <span class="switch-slider round"></span>
+        
+                                                </label>
+                                            </div>
+                                            <div class="item">
+                                                <p>Audio Only</p>
+                                            </div>
+                                            <div class="option">
+                                                <label class="switch"
+                                                data-setting="requirePassword1234"
+                                                data-setting-type="boolean">
+                                                
+                                                    <input onchange="updateSetting(this)" data-setting-input type="checkbox" autocomplete="off">
+                                                    <span class="switch-slider round"></span>
+        
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="page controls active">
+                                    <!-- data-auto-height="100" -->
+                                    <div class="lists style1">
+                                        <div class="controls">
+                                            <div class="scroll">
+
+                                                <div class="item label">
+                                                    <h1>Rooms</h1>
+                                                </div>
+                                                <div class="flex-group room-list">
+                                                    <div class="template">
+                                                        <div class="item option">
+                                                            <div class="mainbox" onclick="viewButtonClickedControls(this);">
+                                                                <div class="content">
+                                                                    <h3 class="room-title">Chat Room</h3>
+                                                                </div>
+                                                                <div class="badges">
+                        
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option active">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Main Room</h3>
+                                                            </div>
+                                                            <div class="badges">
+                                                                <!-- <div class="badge">
+                                                                    <i class="las la-angle-double-down"></i>
+                                                                </div>
+                                                                <div class="badge">
+                                                                    <i class="las la-user-shield"></i>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Talent Room</h3>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Chat Room</h3>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item label">
+                                                    <h1>Adjustable Scenes</h1>
+                                                </div>
+                                                <div class="flex-group">
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Team A</h3>
+                                                                <div class="data">
+                                                                    <!-- <p>3</p> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Team B</h3>
+                                                                <div class="data">
+                                                                    <!-- <p>3</p> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Judge with teams</h3>
+                                                                <div class="data">
+                                                                    <!-- <p>1</p> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="badges">
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item label">
+                                                    <h1>All People</h1>
+                                                </div>
+                                                <div class="flex-group single-text half">
+                                                    <div class="item option active">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Andrew</h3>
+                                                            </div>
+                                                            <div class="groups">
+                                                                <div class="group-icon-list">
+                                                                    <div class="group-icon a">
+                                                                        <h4>1</h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Steve</h3>
+                                                            </div>
+                                                            <div class="groups">
+                                                                <div class="group-icon-list">
+                                                                    <div class="group-icon a">
+                                                                        <h4>1</h4>
+                                                                    </div>
+                                                                    <div class="group-icon b">
+                                                                        <h4>2</h4>
+                                                                    </div>
+                                                                    <div class="group-icon c">
+                                                                        <h4>3</h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- <div class="subbox">
+                                                            <div class="buttons">
+                                                                <button>
+                                                                    <i class="las la-paperclip"></i>
+                                                                    <p>Copy Link</p>
+                                                                </button>
+                                                                <div class="second-layer">
+                                                                    <button class="break">
+                                                                        <i class="las la-eye"></i>
+                                                                        <p>Preview Link</p>
+                                                                    </button>
+                                                                    <button class="break">
+                                                                        <i class="las la-cog"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Devin</h3>
+                                                            </div>
+                                                            <div class="groups">
+                                                                <div class="group-icon-list">
+                                                                    <div class="group-icon a">
+                                                                        <h4>1</h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Jackson</h3>
+                                                            </div>
+                                                            <div class="groups">
+                                                                <div class="group-icon-list">
+                                                                    <div class="group-icon b">
+                                                                        <h4>2</h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Sue</h3>
+                                                            </div>
+                                                            <div class="groups">
+                                                                <div class="group-icon-list">
+                                                                    <div class="group-icon b">
+                                                                        <h4>2</h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>Shelly</h3>
+                                                            </div>
+                                                            <div class="groups">
+                                                                <div class="group-icon-list">
+                                                                    <div class="group-icon b">
+                                                                        <h4>2</h4>
+                                                                    </div>
+                                                                    <div class="group-icon c">
+                                                                        <h4>3</h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item option">
+                                                        <div class="mainbox">
+                                                            <div class="content">
+                                                                <h3>MOD</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="stats">
+                            <button class="stats-icon" onclick="showHideElement(this, '#main .stats .stats-wrapper')"">
+                                <i class="las la-chart-bar"></i>
+                            </button>
+                            <div class="stats-wrapper">
+                                <button class="close-icon active" onclick="showHideElement(this.parentNode, '#main .stats .stats-icon')">
+                                    <i class="las la-arrow-down"></i>
+                                </button>
+                                <div>
+                                    <h3>Stats 1</h3>
+                                    <h3>Stats 2</h3>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- <div class="gutter gutter-col-1"></div> -->
+                <div id="#split-1" class="video-section config-2">
+                    <div class="block one">
+                        <div class="video-menu">
+                            <div class="data">
+                                <div class="count">
+                                    <p>4 / 7</p>
+                                </div>
+                            </div>
+                            <div class="center-label">
+                                <!-- First -->
+                                <h2></h2>
+                            </div>
+                            <div class="zoom">
+                                <div class="input-slider hide-values thin small-cursor">
+                                    <div class="values">
+                                        <p class="first">Err</p>
+                                        <p class="last">Err</p>
+                                        <p class="moving">0</p>
+                                        <input class="moving-input" type="text">
+                                    </div>
+                                    <div class="control">
+                                        <input data-slider-id="AAD" data-slider-preload type="range" min="0" max="200" value="100" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layout-control">
+                                <button onclick="
+                                openDialog('GcgFduZn0QDLY2bDP', this, {
+                                    hoverOutClose: false,
+                                    clickOutClose: true,
+                                    placement: 'bottom',
+                                    callbackData: {
+                                        button: this
+                                    },
+                                    callback: (data) => {                        
+                                        if(data.closeData) {
+                                            changeBoxesInControls(data.closeData);
+                                        }
+                                    }
+                                });">
+                                    <i class="las la-grip-horizontal"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-section-content">
+                            <div class="layout-wrapper">
+                                <!-- <div class="item">
+                                    <div class="item-content">
+                                        <div class="t-controls-wrapper">
+                                            <div class="label">
+                                                <h3>Someone</h3>
+                                            </div>
+                                            <div class="controls">
+                                                <button>
+                                                    <i class="las la-comment-alt"></i>
+                                                    <p>Message...</p>
+                                                </button>
+                                                <button class="solid">
+                                                    <i class="las la-microphone"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="video-wrapper wh-ratio" data-whratio="0.5625">
+                                            <div class="video">
+        
+                                            </div>
+                                            <div class="overlay">
+                                                <div class="controls">
+                                                    <div class="volume-slider...">
+                                                    </div>
+                                                    <button>
+                                                        <i class="las la-video"></i>
+                                                    </button>
+                                                    <button>
+                                                        <i class="las la-volume-up"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="b-controls-wrapper">
+                                            <div class="controls">
+                                                <div class="groups">
+                                                    <div class="group-icon-list">
+                                                        <div class="group-icon a">
+                                                            <h4>1</h4>
+                                                        </div>
+                                                        <div class="group-icon b">
+                                                            <h4>2</h4>
+                                                        </div>
+                                                        <div class="group-icon c">
+                                                            <h4>3</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="groups-dropdown">
+                                                        <button class="small"><i class="las la-angle-down"></i></button>
+                                                    </div>
+                                                </div>
+                                                <button class="solid">
+                                                    <i class="las la-paper-plane"></i>
+                                                </button>
+                                                <button class="solid end active">
+                                                    <i class="las la-window-close"></i>
+                                                </button>
+                                            </div>
+                                            <div class="controls-second">
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gutter inner-gutter-col-1"></div>
+                    <div class="block two">
+                        <div class="video-menu">
+                            <div class="data">
+                                <div class="count">
+                                    <p>4 / 7</p>
+                                </div>
+                            </div>
+                            <div class="center-label">
+                                <!-- Second -->
+                                <h2></h2>
+                            </div>
+                            <div class="zoom">
+                                <div class="input-slider hide-values thin small-cursor">
+                                    <div class="values">
+                                        <p class="first">Err</p>
+                                        <p class="last">Err</p>
+                                        <p class="moving">0</p>
+                                        <input class="moving-input" type="text">
+                                    </div>
+                                    <div class="control">
+                                        <input data-slider-id="AAD" data-slider-preload type="range" min="0" max="200" value="100" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layout-control">
+                                <button onclick="
+                                openDialog('GcgFduZn0QDLY2bDP', this, {
+                                    hoverOutClose: false,
+                                    clickOutClose: true,
+                                    placement: 'bottom',
+                                    callbackData: {
+                                        button: this
+                                    },
+                                    callback: (data) => {                        
+                                        if(data.closeData) {
+                                            changeBoxesInControls(data.closeData);
+                                        }
+                                    }
+                                });">
+                                    <i class="las la-grip-horizontal"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="video-section-content">
+                            <div class="layout-wrapper">
+                                <!-- <div class="item">
+                                    <div class="item-content">
+                                        <div class="t-controls-wrapper">
+                                            <div class="label">
+                                                <h3>Someone</h3>
+                                            </div>
+                                            <div class="controls">
+                                                <button>
+                                                    <i class="las la-comment-alt"></i>
+                                                    <p>Message...</p>
+                                                </button>
+                                                <button class="solid">
+                                                    <i class="las la-microphone"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="video-wrapper wh-ratio" data-whratio="0.5625">
+                                            <div class="video">
+        
+                                            </div>
+                                            <div class="overlay">
+                                                <div class="controls">
+                                                    <div class="volume-slider...">
+                                                    </div>
+                                                    <button>
+                                                        <i class="las la-video"></i>
+                                                    </button>
+                                                    <button>
+                                                        <i class="las la-volume-up"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="b-controls-wrapper">
+                                            <div class="controls">
+                                                <div class="groups">
+                                                    <div class="group-icon-list">
+                                                        <div class="group-icon a">
+                                                            <h4>1</h4>
+                                                        </div>
+                                                        <div class="group-icon b">
+                                                            <h4>2</h4>
+                                                        </div>
+                                                        <div class="group-icon c">
+                                                            <h4>3</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="groups-dropdown">
+                                                        <button class="small"><i class="las la-angle-down"></i></button>
+                                                    </div>
+                                                </div>
+                                                <button class="solid">
+                                                    <i class="las la-paper-plane"></i>
+                                                </button>
+                                                <button class="solid end active">
+                                                    <i class="las la-window-close"></i>
+                                                </button>
+                                            </div>
+                                            <div class="controls-second">
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="template">
+                        <div class="item guest">
+                            <div class="item-content">
+                                <div class="t-controls-wrapper">
+                                    <div class="label">
+                                        <h3>Someone</h3>
+                                    </div>
+                                    <div class="controls">
+                                        <button>
+                                            <i class="las la-comment-alt"></i>
+                                            <p>Message...</p>
+                                        </button>
+                                        <button class="solid">
+                                            <i class="las la-microphone"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="video-wrapper wh-ratio" data-whratio="0.5625">
+                                    <div class="video">
+
+                                    </div>
+                                    <div class="overlay">
+                                        <div class="controls">
+                                            <div class="volume-slider...">
+                                            </div>
+                                            <button>
+                                                <i class="las la-video"></i>
+                                            </button>
+                                            <button>
+                                                <i class="las la-volume-up"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="b-controls-wrapper">
+                                    <div class="controls">
+                                        <div class="groups">
+                                            <div class="group-icon-list">
+                                                <div class="group-icon a">
+                                                    <h4>1</h4>
+                                                </div>
+                                                <div class="group-icon b">
+                                                    <h4>2</h4>
+                                                </div>
+                                                <div class="group-icon c">
+                                                    <h4>3</h4>
+                                                </div>
+                                            </div>
+                                            <div class="groups-dropdown">
+                                                <button onclick="
+                                                openDialog('HkfSc6o1gb32fv', this, {
+                                                    hoverOutClose: false,
+                                                    clickOutClose: true,
+                                                    placement: 'bottom-start',
+                                                    modifiers: [
+                                                        {
+                                                            name: 'offset',
+                                                            options: {
+                                                                offset: [0, 5],
+                                                            },
+                                                        },
+                                                    ],
+                                                    callbackData: {
+                                                        button: this
+                                                    },
+                                                    callback: (data) => {                        
+                                                        if(data.closeData) {
+                                                            // Update the person's groups
+                                                            // changeBoxesInControls(data.closeData);
+                                                        }
+                                                    }
+                                                });" class="small"><i class="las la-angle-down"></i></button>
+                                            </div>
+                                        </div>
+                                        <button class="solid">
+                                            <i class="las la-paper-plane"></i>
+                                        </button>
+                                        <button class="solid end active">
+                                            <i class="las la-window-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="controls-second">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="gutter gutter-col-3"></div> -->
+                <div id="#split-2" class="side-wrapper two">
+                    <div class="side pannel-section-2">
+                        <!-- <div class="pills">
+                            <button class="active">
+                                <p>Inspector</p>
+                            </button>
+                            <button>
+                                <p>Chat</p>
+                            </button>
+                        </div> -->
+                        <div class="pannel-content">
+                            <div class="pages">
+                                <div class="page inspector active">
+                                    <h2>Inspector</h2>
+                                </div>
+                                <div class="page chat">
+                                    <h2>Chat</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom main-menu">
+            <div class="content-menu">
+                <div class="left menu-wrapper">
+                    <button onclick="loadPage(this, this.parentNode, '#main .maga-page.rooms', '#main .maga-pages')" class="">
+                        <i class="las la-layer-group"></i>
+                        <h4>Rooms</h4>
+                    </button>
+                    <button onclick="loadPage(this, this.parentNode, '#main .maga-page.scenes', '#main .maga-pages')" class="">
+                        <i class="las la-object-ungroup"></i>
+                        <h4>Scenes</h4>
+                    </button>
+                    <button onclick="loadPage(this, this.parentNode, '#main .maga-page.control', '#main .maga-pages')" class="active">
+                        <i class="las la-stream"></i>
+                        <h4>Controls</h4>
+                    </button>
+                </div>
+                <div class="right menu-wrapper">
+                    <h1 class="logo">VDO.ninja</h1>
+                </div>
+            </div>
+        </div>
+        <div class="dialogs">
+            <!-- Dialog for seeing the previously used passwords -->
+            <div data-dialog-id="ExithefHZtDTQvJNC" class="dialog password-options" role="tooltip">
+                <div class="content">
+                    <div class="list">
+                        <h2 class="row label">Prevously Used:</h2>
+                        <button>NotAPassword</button>
+                        <h2 class="row label">From other Rooms</h2>
+                        <button>NotAPassword</button>
+                    </div>
+                </div>
+            </div>
+            <!-- The overlay dialog for where you want to place the item in the control page -->
+            <div data-dialog-id="lKPqq9LFZueaQ9XdR" class="dialog controlView-box" role="tooltip">
+                <button onclick="closeDialog('lKPqq9LFZueaQ9XdR','one');">
+                    <i class="las la-caret-square-up"></i>
+                </button>
+                <button onclick="closeDialog('lKPqq9LFZueaQ9XdR','two');">
+                    <i class="las la-caret-square-down"></i>
+                </button>
+            </div>
+            <!-- The dialog for when you are changing the layout of boxes on the control page -->
+            <div data-dialog-id="GcgFduZn0QDLY2bDP" class="dialog controlView-change" role="tooltip">
+                <div class="content">
+                    <button onclick="closeDialog('GcgFduZn0QDLY2bDP','config-0');">
+                        <i class="las la-stop"></i>
+                    </button>
+                    <button onclick="closeDialog('GcgFduZn0QDLY2bDP','config-2');">
+                        <i class="las la-columns"></i>
+                    </button>
+                    <button onclick="closeDialog('GcgFduZn0QDLY2bDP','config-1');">
+                        <i class="las la-columns rotate"></i>
+                    </button>
+                </div>
+            </div>
+            <div data-dialog-id="HkfSc6o1gb32fv" class="dialog controlView-change" role="tooltip">
+                <div class="content">
+                    <button onclick="closeDialog('GcgFduZn0QDLY2bDP','config-0');">
+                        <i class="las la-stop"></i>
+                    </button>
+                    <button onclick="closeDialog('GcgFduZn0QDLY2bDP','config-2');">
+                        <i class="las la-columns"></i>
+                    </button>
+                    <button onclick="closeDialog('GcgFduZn0QDLY2bDP','config-1');">
+                        <i class="las la-columns rotate"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- --- Main --- -->
+<!-- Custom JS -->
+<script defer src="js/main.js"></script>
+
+<!-- --- Back End --- -->
+<!-- Imported Libraries -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+<!-- Custom JS -->
+<script src="js/back/back.js"></script>
+<!-- Custom Libraries -->
+<script src="js/back/iframe-bridge.js"></script>
+
+<!-- --- Front End --- -->
+<!-- Imported Libraries -->
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="js/lib/ResizeSensor.js"></script>
+<script src="js/lib/ElementQueries.js"></script>
+<script src="https://unpkg.com/split.js/dist/split.min.js"></script>
+<!-- <script src="https://unpkg.com/split-grid/dist/split-grid.js"></script> -->
+<!-- A custom implementation of split-grid, just so it will work with split.js on the same document-->
+<script src="js/front/lib/split-grid.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.2/split.js"></script> -->
+<!-- Custom JS -->
+<script src="js/front/front.js"></script>
+<!-- Custom Libraries -->
+<script src="js/front/lib/prosettings.js"></script>
+<script src="js/front/lib/validate.js"></script>
+<script src="js/front/lib/inputs.js"></script>
+<script src="js/front/lib/popups.js"></script>
+<script src="js/front/lib/paging.js"></script>
+</html>

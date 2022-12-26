@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Look Booooook</title>
+    <link rel="icon" href="img/Temp-Icon.png">
+
+    <!-- Custom CSS Libraries -->
+    <link rel="stylesheet" href="css/lib/inputs.css">
+    <link rel="stylesheet" href="css/lib/popups.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/lookbook.css">
+
+    <!-- Line Awesome -->
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+</head>
+<body>
+    <div id="body">
+        <br>
+
+        <div class="topic-label">
+            <h1>Colors</h1>
+        </div>
+        <div class="topic-row">
+            <div class="table">
+                <div class="item">
+                    <p class="description">DARK Menu BG</p>
+                    <div class="swatch" style="background: #12171c">#12171c</div>
+                </div>
+                <div class="item">
+                    <p class="description">Menu BG</p>
+                    <div class="swatch" style="background: #121a22">#121a22</div>
+                </div>
+                <div class="item">
+                    <p class="description">Side Pannel BG</p>
+                    <div class="swatch" style="background: #141921">#141921</div>
+                </div>
+                <div class="item">
+                    <p class="description">General btn Dark*</p>
+                    <div class="swatch" style="background: rgba(0, 0, 0, 0.23)">rgba(0, 0, 0, 0.23)</div>
+                </div>
+                <div class="item">
+                    <p class="description">General btn Light*</p>
+                    <div class="swatch" style="background: rgba(59, 59, 59, 0.23)">rgba(59, 59, 59, 0.23)</div>
+                </div>
+                <div class="item">
+                    <p class="description">Small Dialog</p>
+                    <div class="swatch" style="background: #0f0f0f">#0f0f0f</div>
+                </div>
+                <div class="item">
+                    <p class="description">Primary Color</p>
+                    <div class="swatch" style="background: #3b11c4">#3b11c4</div>
+                </div>
+                <div class="item">
+                    <p class="description">Primary Color ALT</p>
+                    <div class="swatch dark" style="background: #64b6f6">#64b6f6</div>
+                </div>
+                <div class="item">
+                    <p class="description">Second Color</p>
+                    <div class="swatch dark" style="background: #f18b43">#f18b43</div>
+                </div>
+            </div>
+            <p>* Have varients based on User Interactions</p>
+            <br>
+            <p><b>NOTE: There are also defined Light & Dark text varients</b></p>
+        </div>
+    
+        <div class="topic-label">
+            <h1>Slider Simple</h1>
+        </div>
+        <div class="topic-row">
+            <div class="states">
+                <div class="item">
+                    <div class="menu">
+                        <h4>Basic Slider</h4>
+                        <p><i>Created with ".input-slider"</i></p>
+                        <div class="input-slider"
+                        data-setting="guestLimit"
+                        data-setting-type="number">
+                            <div class="values">
+                                <p class="first">Err</p>
+                                <p class="last">Err</p>
+                                <div class="moving-background"></div>
+                                <p class="moving">0</p>
+                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                            </div>
+                            <div class="control">
+                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="300" value="10" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="states">
+                <div class="item">
+                    <div class="menu">
+                        <h4>Pilled Slider</h4>
+                        <p><i>This includes pill options to allow for presets</i></p>
+                        <div class="input-slider"
+                        data-setting="guestLimit"
+                        data-setting-type="number">
+                            <div class="values">
+                                <p class="first">Err</p>
+                                <p class="last">Err</p>
+                                <div class="moving-background"></div>
+                                <p class="moving">0</p>
+                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                            </div>
+                            <div class="control">
+                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAB" data-slider-preload type="range" min="0" max="4000" value="400" autocomplete="off">
+                            </div>
+                            <div class="pills">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="states two">
+                <div class="item">
+                    <div class="menu">
+                        <h4>No-Value Slider</h4>
+                        <p><i>Created with ".input-slider .hide-values"</i></p>
+                        <div class="input-slider hide-values"
+                        data-setting="guestLimit"
+                        data-setting-type="number">
+                            <div class="values">
+                                <p class="first">Err</p>
+                                <p class="last">Err</p>
+                                <div class="moving-background"></div>
+                                <p class="moving">0</p>
+                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                            </div>
+                            <div class="control">
+                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="300" value="100" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="menu">
+                        <h4>Thin Slider</h4>
+                        <p><i>Created with ".input-slider .thin"</i></p>
+                        <div class="input-slider thin"
+                        data-setting="guestLimit"
+                        data-setting-type="number">
+                            <div class="values">
+                                <p class="first">Err</p>
+                                <p class="last">Err</p>
+                                <div class="moving-background"></div>
+                                <p class="moving">0</p>
+                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                            </div>
+                            <div class="control">
+                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="300" value="60" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="states two">
+                <div class="item">
+                    <div class="menu">
+                        <h4>Small-Cursor Slider</h4>
+                        <p><i>Created with ".input-slider .small-cursor"</i></p>
+                        <div class="input-slider small-cursor"
+                        data-setting="guestLimit"
+                        data-setting-type="number">
+                            <div class="values">
+                                <p class="first">Err</p>
+                                <p class="last">Err</p>
+                                <div class="moving-background"></div>
+                                <p class="moving">0</p>
+                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                            </div>
+                            <div class="control">
+                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="300" value="250" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="menu">
+                        <h4>Tiny (Non-Inportant) Slider</h4>
+                        <p><i>Created with all the above classes</i></p>
+                        <div class="input-slider thin small-cursor hide-values"
+                        data-setting="guestLimit"
+                        data-setting-type="number">
+                            <div class="values">
+                                <p class="first">Err</p>
+                                <p class="last">Err</p>
+                                <div class="moving-background"></div>
+                                <p class="moving">0</p>
+                                <input onenter="updateSetting(this)" onblur="updateSetting(this)" class="moving-input" type="text">
+                            </div>
+                            <div class="control">
+                                <input data-setting-input onchange="updateSetting(this)" data-slider-id="AAC" data-slider-preload type="range" min="0" max="300" value="20" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="topic-label">
+            <h1>Alternate-Option Buttons</h1>
+        </div>
+        <div class="topic-row">
+            
+        </div>
+
+        <div class="topic-label">
+            <h1>Regular Button</h1>
+        </div>
+        <div class="topic-row">
+            
+        </div>
+
+        <div class="topic-label">
+            <h1>Switch</h1>
+        </div>
+        <div class="topic-row">
+            
+        </div>
+
+        <div class="topic-label">
+            <h1>Radio Buttons</h1>
+        </div>
+        <div class="topic-row">
+            
+        </div>
+
+        <div class="topic-label">
+            <h1>Drop Down</h1>
+        </div>
+        <div class="topic-row">
+            
+        </div>
+
+        <div class="topic-label">
+            <h1>Text Input - Formal</h1>
+        </div>
+        <div class="topic-row">
+            
+        </div>
+
+        <div class="topic-label">
+            <h1>Text Edit - Informal</h1>
+        </div>
+        <div class="topic-row">
+            
+        </div>
+
+        <div class="topic-label">
+            <h1>Search</h1>
+        </div>
+        <div class="topic-row">
+            
+        </div>
+
+    </div>
+</body>
+
+<!-- --- Main --- -->
+<!-- Custom JS -->
+<script defer src="js/main.js"></script>
+
+<!-- --- Back End --- -->
+<!-- Imported Libraries -->
+
+<!-- Custom JS -->
+
+<!-- Custom Libraries -->
+
+
+<!-- --- Front End --- -->
+<!-- Imported Libraries -->
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="js/lib/ResizeSensor.js"></script>
+<script src="js/lib/ElementQueries.js"></script>
+<!-- Custom JS -->
+
+<!-- Custom Libraries -->
+<script src="js/front/lib/prosettings.js"></script>
+<script src="js/front/lib/validate.js"></script>
+<script src="js/front/lib/inputs.js"></script>
+<script src="js/front/lib/popups.js"></script>
+</html>

@@ -1,0 +1,591 @@
+/* 
+Author(s):
+Andrew
+
+Description:
+This file covers the repeated groupings of elements which I have set up CSS
+for so that I can utilize it across the page. This goes into specifics, but
+only on the groupings, so that they can be utilized without hassle in the
+HTML and I don't have to recode it every time (hopefuly).
+
+Created:
+12/19/2022
+*/
+
+/* TODO: THIS MIGHT NEED TO GET MOVED TO THE INPUTS.CSS FILE */
+.custom-checkbox-2 {
+    display: flex;
+    flex-direction: row;
+    /* padding-left: 34px; */
+    padding-right: 10px;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+    /* font-size: 22px; */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.custom-checkbox-2 p {
+    padding-left: 10px;
+}
+
+/* Hide the browser's default checkbox */
+.custom-checkbox-2 input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.custom-checkbox-2 .check-box {
+    position: relative;
+    /* top: 0;
+    left: 0; */
+    height: 23px;
+    width: 23px;
+    background-color: var(--text-light-first);
+    border-radius: 3px;
+}
+.custom-checkbox-2 .checkmark {
+    background: var(--logo-color-2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 0px;
+    width: 0px;
+    border-radius: 3px;
+    transition: height 0.3s ease-in;
+    transition: width 0.1s ease-in;
+}
+.custom-checkbox-2:hover .checkmark {
+    width: 0px;
+    height: 0px;
+}
+.custom-checkbox-2:not(:hover) input:checked ~ .check-box .checkmark {
+    height: 24px;
+    width: 24px;
+}
+.custom-checkbox-2:hover input:checked ~ .check-box .checkmark {
+    height: 20px;
+    width: 20px;
+}
+
+
+
+
+
+
+
+.style1 {
+    /* width: calc(100% - 20px); */
+    /* margin-left: 10px; */
+    width: 100%;
+    flex-grow: 100;
+    /* height: 100%; */
+    display: flex;
+    flex-direction: row;
+    color: var(--text-light-fourth);
+    /* border-bottom: solid 1px var(--line); */
+}
+.style1 .scene-list {
+    width: 100%;
+    padding: 0px 2px;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+    direction: rtl;
+    scrollbar-width: none;
+}
+.style1 .scene-list::-webkit-scrollbar {
+    display: none;
+}
+/* .style1 .views {
+    width: 30%;
+    border-right: solid 1px var(--line);
+    padding: 0px 4px;
+    min-width: min-content;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    direction: rtl;
+    scrollbar-width: none;
+} */
+.style1 .room-list {
+    /* width: 70%; */
+    width: 100%;
+    padding: 0px 2px;
+    /* background-color: yellow; */
+    /* display: flex; */
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+    direction: rtl;
+    scrollbar-width: none;
+}
+/* .style1 .template {
+    display: none;
+} */
+.style1 .room-list .template {
+    display: none;
+}
+.style1 .room-list::-webkit-scrollbar {
+    display: none;
+}
+.style1 .controls {
+    /* width: 70%; */
+    width: 100%;
+    padding: 0px 2px;
+    /* background-color: yellow; */
+    /* display: flex; */
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+    direction: rtl;
+    scrollbar-width: none;
+}
+.style1 .controls::-webkit-scrollbar {
+    display: none;
+}
+.style1 .scroll {
+    height: 0px;
+    direction: ltr;
+}
+
+.style1 .views .flex-group {
+    margin-bottom: 1.5rem;
+}
+.style1 .controls .flex-group {
+    margin-bottom: 2rem;
+}
+.style1 .flex-group {
+    /* display: flex;
+    flex-wrap: wrap; */
+    display: grid;
+    grid-column-gap: 3px;
+    /* grid-auto-flow: column; */
+    /* grid-auto-rows: 1fr; */
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+    grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+    width: 100%;
+}
+.style1 .flex-group.half {
+    grid-template-columns: repeat(auto-fill, minmax(min(10rem, 100%), 1fr));
+}
+.style1 .flex-group.third {
+    grid-template-columns: repeat(auto-fill, minmax(min(7rem, 100%), 1fr));
+}
+
+.style1 .item {
+    margin-bottom: 3px;
+    /* height: fit-content; */
+}
+.style1 .label {
+    color: var(--text-light-second);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+.style1 .label h1 {
+    margin-left: 10px;
+    user-select: none;
+    pointer-events: none;
+}
+.style1 .label p {
+    margin-left: 10px;
+    color: var(--text-light-fifth);
+    user-select: none;
+    pointer-events: none;
+}
+.style1 .option {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.style1 .option .mainbox {
+    direction: ltr;
+    
+    border-radius: 0.5rem;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.388);
+    padding: 10px 0;
+    background: var(--page-item-bg);
+    transition: background 0.1s;
+    
+    display: flex;
+    flex-direction: row;
+
+    position: relative;
+    z-index: 2;
+}
+.style1 .option.hover .mainbox {
+    background: var(--logo-color);
+}
+.style1 .option.active:not(.hidden2) .mainbox {
+    background: var(--logo-color);
+    background: linear-gradient(45deg, var(--logo-color), var(--logo-color-alt));
+}
+.style1 .option.hidden2:hover .mainbox {
+    background: var(--logo-color);
+}
+.style1 .option:not(.active):hover .mainbox {
+    background: var(--logo-color);
+}
+.style1 .option:not(.active) .subbox {
+    display: none;
+}
+.style1 .option .subbox {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.071);
+    padding: 10px 0;
+    padding-top: calc(10px + 3rem);
+    margin-top: -3rem;
+    margin-bottom: 3px;
+    /* background: var(--page-item-sub-background); */
+    background: linear-gradient(-20deg, var(), var());
+    transition: background 0.1s;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    z-index: 1;
+}
+.style1 .scene-list .option .subbox {
+    display: none;
+}
+.style1 .option .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.style1 .option[max-width~="300px"] button.break p {
+    display: none;
+}
+/* 215 */
+/* .style1 .option[max-width~="115px"] .buttons {
+    flex-direction: column;
+} */
+.style1 .option .second-layer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.style1 .option .subbox button {
+    background: rgba(59, 59, 59, 0.23);
+    /* background: rgba(0, 0, 0, 0.23); */
+    padding: 3px 10px;
+    /* margin: auto; */
+    /* margin-left: calc(1px + 0.1vw);
+    margin-right: calc(1px + 0.1vw); */
+    margin: 0 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    border: none;
+    color: var(--text-light-third);
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.style1 .option .subbox button:hover {
+    /* background: rgba(59, 59, 59, 0.23); */
+    background: rgba(0, 0, 0, 0.23);
+}
+.style1 .option .subbox i {
+    font-size: 1.5rem;
+}
+.style1 .option .subbox p {
+    margin-left: 5px;
+}
+/* .style1 .option .subbox button :first-child {
+    margin-right: 5px;
+}
+.style1 .option .subbox button :last-child {
+    margin-right: 0px;
+} */
+.style1 .option .subbox button p {
+    font-size: 0.9rem;
+}
+
+/* .style1 .views .option {
+    background: var(--pannel-bg);
+    border: solid 2px var(--page-item-bg);
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.251);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+} */
+/* .style1 .views .option.active {
+    background: var(--pannel-bg);
+    border: solid 2px var(--logo-color-alt);
+
+    background: 
+        linear-gradient(var(--pannel-bg), var(--pannel-bg)) padding-box,
+        linear-gradient(to right, var(--logo-color), var(--logo-color-alt)) border-box;
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+} */
+/* .style1 .views .option:not(.active):hover {
+    background: var(--pannel-bg);
+    border: solid 2px var(--logo-color);
+} */
+/* .style1 .views .content {
+    padding-right: 15px;
+} */
+
+.style1 .option .content {
+    flex-grow: 1;
+    padding-left: 15px;
+    /* width: max-content; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .style1 .views .option h3 {
+    color: var(--text-light-fourth);
+} */
+.style1 .option h3 {
+    color: var(--text-light-third);
+    user-select: none;
+    pointer-events: none;
+}
+.style1 .controls .option .flex-group:not(.single-text) h3 {
+    margin-bottom: 10px;
+}
+.style1 .option .data {
+    margin-top: auto;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.style1 .option .data p {
+    margin-right: 15px;
+}
+.style1 .option .data p:last-child {
+    margin-right: 0;
+}
+.style1 .option p {
+    user-select: none;
+    pointer-events: none;
+}
+.style1 .option .badges {
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.style1 .option .badge {
+    background: var(--logo-color-2);
+    color: var(--text-light-first);
+    width: 28px;
+    height: 28px;
+    margin-bottom: 3px;
+    border-radius: 0.6rem;
+    font-size: 1.4rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.style1 .option .badge i {
+    text-shadow: 0.5px 1px 0.2px rgba(28, 28, 28, 0.45);
+}
+.style1 .option .groups {
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    transform: translateY(25%);
+}
+.style1 .option .group-icon-list {
+    position: relative;
+    z-index: 3; 
+    /* z-index doesn't work because the next elements are*/
+}
+
+
+.style3 {
+    /* height: 200px; */
+    border-top: solid 1px var(--line);
+    color: var(--text-light-second);
+    position: relative;
+}
+.style4 .select-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* background: var(--pannel-bg); */
+    z-index: 3;
+    color: var(--text-light-second);
+}
+.style4.viewing .select-overlay {
+    display: none;
+}
+.style3 .menu {
+    padding: 1.5rem 10px;
+    padding-top: 1.1rem;
+}
+.style3 .name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.style3 .name h2 {
+    margin-right: 10px;
+    pointer-events: none;
+    user-select: none;
+}
+.style3 .name button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.style3 .name button:hover i {
+    color: var(--logo-color-alt);
+}
+.style3 .name i {
+    font-size: 1.5rem;
+    color: var(--text-light-third);
+}
+.style2 .menu {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 5px 0;
+}
+
+.style2 .wide:not(.option) {
+    grid-column: 1 / 3;
+    width: 100%;
+}
+.style2 .label h1 {
+    margin: 0.25rem 0;
+    margin-left: 1vw;
+    color: var(--text-second);
+}
+.style2 .item {
+    grid-column: 1 / 2;
+    width: 100%;
+    max-width: 18vw;
+    /* min-width: min-content; */
+    min-width: min-content;
+
+    min-height: 20px;
+    padding: 4px 0;
+
+    display: flex;
+    /* justify-content: end; */
+    align-items: center;
+    /* text-align: right; */
+}
+.style2 .item p {
+    width: fit-content;
+    margin: 0;
+    margin-right: 10px;
+    /* color: var(--text-dark-third); */
+    color: var(--text-third);
+    pointer-events: none;
+    user-select: none;
+}
+.style2 .item h4 {
+    margin-right: 10px;
+    pointer-events: none;
+    user-select: none;
+}
+.style2 .option {
+    grid-column: 2 / 3;
+    min-height: 28px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+}
+.style2 .option.wide {
+    grid-column: 1 / 3;
+    min-height: 28px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    padding-left: 20px;
+}
+.style2 .option.hide {
+    display: none;
+}
+.style2 .option.grey {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+}
+.style2 .option .switch.slightly-hidden {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+}
+.style2 .spacer {
+    margin: 10px 0;
+    border-bottom: solid 1px var(--line);
+    grid-column: 1 / 3;
+    opacity: 0.5;
+}
+
+.style2 .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.style2 .buttons button {
+    background: rgba(59, 59, 59, 0.23);
+    /* background: rgba(0, 0, 0, 0.23); */
+    padding: 3px 10px;
+    /* margin: auto; */
+    /* margin-left: calc(1px + 0.1vw);
+    margin-right: calc(1px + 0.1vw); */
+    margin: 0 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    border: none;
+    color: var(--text-light-second);
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.style2 .buttons button:hover,
+.style2 .buttons button.active {
+    /* background: rgba(59, 59, 59, 0.23); */
+    background: rgba(0, 0, 0, 0.23);
+}
+.style2 .buttons i {
+    font-size: 1.5rem;
+}
+.style2 .buttons p {
+    margin-left: 5px;
+}

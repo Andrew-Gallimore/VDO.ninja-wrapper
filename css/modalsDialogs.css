@@ -1,0 +1,330 @@
+/* 
+Author(s):
+Andrew
+
+Description:
+This file covers the css for specific modals, dialogs, and other popups that
+I have custom made. This file builds ontop of the js and css files for making
+the dialogs and modals pop up in the first place
+
+Created:
+12/19/2022
+*/
+
+
+/* ------------------------------- */
+/* ---- Custom CSS for Modals ---- */
+/* ------------------------------- */
+
+
+
+/* Settings modal */
+/* #settings .content-wrapper {
+    height: calc(100% - 12px);
+}
+#settings .content {
+    display: grid;
+    grid-template-columns: min-content auto;
+    height: 100%;
+    overflow: hidden;
+}
+#settings .menu {
+    background: var(--pannel-background-third);
+    position: relative;
+    height: 350px;
+    max-height: 100%;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+}
+#settings .menu .scroll {
+    height: 100%;
+    width: fit-content;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 16px;
+    direction: rtl;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(126, 126, 126) var(--pannel-background-third);
+}
+#settings .menu .scroll::-webkit-scrollbar {
+    display: none;
+}
+#settings .menu h1 {
+    margin: 0.25rem;
+    margin-bottom: 0.5rem;
+    user-select: none;
+    font-weight: 900;
+    font-weight: bolder;
+    margin-top: 10px;
+    text-align: center;
+}
+#settings .menu .item {
+    direction: ltr;
+    position: relative;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+}
+#settings .menu .item:last-child {
+    margin-bottom: 0;
+}
+#settings .menu .item:hover {
+    background: rgba(255, 255, 255, 0.071);
+}
+#settings .menu .item.active {
+    background: rgba(255, 255, 255, 0.262);
+    border-radius: 0.15rem;
+    cursor: default;
+}
+#settings .menu .item.active::after{
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    clear: both;
+    transform: translateY(-50%);
+}
+#settings .menu .item p {
+    margin: 0;
+    margin-left: 5px;
+    margin-right: 10px;
+    user-select: none;
+    pointer-events: none;
+    color: var(--text-dark-first);
+}
+#settings .menu .item .icon {
+    margin-left: auto;
+    margin-right: 0;
+    width: fit-content;
+    padding: 1px 6.5px;
+    font-size: 2rem;
+    cursor: pointer;
+    background: var();
+    border: solid 1px var();
+    border-radius: 5px;
+    pointer-events: none;
+}
+#settings .menu .item:hover .icon {
+    border-color: #aeaeae;
+}
+#settings .menu .item.active .icon {
+    border-radius: 1px;
+    border-color: #747474;
+    border-style: ridge;
+}
+
+#settings .menu .item.parent {
+    margin-bottom: 0;
+}
+#settings .menu .sub-items {
+    direction: ltr;
+    margin-left: 0;
+    margin-right: auto;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+#settings .menu .item.sub {
+    min-height: 2rem;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    flex-grow: 100;
+    overflow: hidden;
+}
+#settings .menu .item.sub.active {
+    background: rgba(255, 255, 255, 0.377);
+    border-radius: 0.15rem;
+    cursor: default;
+}
+#settings .menu .item.sub p {
+    color: var(--text-dark-fourth);
+}
+#settings .menu .template {
+    display: none;
+}
+
+
+#settings .page {
+    padding-left: 15px;
+    padding-left: calc(10px + 3%);
+    padding-right: calc(0px + 3%);
+}
+#settings .page:not(.active) {
+    display: none;
+}
+#settings .page-content {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 5px 0;
+}
+
+#settings .page .label {
+    grid-column: 1 / 3;
+    width: 100%;
+}
+#settings .page .label h1 {
+    margin: 0.25rem 0;
+    margin-left: 1vw;
+    color: var(--text-second);
+}
+#settings .page .item {
+    grid-column: 1 / 2;
+    width: 100%;
+    max-width: 18vw;
+    min-width: 100px;
+
+    min-height: 20px;
+    padding: 4px 0;
+
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    text-align: right;
+}
+#settings .page .item p {
+    width: fit-content;
+    margin: 0;
+    margin-right: 10px;
+    color: var(--text-third);
+    pointer-events: none;
+    user-select: none;
+}
+#settings .page .option {
+    grid-column: 2 / 3;
+    min-height: 28px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+#settings .page .option.hide {
+    display: none;
+}
+#settings .page .option.grey {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+}
+#settings .page .option .switch.slightly-hidden {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+} */
+
+
+
+
+
+
+
+
+/* -------------------------------- */
+/* ---- Custom CSS for Dialogs ---- */
+/* -------------------------------- */
+
+
+/* For the previously used passwords popup */
+.dialog.password-options {
+    background: var(--text-dark-second);
+    color: var(--text-second);
+    border-radius: 3px;
+}
+.dialog.password-options .content {
+    padding: 6px 1vw;
+}
+.dialog.password-options h2 {
+    margin: 0.5rem 0;
+}
+
+
+/* For the controlView box which appears on the view selecting buttons on the left in the control tab */
+.dialog.controlView-box {
+    background: none;
+    display: flex;
+}
+.dialog.controlView-box.d1 {
+    flex-direction: row;
+}
+.dialog.controlView-box.d2 {
+    flex-direction: column;
+}
+.dialog.controlView-box button {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dialogSmallBG);
+    border: none;
+    border-radius: 0.25rem;
+    color: var(--text-light-first);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+.dialog.controlView-box button:hover {
+    background: var(--logo-color-alt);
+    transition: background 0.5s;
+}
+
+.dialog.controlView-box.d1 button:first-child {
+    margin-right: 2.5px;
+}
+.dialog.controlView-box.d1 button:last-child {
+    margin-left: 2.5px;
+}
+.dialog.controlView-box.d1 button:first-child i {
+    rotate: -90deg;
+}
+.dialog.controlView-box.d1 button:last-child i {
+    rotate: -90deg;
+}
+
+.dialog.controlView-box.d2 button:first-child {
+    margin-bottom: 5px;
+}
+.dialog.controlView-box.d2 button:last-child {
+    margin-top: 5px;
+}
+
+
+/* For the dialog to change the orientation of view boxes in the top right in the control tab*/
+.dialog.controlView-change {
+    background: var(--dialogSmallBG);
+    border: solid 1px var(--line);
+    box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.277);
+    /* box-shadow: 2px 4px 5px var(--logo-color-alt); */
+    /* background: rgba(0, 0, 0, 0.223); */
+    padding: 8px;
+    border-radius: 0.5rem;
+    display: flex;
+    /* flex-direction: column; */
+    cursor: default;
+}
+.dialog.controlView-change button {
+    background: none;
+    border: none;
+    padding: 4px;
+    border-radius: 0.5rem;
+    color: var(--text-light-second);
+    cursor: pointer;
+}
+.dialog.controlView-change button i {
+    font-size: 1.25rem;
+}
+.dialog.controlView-change button i.rotate {
+    rotate: 90deg;
+}

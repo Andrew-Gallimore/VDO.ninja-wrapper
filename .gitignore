@@ -1,0 +1,2 @@
+#Ignores the SSL certificates so my personal details in them aren't shared :/
+SSLcert/

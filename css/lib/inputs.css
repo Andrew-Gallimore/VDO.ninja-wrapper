@@ -1,0 +1,367 @@
+/* 
+Author(s):
+Andrew
+
+Description:
+This file covers the css for general input elements, custom made for this
+UI style. The elements are completely styled through this file, and are
+just utilized throught the rest of the HTML file
+
+Created:
+6/26/2022
+*/
+
+:root {
+    --logo-color: #3b11c4;
+    --logo-color-alt: #64b6f6;
+    --logo-color-2: #f18b43;
+
+    --text-first: #f6f6f6;
+    --text-second: #d0d0d0;
+
+    --button-bg-light: rgba(59, 59, 59, 0.23);
+    --button-bg-light-hover: rgba(103, 103, 103, 0.23);
+    --button-bg-light-selected: rgba(149, 149, 149, 0.23);
+
+    --button-bg-dark: rgba(0, 0, 0, 0.23);
+    --button-bg-dark-hover: rgba(48, 48, 48, 0.224);
+    --button-bg-dark-selected: rgba(83, 83, 85, 0.224);
+}
+
+
+
+
+
+/* The switch -> the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    min-height: 18px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider for the Switch */
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    min-height: 18px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(152, 152, 152);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 50%;
+    transform: translateY(50%);
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .switch-slider {
+    background: var(--logo-color-alt);
+}
+
+input:checked + .switch-slider:before {
+    -webkit-transform: translateX(16px) translateY(50%);
+    -ms-transform: translateX(16px) translateY(50%);
+    transform: translateX(16px) translateY(50%);
+}
+
+/* Rounded sliders */
+.switch-slider.round {
+    border-radius: 20px;
+}
+
+.switch-slider.round:before {
+    border-radius: 50%;
+} 
+
+
+
+
+
+/* Custom Linear Slider */
+.input-slider {
+    width: 100%;
+}
+.input-slider .values {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+.input-slider.hide-values .values {
+    display: none;
+}
+.input-slider .values p,
+.input-slider .values input[type=text] {
+    margin-bottom: 0.3rem;
+    margin-top: 0.4rem;
+}
+.input-slider .values .first {
+    padding-left: 5px;
+    padding-right: 5px;
+    color: rgb(152, 152, 152);
+    pointer-events: none;
+    user-select: none;
+    font-weight: 300;
+    
+    opacity: 1;
+    transition: opacity 0.6s;
+}
+.input-slider .values .last {
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-left: auto;
+    color: rgb(152, 152, 152);
+    pointer-events: none;
+    user-select: none;
+    font-weight: 300;
+
+    opacity: 1;
+    transition: opacity 0.6s;
+}
+.input-slider .first.hide,
+.input-slider .last.hide {
+    opacity: 0;
+}
+
+.input-slider .values .moving {
+    position: absolute;
+    color: var(--text-first);
+    font-weight: 500;
+}
+.input-slider .values .moving-input {
+    position: absolute;
+    color: var(--text-first);
+    font-weight: 500;
+
+    background: none;
+    border: none;
+    outline: none;
+    text-align:center;
+
+    width: 50px;
+    font-size: 1rem;
+    opacity: 0;
+}
+/* .input-slider:hover .values .moving-input, */
+/* .input-slider:hover .values .moving:after {
+    content: "";
+    opacity: 1;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    display: block;
+    width: calc(100% + 12px);
+    height: calc(100% + 4px);
+    border-radius: 3px;
+    background: var(--button-bg-dark);
+    transition: background 1s;
+} */
+.input-slider .values .moving-background {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    display: block;
+    /* width: calc(30px + 12px); */
+    height: calc(100% + 4px);
+    border-radius: 3px;
+    /* background: var(--button-bg-dark); */
+    background: #0d1319;
+    border: solid 1px rgba(255, 255, 255, 0);
+
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+.input-slider:hover .values .moving-background {
+    opacity: 1;
+    transition: opacity 0.3s;
+    border: solid 1px rgba(255, 255, 255, 0.045);
+}
+.input-slider .values .moving-background.active {
+    border: solid 1px rgba(255, 255, 255, 0.171);
+    opacity: 1;
+}
+
+.input-slider .control {
+    padding-top: 18px;
+    width: 100%;
+}
+.input-slider input[type="range"] {
+    /* -webkit-appearance: none; */
+    appearance: none;
+    width: 100%;
+    height: 7px;
+    background: var(--button-bg-dark);
+    border-radius: 5px;
+    background-image: linear-gradient(var(--logo-color-2), var(--logo-color-2));
+    background-size: 70% 100%;
+    background-repeat: no-repeat;
+    margin-left: 0;
+    margin-right: 0;
+}
+.input-slider.thin input[type="range"] {
+    height: 4px;
+}
+
+.input-slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 3px;
+    border-color: rgba(255, 0, 0, 0);
+    background: var(--logo-color-2);
+    transform: translateY(-14px);
+    cursor: ew-resize;
+    transition: background .3s ease-in-out;
+    transition: height 0.2s ease-in;
+}
+.input-slider input[type="range"]::-webkit-slider-thumb:hover {
+    height: 18px;
+    width: 18px;
+}
+.input-slider input[type="range"]::-webkit-slider-thumb:active {
+    height: 18px;
+    width: 18px;
+}
+
+.input-slider.small-cursor input[type="range"]::-webkit-slider-thumb {
+    height: 12px;
+    width: 12px;
+}
+.input-slider.small-cursor input[type="range"]::-webkit-slider-thumb:hover {
+    height: 16px;
+    width: 16px;
+}
+.input-slider.small-cursor input[type="range"]::-webkit-slider-thumb:active {
+    height: 16px;
+    width: 16px;
+}
+
+/* Firefox */
+.input-slider input[type="range"]::-moz-range-thumb {
+    appearance: none;
+    height: 14px;
+    width: 14px;
+    border-radius: 3px;
+    border-color: rgba(255, 0, 0, 0);
+    background: var(--logo-color-2);
+    transform: translateY(-14px);
+    cursor: ew-resize;
+    transition: background .3s ease-in-out;
+    transition: height 0.2s ease-in;
+}
+.input-slider input[type="range"]::-moz-range-thumb:hover {
+    height: 18px;
+    width: 18px;
+}
+.input-slider input[type="range"]::-moz-range-thumb:active {
+    height: 18px;
+    width: 18px;
+}
+
+.input-slider.small-cursor input[type="range"]::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+}
+.input-slider.small-cursor input[type="range"]::-moz-range-thumb:hover {
+    height: 16px;
+    width: 16px;
+}
+.input-slider.small-cursor input[type="range"]::-moz-range-thumb:active {
+    height: 16px;
+    width: 16px;
+}
+
+
+.input-slider input[type=range]::-webkit-slider-runnable-track  {
+    -webkit-appearance: none;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+}
+.input-slider .pills {
+    width: 100%;
+    height: 30px;
+    position: relative;
+    margin-top: 0.2rem;
+}
+.input-slider .pills button {
+    position: absolute;
+    /* background: #444444; */
+    /* background: rgba(0, 0, 0, 0.223); */
+    background: var(--button-bg-dark);
+    border: none;
+    padding: 4px 8px;
+    color: var(--text-second);
+    cursor: pointer;
+}
+.input-slider .pills button:hover {
+    /* background-color: #6a6a6a; */
+    /* background: #30303039; */
+    background: var(--button-bg-dark-hover);
+}
+.input-slider .pills button:active {
+    /* background-color: #6a6a6a; */
+    /* background: rgba(83, 83, 85, 0.224); */
+    background: var(--button-bg-dark-selected);
+}
+
+
+
+
+/* Text Input */
+.text-input {
+    width: calc(100% - 1vw - 6px);
+    border-radius: 3px;
+    border: solid 1px rgba(255, 255, 255, 0);
+    padding: 3px 6px;
+    padding-left: 1vw;
+    background: #0d1319;
+    outline: none;
+    font-size: 1rem;
+    color: var(--text-first);
+}
+.text-input:hover {
+    border: solid 1px rgba(255, 255, 255, 0.073);
+}
+.text-input:active,
+.text-input:focus,
+.text-input.active {
+    border: solid 1px rgba(255, 255, 255, 0.171);
+}
+
+.text-with-dropdown {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.text-with-dropdown .input-suggestion {
+    flex-grow: 100;
+    padding-right: 1vw;
+}
+.text-with-dropdown .suggestion {
+    position: absolute;
+}
