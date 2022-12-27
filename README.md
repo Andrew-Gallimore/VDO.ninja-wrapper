@@ -34,4 +34,7 @@ Things that need to happen include:
 ### VDO.ninja
 VDO.Ninja is the core of this system/wrapper, and it is contructed with WebRTC to send the video feeds efficiently and effortlessly (for end users). This project utilizes VDO.ninja centerally, and wouldn't exist without it. So thank you imensly Steve!
 
-VDO.ninja actually has it's own apps for different use cases, and can be used right now at [VDO.ninja](https://vdo.ninja "The core system of VDO.ninja-wrapper"). VDO.ninja-wrapper is like another one of the apps, specializing in call-in show as well as general multi-camera use cases. So if you don't find what you need with VDO.ninja-wrapper, first tell us, so we can fix it, but also check his stuff to see if that works.
+VDO.ninja actually has it's own apps for different use cases, and can be used right now at [VDO.ninja](https://vdo.ninja "The core system of VDO.ninja-wrapper"). VDO.ninja-wrapper is like another one of the apps, specializing in call-in show as well as general multi-camera use cases. So if you don't find what you need with VDO.ninja-wrapper, *first tell us so we can fix it*, but then also check the original VDO.ninja apps to see if that works for you.
+
+
+> **Updated 12/26/22**
