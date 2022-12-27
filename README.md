@@ -12,7 +12,7 @@ What is the price of this control? FREE! Because this system utilizes VDO.ninja 
 ## How to use this?
 Currently, there is no hosted site for VDO.ninja-wrapper, and so can't be utilized by the public. When a stable version is released, the link to it will be here with instructions of how you can get going with it.
 
-Secondly, if you are looking for docs or examples about how you can use VDO.ninja-wrapper, we also don't have those released yet. Once this is hosted somewhere there will hopefully be documentation, examples, and templates directly embeded inside the site, however, there will also be a like to it here later as well.
+Secondly, if you are looking for docs or examples about how you can use VDO.ninja-wrapper, we also don't have those released yet. Once this is hosted somewhere there will hopefully be documentation, examples, and templates directly embeded inside the site, however, there will also be a link to it here later as well.
 
 
 ## Can I help?
