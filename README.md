@@ -1,7 +1,7 @@
 # VDO.ninja-wrapper
 This is **VDO.ninja-wrapper** *(working title)*, and it allows someone to professionally bring in people's remote video feeds into programs like OBS.
 
-![Image of VDO.ninja-wrapper director page](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "VDO.ninja director control page")
+![Image of VDO.ninja-wrapper director page](https://github.com/Andrew-Gallimore/VDO.ninja-wrapper/blob/developement/img/Thumbnail.PNG "VDO.ninja director control page")
 
 It is built for professionals and beginers alike, with the controls any livestream director _wishes_ they could have in more traditional video conferencing software, as well as simple controls anyone can use. Examples of the controls directors have are: remotely adjusting the camera settings of a guest, managing what controls guests have control of, tuning the bitrate and filters of both video and audio, and so much more. For end users, _in the most basic format_, it looks like a video conferencing call, and in the future, directors might be able to add custom branding to make the call feel like the stream they are calling into.
 
