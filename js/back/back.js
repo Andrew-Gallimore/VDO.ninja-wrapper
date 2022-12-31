@@ -99,7 +99,7 @@ function loadIframe(ID){
 				}
 			}
 		});
-		console.log(customEventCallbacks)
+		// console.log(customEventCallbacks)
 		
 	});
 	  
@@ -703,6 +703,10 @@ function parsePersonInfo(streamID, data) {
 				peopleObjects[i].statuses.volume = 0;
 			}
 
+			var test = peopleObjects[i];
+			// console.log(test)
+			
+			console.log(JSON.stringify(peopleObjects[i], null, 1));
 			break;
 		}
 	}
@@ -720,7 +724,7 @@ function readPersonData(streamID) {
 function createPersonElement(streamID) {
 	var peoplesLocation = document.querySelector(".peopleLocation");
 	var guestTemplateQuery = ".personTemplate";
-	var guestPasteLocation = peoplesLocation.querySelector(".peoples");
+	// var guestPasteLocation = peoplesLocation.querySelector(".peoples");
 
 	var labelQuery = ".label";
 	var IDQuery = ".id";
@@ -732,70 +736,70 @@ function createPersonElement(streamID) {
 			var personObject = peopleObjects[i];
 
 			if(!personObject.element) {
-				if(personObject.type === "guest") {
-					var temp = peoplesLocation.querySelector(guestTemplateQuery + " .guest").cloneNode(true);
+				// if(personObject.type === "guest") {
+				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .guest").cloneNode(true);
 
-					// Setting ID where its needed
-					temp.setAttribute("data-streamID", personObject.streamID)
-					temp.querySelector(IDQuery).innerHTML = personObject.streamID;
+				// 	// Setting ID where its needed
+				// 	temp.setAttribute("data-streamID", personObject.streamID)
+				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
 
-					// Setting the person's label if they have one
-					if(personObject.label) {
-						temp.querySelector(labelQuery).innerHTML = personObject.label;
-					}else {
-						temp.querySelector(labelQuery).innerHTML = "Guest";
-						peopleObjects[i].label = "Guest";
-					}
+				// 	// Setting the person's label if they have one
+				// 	if(personObject.label) {
+				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
+				// 	}else {
+				// 		temp.querySelector(labelQuery).innerHTML = "Guest";
+				// 		peopleObjects[i].label = "Guest";
+				// 	}
 
-					// Adding someone's video if they have one
-					if(personObject.stream) {
-						createPersonVideo(temp, media.streams[streamID])
-					}
-				}else if(personObject.type === "director") {
-					var temp = peoplesLocation.querySelector(guestTemplateQuery + " .director").cloneNode(true);
+				// 	// Adding someone's video if they have one
+				// 	if(personObject.stream) {
+				// 		createPersonVideo(temp, media.streams[streamID])
+				// 	}
+				// }else if(personObject.type === "director") {
+				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .director").cloneNode(true);
 
-					// Setting ID where its needed
-					temp.setAttribute("data-streamID", personObject.streamID)
-					temp.querySelector(IDQuery).innerHTML = personObject.streamID;
+				// 	// Setting ID where its needed
+				// 	temp.setAttribute("data-streamID", personObject.streamID)
+				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
 
-					// Setting the person's label if they have one
-					if(personObject.label) {
-						temp.querySelector(labelQuery).innerHTML = personObject.label;
-					}else {
-						temp.querySelector(labelQuery).innerHTML = "Director";
-						peopleObjects[i].label = "Director";
-					}
+				// 	// Setting the person's label if they have one
+				// 	if(personObject.label) {
+				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
+				// 	}else {
+				// 		temp.querySelector(labelQuery).innerHTML = "Director";
+				// 		peopleObjects[i].label = "Director";
+				// 	}
 
-					// Adding someone's video if they have one
-					if(personObject.stream) {
-						createPersonVideo(temp, media.streams[streamID])
-					}
-				}else if(personObject.type === "screenshare") {
-					var temp = peoplesLocation.querySelector(guestTemplateQuery + " .screenshare").cloneNode(true);
+				// 	// Adding someone's video if they have one
+				// 	if(personObject.stream) {
+				// 		createPersonVideo(temp, media.streams[streamID])
+				// 	}
+				// }else if(personObject.type === "screenshare") {
+				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .screenshare").cloneNode(true);
 
-					// Setting ID where its needed
-					temp.setAttribute("data-streamID", personObject.streamID)
-					temp.querySelector(IDQuery).innerHTML = personObject.streamID;
+				// 	// Setting ID where its needed
+				// 	temp.setAttribute("data-streamID", personObject.streamID)
+				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
 
-					// Setting the person's label if they have one
-					if(personObject.label) {
-						temp.querySelector(labelQuery).innerHTML = personObject.label;
-					}else {
-						temp.querySelector(labelQuery).innerHTML = "Screenshare";
-						peopleObjects[i].label = "Screenshare";
-					}
+				// 	// Setting the person's label if they have one
+				// 	if(personObject.label) {
+				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
+				// 	}else {
+				// 		temp.querySelector(labelQuery).innerHTML = "Screenshare";
+				// 		peopleObjects[i].label = "Screenshare";
+				// 	}
 
-					// Adding someone's video if they have one
-					if(personObject.stream) {
-						createPersonVideo(temp, media.streams[streamID])
-					}
-				}
+				// 	// Adding someone's video if they have one
+				// 	if(personObject.stream) {
+				// 		createPersonVideo(temp, media.streams[streamID])
+				// 	}
+				// }
 
-				// Putting the created element into the person's object
-				if(temp) {
-					guestPasteLocation.appendChild(temp);
-					peopleObjects[i].element = temp;
-				}
+				// // Putting the created element into the person's object
+				// if(temp) {
+				// 	guestPasteLocation.appendChild(temp);
+				// 	peopleObjects[i].element = temp;
+				// }
 
 				console.log(personObject)
 			}
@@ -804,6 +808,7 @@ function createPersonElement(streamID) {
 }
 
 function createPersonVideo(element, stream) {
+	console.log(element)
 	// Putting the person's video in the page
 	var videoLocationQuery = ".video";
 	element.querySelector(videoLocationQuery).appendChild(stream);
@@ -811,16 +816,33 @@ function createPersonVideo(element, stream) {
 
 function removePersonElement(streamID) {
 	// Removing the element from the page
-	var element = document.querySelector("[data-streamid='" + streamID + "']");
-	if(element) element.remove();
+	// var element = document.querySelector("[data-streamid='" + streamID + "']");
+	// if(element) element.remove();
 	
-	// Removing the element from the person's object
-	for (let i = 0; i < peopleObjects.length; i++) {
-		if(peopleObjects[i].streamID === streamID) {
-			peopleObjects[i].element = null;
-			break;
-		}
-	}
+	// // Removing the element from the person's object
+	// for (let i = 0; i < peopleObjects.length; i++) {
+	// 	if(peopleObjects[i].streamID === streamID) {
+	// 		peopleObjects[i].element = null;
+	// 		break;
+	// 	}
+	// }
+}
+
+// These are end-points for while a person is joining or leaving, these will call functions in the front end
+function guestChanging(personObject) {
+
+}
+
+function gotGuestData(personObject) {
+
+}
+
+function guestConnected(personObject) {
+
+}
+
+function guestVideoCreated(personObject) {
+
 }
 
 var loadingLabels = [];
@@ -886,6 +908,7 @@ function loadLabel(streamID, callback, values) {
 							for (let i = 0; i < peopleObjects.length; i++) {
 								if(peopleObjects[i].streamID === data.streamID) {
 									console.log("adding label")
+									// Adding a label if there was a label for the person
 									if(e.data.streamIDs[data.streamID]) {
 										peopleObjects[i].label = e.data.streamIDs[data.streamID];
 									}
@@ -925,7 +948,6 @@ function loadLabel(streamID, callback, values) {
 
 				// Actually calling the getStreamIDs to the iframe
 				iframe.contentWindow.postMessage({"getStreamIDs":true}, '*');
-				console.log(customEventCallbacks)
 				
 			});
 		}

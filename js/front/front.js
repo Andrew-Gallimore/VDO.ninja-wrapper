@@ -365,11 +365,15 @@ function loadContentInControls(input, box="one") {
                     temp.querySelector(".label h3").innerText = "Guest";
                 }
                 
-                // Putting in video element
+                // Putting in video element to temp
                 // Need to add option for iframe solo-view feeds, for not-chrome browser option to view people
                 temp.querySelector(".video").appendChild(person.stream);
-
+                
+                // Putting in the whole video and stuff around it
                 pastLocation.appendChild(temp);
+                // Starting the video playing again, because it STOPS when you MOVE IT, AH!
+                temp.querySelector(".video video").play();
+
             }else {
                 console.log("[Front.js] Need to add new person type to be able to be added to the page when loading a room into the viewing box");
             }
@@ -397,8 +401,8 @@ function clearContentInControls(input, box="one") {
         var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
         var peopleLocation = location.querySelector(".video-section-content .layout-wrapper")
 
-        // Getting room data
-        var data = MgetRoomData(input.getAttribute("data-roomID"));
+        // // Getting room data
+        // var data = MgetRoomData(input.getAttribute("data-roomID"));
 
         // Clearing the name for the room to nothing
         location.querySelector(".video-menu .center-label h2").innerHTML = ""

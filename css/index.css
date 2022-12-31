@@ -904,3 +904,11 @@ body::-webkit-scrollbar {
 .pannel-section-2 .page:not(.active) {
     display: none !important;
 }
+
+
+
+iframe {
+    width: 80%;
+    height: 600px;
+    margin-left: 10%;
+}
