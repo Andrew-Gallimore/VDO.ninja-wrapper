@@ -375,7 +375,7 @@ function loadContentInControls(input, box="one") {
                 temp.querySelector(".video video").play();
 
             }else {
-                console.log("[Front.js] Need to add new person type to be able to be added to the page when loading a room into the viewing box");
+                console.warn("[Front.js] Need to add new person type of (" + person.type + ") to be able to be added to the page when loading a room into the viewing box");
             }
         }
         if(data.guests.length < 1) {

@@ -32,10 +32,12 @@ var eventer = window[eventMethod];
 var messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
 eventer(messageEvent, function (e) {
 	if(e.data.kind !== "video" && e.data.kind !== "audio") {
-		if(e.data.action !== "view-stats-updated" && e.data.stats == undefined) {
-			console.log("Window event")
-			// console.log(e)
-			console.log(e.data)
+		if(e.data.action !== "view-stats-updated" && e.data.stats === undefined) {
+			if(e.data.streamIDs === undefined) {
+				console.log("Window event")
+				// console.log(e)
+				console.log(e.data)
+			}
 		}
 	}else {
 		// console.log("AudioVideo")
@@ -98,11 +100,11 @@ async function startMain() {
 		// }
 	}
 
-	await loadRoom(1);
-	var room2ID = getRoomID(1);
-	var rooms2Data = await checkRoomData(room2ID);
-	guestLisseners(room2ID);
-	FnewRoomItem(rooms2Data.data)
+	// await loadRoom(1);
+	// var room2ID = getRoomID(1);
+	// var rooms2Data = await checkRoomData(room2ID);
+	// guestLisseners(room2ID);
+	// FnewRoomItem(rooms2Data.data)
 
 		// Check data inside first room for how many other rooms and their names & such
 			//get room data
