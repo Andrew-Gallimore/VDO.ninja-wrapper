@@ -100,11 +100,11 @@ async function startMain() {
 		// }
 	}
 
-	// await loadRoom(1);
-	// var room2ID = getRoomID(1);
-	// var rooms2Data = await checkRoomData(room2ID);
-	// guestLisseners(room2ID);
-	// FnewRoomItem(rooms2Data.data)
+	await loadRoom(1);
+	var room2ID = getRoomID(1);
+	var rooms2Data = await checkRoomData(room2ID);
+	guestLisseners(room2ID);
+	FnewRoomItem(rooms2Data.data)
 
 		// Check data inside first room for how many other rooms and their names & such
 			//get room data

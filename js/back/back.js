@@ -30,7 +30,8 @@ function loadIframe(ID){
 	iframe.classList.add("vdon");
 	iframe.classList.add("_" + ID);
 
-	var iframesrc="https://vdo.ninja/alpha/?sendframes?director=" + ID;
+	// var iframesrc="https://vdo.ninja/alpha/?sendframes?director=" + ID;
+	var iframesrc="https://vdoninja.netlify.app/alpha/?sendframes?director=" + ID;
     console.log(iframesrc.toString())
 	iframe.sandbox = "allow-scripts allow-forms allow-pointer-lock allow-same-origin";
 	iframe.src = iframesrc;
