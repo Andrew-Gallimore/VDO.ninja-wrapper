@@ -31,7 +31,7 @@ function loadIframe(ID){
 	iframe.classList.add("_" + ID);
 
 	// var iframesrc="https://vdo.ninja/alpha/?sendframes?director=" + ID;
-	var iframesrc="https://vdoninja.netlify.app/?sendframes&salt=vdoninja&director=" + ID;
+	var iframesrc="https://vdoninja.netlify.app/?sendframes&salt=vdo.ninja&director=" + ID;
     console.log(iframesrc.toString())
 	iframe.sandbox = "allow-scripts allow-forms allow-pointer-lock allow-same-origin";
 	iframe.src = iframesrc;
