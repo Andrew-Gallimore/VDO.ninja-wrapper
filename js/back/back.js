@@ -5,7 +5,7 @@
 
 /*
 This is a layer which has some of my new structure of commands, that builds off the old structure in VDO.ninja
-This is needed so I can run functions without worrying about their connections to the bridge & Iframe API
+This is needed so I can run functions without worrying about their connections to the bridge & Iframe API.
 */
 
 
