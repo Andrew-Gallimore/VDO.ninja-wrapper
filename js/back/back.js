@@ -11,9 +11,10 @@ This is needed so I can run functions without worrying about their connections t
 
 function getDirectorID() {
 	// Eventually will need to get it from URL params
+	// return "kXfEikzQQ68tySm";
 
 	// Temporaraly
-	return "kXfEikzQQ68tySm";
+	return generateRTid()
 }
 
 function generateRTid() {
