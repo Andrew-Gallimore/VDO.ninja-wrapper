@@ -6,10 +6,8 @@
 // import splitGrid = require("./lib/split-grid");
 
 // main.js interacts with any function starting with F[...]
-
-function Falert(data) {
-
-}
+displayedGuests = [];
+// From back end, creating a new room button wherever it needs them
 function FnewRoomItem(data) {
     // Loading a new room item in the rooms list in the ROOMS TAB
     var mainParent = document.querySelector("#main .maga-page.rooms .room-list")
@@ -56,7 +54,7 @@ function FnewRoomItem(data) {
     pastParent.appendChild(temp)
 }
 
-// Rooms tab, when you click on a room option to view in on the page
+// Rooms tab, when you click on a room option to view in on the page (handles the other functions to call)
 function roomButtonClickedRooms(button) {
     // Update which button is active
     var addActive = true;
@@ -117,11 +115,12 @@ function loadRoomSettings(data) {
     // Starting to view the settings, after all the contents filled in
     document.querySelector("#main .maga-page.rooms .other-content .side-wrapper").classList.add("viewing")
 }
+// Room tab, hiding the data/options/settings for a room
 function hideRoomSettings() {
     document.querySelector("#main .maga-page.rooms .other-content .side-wrapper").classList.remove("viewing")
 }
 
-// Rooms Tab, showing the data about the current room
+// Rooms Tab, showing the room-data about the current room
 function loadRoomData(data) {
     var dataParent = document.querySelector("#main .maga-page.rooms .room-data .list");
 
@@ -153,6 +152,7 @@ function loadRoomData(data) {
     // Actually showing the data, after it has been filled in
     document.querySelector("#main .maga-page.rooms .room-data").classList.remove("hide")
 }
+// Rooms Tab, hiding the room-data about the current room
 function hideRoomData() {
     document.querySelector("#main .maga-page.rooms .room-data").classList.add("hide")
 }
@@ -163,8 +163,14 @@ function hideRoomData() {
 var controlViewCount = 2;
 var controlViewDirection = 1; // 2=up/down 1=left/right
 var loadedViews = {
-    one: null,
-    two: null
+    one: {
+        button: null,
+        room: null
+    },
+    two: {
+        button: null,
+        room: null
+    }
 };
 
 // Controls tab, when you click on a room option to view in on the page
@@ -178,7 +184,7 @@ function viewButtonClickedControls(button) {
     // Update which button is active
     var addActive = true;
     // if(button.parentNode.classList.contains("active")) addActive = false;
-    if(button.parentNode == loadedViews.one || button.parentNode == loadedViews.two) {
+    if(button.parentNode == loadedViews.one.button || button.parentNode == loadedViews.two.button) {
         addActive = false;
     }
 
@@ -189,7 +195,7 @@ function viewButtonClickedControls(button) {
         // Removeing the current active buttons that aren't views currently being displayed
         var buttonsParent = document.querySelector("#main .maga-page.control .page.controls .scroll");
         buttonsParent.querySelectorAll(".option.active .mainbox").forEach(element => {
-            if(element !== loadedViews.one && element !== loadedViews.two) {
+            if(element !== loadedViews.one.button && element !== loadedViews.two.button) {
                 element.parentNode.classList.remove("active")
             }
         })
@@ -244,33 +250,33 @@ function viewButtonClickedControls(button) {
                 if(data.closeData) {
                     if(data.closeData === "one") {
                         // There are two options:
-                        if(loadedViews.one !== null) {
+                        if(loadedViews.one.button !== null) {
                             // one, they are putting this in place of another one
-                            loadedViews.one.parentNode.classList.remove("active")
+                            loadedViews.one.button.parentNode.classList.remove("active")
                             clearContentInControls(button, "one")
                         }
-                        if(loadedViews.two == button) {
+                        if(loadedViews.two.button == button) {
                             // two, they are moving this to the other slot
-                            loadedViews.two.parentNode.classList.remove("active")
-                            loadedViews.two = null;
+                            loadedViews.two.button.parentNode.classList.remove("active")
+                            loadedViews.two.button = null;
                             clearContentInControls(button, "two")
                             // If there was a place to add the option of loading past options when an empty slot opens up, here it is
                         }
-                        loadedViews.one = button
+                        loadedViews.one.button = button
                     }else if(data.closeData === "two") {
-                        if(loadedViews.two !== null) {
+                        if(loadedViews.two.button !== null) {
                             // one, they are putting this in place of another one
-                            loadedViews.two.parentNode.classList.remove("active")
+                            loadedViews.two.button.parentNode.classList.remove("active")
                             clearContentInControls(button, "two")
                         }
-                        if(loadedViews.one == button) {
+                        if(loadedViews.one.button == button) {
                             // two, they are moving this to the other slot
-                            loadedViews.one.parentNode.classList.remove("active")
-                            loadedViews.one = null;
+                            loadedViews.one.button.parentNode.classList.remove("active")
+                            loadedViews.one.button = null;
                             clearContentInControls(button, "one")
                             // If there was a place to add the option of loading past options when an empty slot opens up, here it is
                         }
-                        loadedViews.two = button
+                        loadedViews.two.button = button
                     }
 
                     if(addActive) {
@@ -295,21 +301,21 @@ function viewButtonClickedControls(button) {
         console.log(addActive)
         if(addActive) {
             // Setting up the button
-            if(loadedViews.one !== null) {
+            if(loadedViews.one.button !== null) {
                 // This removes the button selection which is currently being viewed in one
-                loadedViews.one.parentNode.classList.remove("active")
+                loadedViews.one.button.parentNode.classList.remove("active")
                 
-                loadedViews.one = button
+                loadedViews.one.button = button
             }
-            if(loadedViews.two == button) {
+            if(loadedViews.two.button == button) {
                 // This removed the current view from two if it was in there last
-                loadedViews.two.parentNode.classList.remove("hidden2")
-                loadedViews.two = null;
+                loadedViews.two.button.parentNode.classList.remove("hidden2")
+                loadedViews.two.button = null;
                 clearContentInControls(button, "two")
             }
-            if(loadedViews.two !== null) {
+            if(loadedViews.two.button !== null) {
                 // This is just hiding the active from the button for the view on the right
-                // loadedViews.two.parentNode.classList.add("hidden2")
+                // loadedViews.two.button.parentNode.classList.add("hidden2")
             }
             button.parentNode.classList.add("active");
 
@@ -322,7 +328,7 @@ function viewButtonClickedControls(button) {
     }
 }
 
-
+// Control tab, loading in the content (ie. guests, directors, room labels, guest count, etc.) into a particular view box
 function loadContentInControls(input, box="one") {
     // Find type from input
     var type = "";
@@ -335,6 +341,9 @@ function loadContentInControls(input, box="one") {
 
     // Then grab the data for the people and such as well as update the Menu UI's based on type
     if(type === "room") {
+        // Setting the current roomID in loadedViews
+        loadedViews[box].room = input.getAttribute("data-roomID");
+
         // Getting the locations for things
         var baseLocation = document.querySelector(".maga-page.control .video-section");
         var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
@@ -351,31 +360,32 @@ function loadContentInControls(input, box="one") {
         for (let i = 0; i < data.guests.length; i++) {
             // Need to add a case for if there is 0 guests in it
             
-            var person = MgetPersonData(data.guests[i]);
-            console.log(person)
+            var personData = MgetPersonData(data.guests[i]);
+            console.log(personData)
             
             // Now grabing the template for the type of person (ex: guest, director, screenshare)
-            if(person.type === "guest") {
-                var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
+            if(personData.type === "guest") {
+                createGuestUI(personData);
+                // var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
 
-                // Setting label
-                if(person.label) {
-                    temp.querySelector(".label h3").innerText = person.label;
-                }else {
-                    temp.querySelector(".label h3").innerText = "Guest";
-                }
+                // // Setting label
+                // if(person.label) {
+                //     temp.querySelector(".label h3").innerText = person.label;
+                // }else {
+                //     temp.querySelector(".label h3").innerText = "Guest";
+                // }
                 
-                // Putting in video element to temp
-                // Need to add option for iframe solo-view feeds, for not-chrome browser option to view people
-                temp.querySelector(".video").appendChild(person.stream);
+                // // Putting in video element to temp
+                // // Need to add option for iframe solo-view feeds, for not-chrome browser option to view people
+                // temp.querySelector(".video").appendChild(person.stream);
                 
-                // Putting in the whole video and stuff around it
-                pastLocation.appendChild(temp);
-                // Starting the video playing again, because it STOPS when you MOVE IT, AH!
-                temp.querySelector(".video video").play();
+                // // Putting in the whole video and stuff around it
+                // pastLocation.appendChild(temp);
+                // // Starting the video playing again, because it STOPS when you MOVE IT, AH!
+                // temp.querySelector(".video video").play();
 
             }else {
-                console.warn("[Front.js] Need to add new person type of (" + person.type + ") to be able to be added to the page when loading a room into the viewing box");
+                console.warn("[Front.js] Need to add new person type of (" + personData.type + ") to be able to be added to the page when loading a room into the viewing box");
             }
         }
         if(data.guests.length < 1) {
@@ -387,6 +397,7 @@ function loadContentInControls(input, box="one") {
 
     }
 }
+// Control tab, removing the content from a particular view boxt
 function clearContentInControls(input, box="one") {
     // Find type from input
     var type = "";
@@ -419,6 +430,63 @@ function clearContentInControls(input, box="one") {
     }
 }
 
+// TODO: I will also need to do this for removing the person from the page
+// Creating a guest on the page
+function createGuestUI(personData) {
+    console.log(personData)
+    personData.UI.showingMainUI = true;
+    // Handling alot of creating the person (if the other steps haven't happened yet)
+
+
+    // Getting what box the persons video is in
+    var box;
+    console.log(loadedViews)
+    if(loadedViews.one.room === personData.room.toString()) {
+        box = "one";
+    }else if(loadedViews.two.room === personData.room.toString()) {
+        box = "two";
+    }
+
+    console.log(box)
+    if(box) {
+        // Getting the locations for things
+        var baseLocation = document.querySelector(".maga-page.control .video-section");
+        var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
+        var pastLocation = location.querySelector(".video-section-content .layout-wrapper")
+
+        // Cloneing guest UI base (without specific data)
+        var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
+
+        // Setting label
+        if(personData.label) {
+            temp.querySelector(".label h3").innerText = personData.label;
+        }else {
+            temp.querySelector(".label h3").innerText = "Guest";
+        }
+        
+        // Putting in video element to temp
+        // Need to add option for iframe solo-view feeds, for not-chrome browser option to view people
+        if(personData.UI.hasVideo) {
+            temp.querySelector(".video").appendChild(personData.stream);
+        }else {
+            // Create a "loading video element" (need to get the aspect ratio for the stand in video)
+        }
+        
+        // Putting in the whole video and stuff around it
+        pastLocation.appendChild(temp);
+        // Starting the video playing again, because it STOPS when you MOVE IT in dom, AH!
+        temp.querySelector(".video video").play();
+    }
+}
+
+function loadUserVideo(personData) {
+    personData.UI.hasVideo = true;
+    if(personData.UI.showingMainUI) {
+        // Create it
+    }
+}
+
+// Control tab, changing the orientation and count of the view boxes
 function changeBoxesInControls(boxStyle) {
     // Changing UI
     var element = document.querySelector(".maga-page.control .video-section");
@@ -430,10 +498,10 @@ function changeBoxesInControls(boxStyle) {
     // Changing Variables
     if(boxStyle === "config-0") {
         controlViewCount = 1
-        if(loadedViews.two !== null) loadedViews.two.parentNode.classList.add("hidden2")
+        if(loadedViews.two.button !== null) loadedViews.two.button.parentNode.classList.add("hidden2")
     }else {
         controlViewCount = 2
-        if(loadedViews.two !== null) loadedViews.two.parentNode.classList.remove("hidden2")
+        if(loadedViews.two.button !== null) loadedViews.two.button.parentNode.classList.remove("hidden2")
 
         if(boxStyle === "config-1") {
             controlViewDirection = 2
@@ -442,6 +510,20 @@ function changeBoxesInControls(boxStyle) {
         }
     }
 }
+
+
+
+// Control tab, handling what a message about a guest loading/leaving means (relative to the other messages)
+function FhandleGuestStat(type, personObject) {
+
+}
+// Control tab, creating in the 'loading' ui for a guest
+function createLoadingGuest() {
+
+}
+
+
+
 
 // Setting the parameters for the slit functionality of the two view boxes in the controls tab
 // SplitGrid({

@@ -34,9 +34,9 @@ eventer(messageEvent, function (e) {
 	if(e.data.kind !== "video" && e.data.kind !== "audio") {
 		if(e.data.action !== "view-stats-updated" && e.data.stats === undefined) {
 			if(e.data.streamIDs === undefined) {
-				console.log("Window event")
-				// console.log(e)
-				console.log(e.data)
+				// console.log("Window event")
+				// // console.log(e)
+				// console.log(e.data)
 			}
 		}
 	}else {
@@ -124,7 +124,7 @@ startMain();
 // TODO, when loading an IFrame times out, it needs to regognize that and specify that there is an issue (and possibly remove the lissener)
 // TODO, figure out how to get if someone is sending video or not for the statuses of people's objects, might need to ask steve
 // TODO, need to add protection against the same streamID, because it breaks it
-// TODO, figure out why getStats isn't updating, and is just saying what the original values were
+
 
 function MgetRoomData(roomID) {
 	var responce = readCurrentRoomData(roomID).data;
@@ -133,4 +133,30 @@ function MgetRoomData(roomID) {
 function MgetPersonData(streamID) {
 	var responce = readPersonData(streamID).data;
 	return responce;
+}
+
+// This tells the front end that a person is loading in some fasion, be it joining or leaving
+function MguestChanging(personObject) {
+	// console.log("guestChanging!")
+}
+
+// This tells the front end that we have the data for someone who is currently connecting
+function MgotGuestData(personObject) {
+	// console.log("gotGuestData!")
+}
+
+// This tells the front end that a person has officially connected, and so create their elements
+function MguestConnected(personObject) {
+	console.log("callingUI")
+	createGuestUI(personObject)
+}
+// This tells the front end that a video is availible, allowing it to dynamically load the video independently from the person's elements
+function MguestVideoCreated(personObject) {
+	// console.log("guestVideoCreated!")
+	loadUserVideo(personObject)
+}
+
+// This tells the front end that a person has officially left, and so remove their elements
+function MguestLeft(personObject) {
+	// console.log("guestLeft :(")
 }

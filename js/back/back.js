@@ -51,6 +51,7 @@ function loadIframe(ID){
 		// Creating backup timeout for 15 seconds
 		setTimeout(() => {
 			resolve("Timed Out")
+			// TODO: Add the removing of other saved ID's like in "loadingIFrames", for example, look at the loadingLabels
 		}, 15000);
 
 		// Setting up remote function to resolve this promise (meaning that the Iframe has loaded)
@@ -301,6 +302,20 @@ var peopleObjects = [
 	// 	element: "[Some Element]"
 	// }
 ]
+var personUItemplate = {
+	showingMainUI: false,
+	showingButton: false,
+	hasVideo: false,
+	buttonLoading: false,
+	buttonHasDetails: false,
+
+	guestChanging: false,
+	gotGuestData: false,
+	guestConnected: false,
+	guestVideoCreated: false,
+	guestLeft: false
+
+}
 
 var statsSyncTime = 0;
 async function guestLisseners(roomID) {
@@ -402,6 +417,7 @@ async function guestLisseners(roomID) {
 						room: roomID,
 						streamID: e.data.streamID,
 						UUID: e.data.UUID,
+						UI: personUItemplate,
 				
 						type: "director",
 					});
@@ -445,6 +461,7 @@ async function guestLisseners(roomID) {
 						room: roomID,
 						streamID: e.data.streamID,
 						UUID: e.data.UUID,
+						UI: personUItemplate,
 				
 						type: "guest"
 					});
@@ -491,6 +508,7 @@ async function guestLisseners(roomID) {
 						room: roomID,
 						streamID: e.data.streamID,
 						UUID: e.data.UUID,
+						UI: personUItemplate,
 				
 						type: "screenshare",
 				
@@ -532,7 +550,8 @@ async function guestLisseners(roomID) {
 					peopleObjects.push({
 						room: roomID,
 						streamID: e.data.streamID,
-						UUID: e.data.UUID
+						UUID: e.data.UUID,
+						UI: personUItemplate,
 					});
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
@@ -570,7 +589,8 @@ async function guestLisseners(roomID) {
 					peopleObjects.push({
 						room: roomID,
 						streamID: e.data.streamID,
-						UUID: e.data.UUID
+						UUID: e.data.UUID,
+						UI: personUItemplate,
 					});
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
@@ -608,15 +628,8 @@ async function guestLisseners(roomID) {
 					}
 				}
 
-				// // This notifies that there is now data for the guest
-				// for (let i = 0; i < peopleObjects.length; i++) {
-				// 	if(peopleObjects[i].streamID === e.data.streamID) {
-				// 		gotGuestData(peopleObjects[i])
-				// 	}
-				// }
 				// This grabs the labels of the person, before running the callback, which is to then notify that there is now data for the guest
 				for (let i = 0; i < peopleObjects.length; i++) {
-					console.log(peopleObjects[i].loadedLabel)
 					if(peopleObjects[i].streamID === e.data.streamID) {
 						loadLabel(e.data.streamID, gotGuestData, peopleObjects[i]);
 					}
@@ -832,25 +845,30 @@ function readPersonData(streamID) {
 // This tells the front end that a person is loading in some fassion, be it joining or leaving
 function guestChanging(personObject) {
 	console.log("guestChanging!")
+	MguestChanging(personObject)
 }
 
 // This tells the front end that we have the data for someone who is currently connecting
 function gotGuestData(personObject) {
 	console.log("gotGuestData!")
+	MgotGuestData(personObject)
 }
 
 // This tells the front end that a person has officially connected, and so create their elements
 function guestConnected(personObject) {
 	console.log("guestConnected :)")
+	MguestConnected(personObject)
 }
 // This tells the front end that a video is availible, allowing it to dynamically load the video independently from the person's elements
 function guestVideoCreated(personObject) {
 	console.log("guestVideoCreated!")
+	MguestVideoCreated(personObject)
 }
 
 // This tells the front end that a person has officially left, and so remove their elements
 function guestLeft(personObject) {
 	console.log("guestLeft :(")
+	MguestLeft(personObject)
 }
 
 var loadingLabels = [];
@@ -869,23 +887,57 @@ function loadLabel(streamID, callback, values) {
 
 		// If there isn't already a lissener for getting the labels (for the particular streamID), then create one
 		var found = false;
-		for (let i = 0; i < loadingLabels.length; i++) {
-			if(loadingLabels[i].Pid.streamID === streamID) {
-				found = true;
-				break;
-			}
-		}
+		// for (let i = 0; i < loadingLabels.length; i++) {
+		// 	if(loadingLabels[i].Pid === streamID) {
+		// 		found = true;
+		// 		break;
+		// 	}
+		// }
 		if(!found) {
 			var Pid = streamID;
 			var position = loadingLabels.length;
+			var Lid = generateRTid();
 			loadingLabels[position] = {
-				"Pid": Pid
+				"Pid": Pid,
+				"Lid": Lid
 			};
 
 			return loadingLabels[position].Promise = new Promise((resolve, reject) => {
-				// Creating backup timeout for 3 seconds
+				// Creating backup timeout for 10 seconds
 				setTimeout(() => {
-					resolve("Timed Out");
+					// Getting the data from the customEventCallbacks so that I can remove their other saved things
+					for (let i = 0; i < customEventCallbacks.length; i++) {
+						if(customEventCallbacks[i].Eid === Eid) {
+							console.warn("Loading Labels has timed out after 10 seconds");
+							resolve("Timed Out");
+
+							var data = customEventCallbacks[i].data;
+							
+							// resolving the loadingIframe Promise & removing its resolve-function from list
+							for (let i = 0; i < promiseResolve.length; i++) {
+								if(promiseResolve[i].Rid === data.Rid) {
+									promiseResolve[i].resolve("Timed Out")
+									promiseResolve.splice(i, 1);
+								}
+							}
+		
+							// removing the promise itself
+							for (let i = 0; i < loadingLabels.length; i++) {
+								if(loadingLabels[i].Lid === data.Lid) {
+									loadingLabels.splice(i, 1)
+								}
+								
+							}
+							
+						}
+					}
+					// For removing this function callback from the list
+					for (let i = 0; i < customEventCallbacks.length; i++) {
+						if(customEventCallbacks[i].Eid === Eid) {
+							customEventCallbacks.splice(i,1);
+							// console.log("EventCallback: " + i)
+						}
+					}
 				}, 3000);
 
 				// Setting up remote function to resolve this promise (meaning that the Iframe has loaded)
@@ -902,6 +954,7 @@ function loadLabel(streamID, callback, values) {
 					"data": {
 						"Rid": Rid,
 						"Pid": Pid,
+						"Lid": Lid,
 						"streamID": streamID,
 						"callback": callback,
 						"values": values,
@@ -935,7 +988,7 @@ function loadLabel(streamID, callback, values) {
 
 							// removing the promise itself
 							for (let i = 0; i < loadingLabels.length; i++) {
-								if(loadingLabels[i].Pid === data.Pid) {
+								if(loadingLabels[i].Lid === data.Lid) {
 									loadingLabels.splice(i, 1)
 								}
 								
