@@ -12,8 +12,6 @@ Centerally, the developement version runs off of a simple node server on localho
 
 Devcert creates both a Certificate Authority (CA) on the computer as well as a specific SSL Certificate for the domain "test.vdo.ninja" which is specified by the Node server. The certificate authority as well as the HOSTS componants of this does mean that running **this system might linger after you remove the direct workspace & files of the VDO.ninja-wrapper**. However, for developement this is significantly midigates the work to get vdo.ninja-wrapper up and running, and so I chose to include it. And when you want to remove devcert, I have layed out the commands to remove it [below](#Devcert-Removal).
 
-------
-
 ## **Starting the Server:**
 
 > If you are wanting to see description of how to get to this point, read the full "How to Deploy" document [here]().
