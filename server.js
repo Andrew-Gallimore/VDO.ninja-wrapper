@@ -19,8 +19,10 @@ app.use('/', express.static(__dirname + '/'));
 // )
 
 async function createServer() {
-  let ssl = await devcert.certificateFor('my-app.test');
-  console.log(ssl)
+  // let ssl2 = await devcert.removeDomain('my-app.test');
+  // console.log(ssl2)
+
+  let ssl = await devcert.certificateFor('test.vdo.ninja');
   const sslServer = https.createServer(ssl, app);
 
   var port = process.env.PORT || 443;
