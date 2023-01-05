@@ -10,7 +10,7 @@ Centerally, the developement version runs off of a simple node server on localho
 
 > Devcert is a npm package installed and ran inside VDO.ninja-warpper's node server. See it's GitHub [here](https://github.com/davewasmer/devcert).
 
-Devcert creates both a Certificate Authority (CA) on the computer as well as a specific SSL Certificate for the domain "test.vdo.ninja" which is specified by the Node server. The certificate authority as well as the HOSTS componants of this does mean that running **this system might linger after you remove the direct workspace & files of the VDO.ninja-wrapper**. However, for developement this is significantly midigates the work to get vdo.ninja-wrapper up and running, and so I chose to include it. And when you want to remove devcert, I have layed out the commands to remove it [below](#Devcert-Removal).
+Devcert creates both a Certificate Authority (CA) on the computer as well as a specific SSL Certificate for the domain "test.vdo.ninja" which is specified by the Node server. The certificate authority as well as the HOSTS componants of this does mean that running **this system might linger after you remove the direct workspace & files of the VDO.ninja-wrapper**. However, for developement this is significantly midigates the work to get vdo.ninja-wrapper up and running, and so I chose to include it. And when you want to remove devcert, I have layed out the commands to remove it [below](#Removing-Devcert).
 
 ## **Starting the Server:**
 
