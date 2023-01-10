@@ -244,7 +244,6 @@ function viewButtonClickedControls(button) {
                 button: button
             },
             callback: (data) => {
-                console.log("Closed!")
                 data.button.parentNode.classList.remove("hover");
 
                 if(data.closeData) {
@@ -259,6 +258,7 @@ function viewButtonClickedControls(button) {
                             // two, they are moving this to the other slot
                             loadedViews.two.button.parentNode.classList.remove("active")
                             loadedViews.two.button = null;
+                            loadedViews.two.room = null;
                             clearContentInControls(button, "two")
                             // If there was a place to add the option of loading past options when an empty slot opens up, here it is
                         }
@@ -273,6 +273,7 @@ function viewButtonClickedControls(button) {
                             // two, they are moving this to the other slot
                             loadedViews.one.button.parentNode.classList.remove("active")
                             loadedViews.one.button = null;
+                            loadedViews.one.room = null;
                             clearContentInControls(button, "one")
                             // If there was a place to add the option of loading past options when an empty slot opens up, here it is
                         }
@@ -283,7 +284,14 @@ function viewButtonClickedControls(button) {
                         // Adding active to the button loading the view
                         button.parentNode.classList.add("active");
                         // Load view into the box
-                        loadContentInControls(button, data.closeData);
+                        var type = "";
+                        var id = "";
+                        if(button.getAttribute("data-roomid") !== null) {
+                            type = "room";
+                            id = button.getAttribute("data-roomID");
+                        }
+
+                        loadContentInControls(type, id, data.closeData);
                     }
                 }
             }
@@ -293,10 +301,10 @@ function viewButtonClickedControls(button) {
         // This means that there is only one viewing box that the button can go into, so just make it active
 
         // Removeing the current active buttons
-        // var buttonsParent = document.querySelector("#main .maga-page.control .page.controls .scroll");
-        // buttonsParent.querySelectorAll(".option.active").forEach(element => {
-        //     element.classList.remove("active")
-        // })
+        var buttonsParent = document.querySelector("#main .maga-page.control .page.controls .scroll");
+        buttonsParent.querySelectorAll(".option.active").forEach(element => {
+            element.classList.remove("active")
+        })
 
         console.log(addActive)
         if(addActive) {
@@ -311,17 +319,27 @@ function viewButtonClickedControls(button) {
                 // This removed the current view from two if it was in there last
                 loadedViews.two.button.parentNode.classList.remove("hidden2")
                 loadedViews.two.button = null;
+                loadedViews.two.room = null;
                 clearContentInControls(button, "two")
             }
             if(loadedViews.two.button !== null) {
                 // This is just hiding the active from the button for the view on the right
+                console.log("Not Null for 2")
                 // loadedViews.two.button.parentNode.classList.add("hidden2")
             }
             button.parentNode.classList.add("active");
 
             // Load into the box
             clearContentInControls(button)
-            loadContentInControls(button);
+
+            var type = "";
+            var id = "";
+            if(button.getAttribute("data-roomid") !== null) {
+                type = "room";
+                id = button.getAttribute("data-roomID");
+            }
+
+            loadContentInControls(type, id);
         }else {
             // Remove from box
         }
@@ -329,20 +347,12 @@ function viewButtonClickedControls(button) {
 }
 
 // Control tab, loading in the content (ie. guests, directors, room labels, guest count, etc.) into a particular view box
-function loadContentInControls(input, box="one") {
-    // Find type from input
-    var type = "";
-    // var data = "";
-    
-    // Defineing type
-    if(input.getAttribute("data-roomid") !== null) type = "room";
-
-    // Need to add different types as I add them to the options in the control tab
-
-    // Then grab the data for the people and such as well as update the Menu UI's based on type
+function loadContentInControls(type, id, box="one") {
+    // TODO, add check to see if it is an actual type or id
+    // console.log(type, id)
     if(type === "room") {
         // Setting the current roomID in loadedViews
-        loadedViews[box].room = input.getAttribute("data-roomID");
+        loadedViews[box].room = id;
 
         // Getting the locations for things
         var baseLocation = document.querySelector(".maga-page.control .video-section");
@@ -350,7 +360,7 @@ function loadContentInControls(input, box="one") {
         var pastLocation = location.querySelector(".video-section-content .layout-wrapper")
 
         // Getting room data
-        var data = MgetRoomData(input.getAttribute("data-roomID"));
+        var data = MgetRoomData(id);
 
         // Setting the name for the room in the page
         location.querySelector(".video-menu .center-label h2").innerHTML = data.name
@@ -361,11 +371,10 @@ function loadContentInControls(input, box="one") {
             // Need to add a case for if there is 0 guests in it
             
             var personData = MgetPersonData(data.guests[i]);
-            console.log(personData)
             
             // Now grabing the template for the type of person (ex: guest, director, screenshare)
             if(personData.type === "guest") {
-                createGuestUI(personData);
+                trackGuest(personData); //This function defaults to the UI wanting to add somone, so don't need to add an event
                 // var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
 
                 // // Setting label
@@ -397,27 +406,27 @@ function loadContentInControls(input, box="one") {
 
     }
 }
-// Control tab, removing the content from a particular view boxt
+// Control tab, removing the content from a particular view box
 function clearContentInControls(input, box="one") {
     // Find type from input
     var type = "";
 
     // Defineing type
     if(input.getAttribute("data-roomid") !== null) type = "room";
-
+    
     // Need to clear the UI based on the type
     if(type === "room") {
         // Getting the locations for things
         var baseLocation = document.querySelector(".maga-page.control .video-section");
         var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
         var peopleLocation = location.querySelector(".video-section-content .layout-wrapper")
-
+        
         // // Getting room data
         // var data = MgetRoomData(input.getAttribute("data-roomID"));
-
+        
         // Clearing the name for the room to nothing
         location.querySelector(".video-menu .center-label h2").innerHTML = ""
-
+        
         // Removing all the people's cameras
         peopleLocation.querySelectorAll(".item").forEach(element => {
             element.remove();
@@ -427,62 +436,6 @@ function clearContentInControls(input, box="one") {
 
     }else if(type === "person") {
 
-    }
-}
-
-// TODO: I will also need to do this for removing the person from the page
-// Creating a guest on the page
-function createGuestUI(personData) {
-    console.log(personData)
-    personData.UI.showingMainUI = true;
-    // Handling alot of creating the person (if the other steps haven't happened yet)
-
-
-    // Getting what box the persons video is in
-    var box;
-    console.log(loadedViews)
-    if(loadedViews.one.room === personData.room.toString()) {
-        box = "one";
-    }else if(loadedViews.two.room === personData.room.toString()) {
-        box = "two";
-    }
-
-    console.log(box)
-    if(box) {
-        // Getting the locations for things
-        var baseLocation = document.querySelector(".maga-page.control .video-section");
-        var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
-        var pastLocation = location.querySelector(".video-section-content .layout-wrapper")
-
-        // Cloneing guest UI base (without specific data)
-        var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
-
-        // Setting label
-        if(personData.label) {
-            temp.querySelector(".label h3").innerText = personData.label;
-        }else {
-            temp.querySelector(".label h3").innerText = "Guest";
-        }
-        
-        // Putting in video element to temp
-        // Need to add option for iframe solo-view feeds, for not-chrome browser option to view people
-        if(personData.UI.hasVideo) {
-            temp.querySelector(".video").appendChild(personData.stream);
-        }else {
-            // Create a "loading video element" (need to get the aspect ratio for the stand in video)
-        }
-        
-        // Putting in the whole video and stuff around it
-        pastLocation.appendChild(temp);
-        // Starting the video playing again, because it STOPS when you MOVE IT in dom, AH!
-        temp.querySelector(".video video").play();
-    }
-}
-
-function loadUserVideo(personData) {
-    personData.UI.hasVideo = true;
-    if(personData.UI.showingMainUI) {
-        // Create it
     }
 }
 
@@ -512,14 +465,151 @@ function changeBoxesInControls(boxStyle) {
 }
 
 
+// Control tab, creating in the 'connecting' ui for a guest
+function createLoadingGuest(personData) {
+    console.log("Creating LOADING")
+    // Getting what box the persons video should be in
+    // THIS IS NOT PROPPER MULTI-VIDEO-LOCATION LOGIC, NEED TO FIX IN FUTURE
+    var type;
+    var box;
+    if(loadedViews.one.room !== null && loadedViews.one.room.toString() === personData.room.toString()) {
+        type = "room";
+        box = "one";
+    }else if(loadedViews.two.room !== null && loadedViews.two.room.toString() === personData.room.toString()) {
+        type = "room";
+        box = "two";
+    }
 
-// Control tab, handling what a message about a guest loading/leaving means (relative to the other messages)
-function FhandleGuestStat(type, personObject) {
+    // The code for actually adding the element
+    if(type === "room") {
+        if(box) {
+            // Getting the locations for things
+            var baseLocation = document.querySelector(".maga-page.control .video-section");
+            var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
+            var pastLocation = location.querySelector(".video-section-content .layout-wrapper")
 
+            // Checking if there is already an element for the person
+            var found = pastLocation.querySelector('[guest-element="' + personData.streamID + '"]')
+            if(found == null) {
+                // Cloneing guest UI base (without specific data)
+                var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
+                temp.classList.add("connecting");
+                temp.setAttribute("guest-element", personData.streamID);
+                
+                // Putting in the whole video and stuff around it
+                pastLocation.appendChild(temp);
+                WHRatioSet();
+            }
+        }
+    }
 }
-// Control tab, creating in the 'loading' ui for a guest
-function createLoadingGuest() {
+// Control tab, transitions a person from the connecting status to fully created
+function creatFullGuest(personData) {
+    console.log("Creating FULL")
+    // Getting what box the persons video should be in
+    // THIS IS NOT PROPPER MULTI-VIDEO-LOCATION LOGIC, NEED TO FIX IN FUTURE
+    var type;
+    var box;
+    if(loadedViews.one.room !== null && loadedViews.one.room.toString() === personData.room.toString()) {
+        type = "room";
+        box = "one";
+    }else if(loadedViews.two.room !== null && loadedViews.two.room.toString() === personData.room.toString()) {
+        type = "room";
+        box = "two";
+    }
 
+    // The code for actually adding the element
+    if(type === "room") {
+        if(box) {
+            // Getting the locations for things
+            var baseLocation = document.querySelector(".maga-page.control .video-section");
+            var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
+            var pastLocation = location.querySelector(".video-section-content .layout-wrapper")
+
+            // Checking if there is already an element for the person
+            var found = pastLocation.querySelector('[guest-element="' + personData.streamID + '"]')
+            if(found == null) {
+                // Cloneing guest UI base (without specific data)
+                var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
+                temp.setAttribute("guest-element", personData.streamID);
+                
+                // Putting in the whole video and stuff around it
+                pastLocation.appendChild(temp);
+                // Starting the video playing again, because it STOPS when you MOVE IT in dom, AH!
+                if(temp.querySelector(".video video") !== null) temp.querySelector(".video video").play();
+                WHRatioSet();
+
+                // Re-finding the found variable, now that we created it
+                found = pastLocation.querySelector('[guest-element="' + personData.streamID + '"]')
+            }
+
+            // Adding the content to the person's element VVV
+
+            // Putting in video element
+            // Need to add option for iframe solo-view feeds, for not-chrome browser option to view people
+            if(personData.stream !== undefined) {
+                // Adding the video because its there
+                found.querySelector(".video").appendChild(personData.stream);
+            }else {
+                // Adding the "getting video" element because the videos not there yet
+                found.classList.add("loadingVideo");
+            }
+
+            // Setting label
+            if(personData.label) {
+                found.querySelector(".label h3").innerText = personData.label;
+            }else {
+                found.querySelector(".label h3").innerText = "Guest";
+            }
+
+            // Removing the loading styling
+            found.classList.remove("connecting");
+        }
+    }
+}
+// Control tab, adding the video to the guest's UI
+function loadUserVideo(personData) {
+    // Getting what box the persons video should be in
+    // THIS IS NOT PROPPER MULTI-VIDEO-LOCATION LOGIC, NEED TO FIX IN FUTURE
+    var type;
+    var box;
+    if(loadedViews.one.room !== null && loadedViews.one.room.toString() === personData.room.toString()) {
+        type = "room";
+        box = "one";
+    }else if(loadedViews.two.room !== null && loadedViews.two.room.toString() === personData.room.toString()) {
+        type = "room";
+        box = "two";
+    }
+
+    // The code for actually adding the element
+    if(type === "room") {
+        if(box) {
+            // Getting the locations for things
+            var baseLocation = document.querySelector(".maga-page.control .video-section");
+            var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
+            var pastLocation = location.querySelector(".video-section-content .layout-wrapper")
+            
+            // Checking if there is already an element for the person
+            var found = pastLocation.querySelector('[guest-element="' + personData.streamID + '"]')
+            if(found) {
+                if(!found.classList.contains("connecting")) {
+                    // console.log("Creating VIDEO")
+                    // Adding in the video element
+                    found.querySelector(".video").appendChild(personData.stream);
+                    // Starting the video playing again, because it STOPS when you MOVE IT in dom, AH!
+                    found.querySelector(".video video").play();
+
+                    // Removing the loading styling
+                    found.classList.remove("connecting");
+                    found.classList.remove("loadingVideo");
+                }
+            }
+        }
+    }
+    // Check for them on the page (not connecting)
+
+    // add their video to the page
+    // Unlock the buttons for the video now (if they were locked with js)
 }
 
 

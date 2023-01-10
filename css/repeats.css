@@ -589,3 +589,49 @@ Created:
 .style2 .buttons p {
     margin-left: 5px;
 }
+
+
+
+
+
+/**
+* ==============================================
+* Dot Typing Loading Animation
+* ==============================================
+*/
+/* I don't know why they used 9999, don't ask me :( */
+.dot-typing {
+    position: relative;
+    left: -9984px;
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+    background-color: var(--text-light-fourth);
+    color: var(--text-light-fourth);
+    box-shadow: 9984px 0 0 0 var(--text-light-fourth), 9999px 0 0 0 var(--text-light-fourth), 10014px 0 0 0 var(--text-light-fourth);
+    animation: dot-typing 1.7s infinite linear;
+}
+
+@keyframes dot-typing {
+    0% {
+    box-shadow: 9984px 0 0 0 var(--text-light-fourth), 9999px 0 0 0 var(--text-light-fourth), 10014px 0 0 0 var(--text-light-fourth);
+    }
+    16.667% {
+    box-shadow: 9984px -10px 0 0 var(--text-light-fourth), 9999px 0 0 0 var(--text-light-fourth), 10014px 0 0 0 var(--text-light-fourth);
+    }
+    33.333% {
+    box-shadow: 9984px 0 0 0 var(--text-light-fourth), 9999px 0 0 0 var(--text-light-fourth), 10014px 0 0 0 var(--text-light-fourth);
+    }
+    50% {
+    box-shadow: 9984px 0 0 0 var(--text-light-fourth), 9999px -10px 0 0 var(--text-light-fourth), 10014px 0 0 0 var(--text-light-fourth);
+    }
+    66.667% {
+    box-shadow: 9984px 0 0 0 var(--text-light-fourth), 9999px 0 0 0 var(--text-light-fourth), 10014px 0 0 0 var(--text-light-fourth);
+    }
+    83.333% {
+    box-shadow: 9984px 0 0 0 var(--text-light-fourth), 9999px 0 0 0 var(--text-light-fourth), 10014px -10px 0 0 var(--text-light-fourth);
+    }
+    100% {
+    box-shadow: 9984px 0 0 0 var(--text-light-fourth), 9999px 0 0 0 var(--text-light-fourth), 10014px 0 0 0 var(--text-light-fourth);
+    }
+}

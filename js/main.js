@@ -82,6 +82,8 @@ async function startMain() {
 		// reserve the room
 		await updateRoomData(room1ID, "reserved", true)
 
+		// loadContentInControls("room", room1ID);
+
 		// update lisseners to lissen for guest joining events, and leaving, and video, etc.
 		guestLisseners(room1ID);
 
@@ -121,9 +123,7 @@ async function startMain() {
 
 startMain();
 
-// TODO, when loading an IFrame times out, it needs to regognize that and specify that there is an issue (and possibly remove the lissener)
-// TODO, figure out how to get if someone is sending video or not for the statuses of people's objects, might need to ask steve
-// TODO, need to add protection against the same streamID, because it breaks it
+
 
 
 function MgetRoomData(roomID) {
@@ -135,28 +135,123 @@ function MgetPersonData(streamID) {
 	return responce;
 }
 
-// This tells the front end that a person is loading in some fasion, be it joining or leaving
+
+// These events tell the guest tracker to update a person's joining/leaving status (and the front end for it) accordingly
+// These events can be broken out later in the API as well
+
+// This means that someone is changing in some way, likely joining or leaving
 function MguestChanging(personObject) {
-	// console.log("guestChanging!")
+	trackGuest(personObject, "guestChanging");
 }
 
-// This tells the front end that we have the data for someone who is currently connecting
+// This means that we have the data for someone who is currently connecting
 function MgotGuestData(personObject) {
-	// console.log("gotGuestData!")
+	trackGuest(personObject, "gotGuestData");
 }
 
-// This tells the front end that a person has officially connected, and so create their elements
+// This means a person has officially connected, and so create their elements
 function MguestConnected(personObject) {
-	console.log("callingUI")
-	createGuestUI(personObject)
+	trackGuest(personObject, "guestConnected");
 }
-// This tells the front end that a video is availible, allowing it to dynamically load the video independently from the person's elements
+// This means a video is availible, allowing it to dynamically load the video independently from the person's elements
 function MguestVideoCreated(personObject) {
-	// console.log("guestVideoCreated!")
-	loadUserVideo(personObject)
+	trackGuest(personObject, "guestVideoCreated");
 }
 
-// This tells the front end that a person has officially left, and so remove their elements
+// This means a person has officially left, and so remove their elements
 function MguestLeft(personObject) {
-	// console.log("guestLeft :(")
+	trackGuest(personObject, "guestLeft");
 }
+
+var trackedGuests = [];
+function trackGuest(personObject, event="loadOnPage") {
+	// console.log(personObject)
+	var found = false;
+	for (let i = 0; i < trackedGuests.length; i++) {
+		if(trackedGuests[i].streamID === personObject.streamID) {
+			// They are currently tracked already, sweeet!
+			found = true;
+			break;
+		}
+	}
+	if(!found) {
+		// They are not yet tracked, and so we need to track them and create any 'connecting' UI needed
+		trackedGuests.push({
+			streamID: personObject.streamID,
+			room: personObject.room,
+			events: {
+				guestChanging: true,
+				gotData: false,
+				guestConnected: false,
+				videoCreated: false,
+				guestLeft: false
+			}
+		})
+
+		// Call connecting UI
+		createLoadingGuest(personObject);
+	}
+
+	// Running through what the UI will need to do for the event for the person
+	for (let i = 0; i < trackedGuests.length; i++) {
+		if(trackedGuests[i].streamID === personObject.streamID) {
+			// Checking if they are even supposed to be in any UI currently
+			var needsUI = false;
+			if(loadedViews.one.room === trackedGuests[i].room) {
+				needsUI = true;
+			}else if(loadedViews.two.room === trackedGuests[i].room) {
+				needsUI = true;
+			}
+
+			// Seeing what needs to happen to UI (if needed) based on event
+			if(event === "guestChanging") {
+				// This can be a person joining or leaving (I don't know of any other cases)
+				
+				// Currently, just change them to loading animation
+				trackedGuests[i].events.guestChanging = true;
+			}else if(event === "guestConnected") {
+				if(trackedGuests[i].events.gotData) {
+					// Create the person!
+					creatFullGuest(personObject);
+					trackedGuests[i].events.guestChanging = false;
+				}
+				trackedGuests[i].events.guestConnected = true;
+			}else if(event === "gotGuestData") {
+				if(trackedGuests[i].events.guestConnected) {
+					// Create the person!
+					creatFullGuest(personObject);
+					trackedGuests[i].events.guestChanging = false;
+				}
+				trackedGuests[i].events.gotData = true;
+			}else if(event === "guestVideoCreated") {
+				// Checking if the event has already been called
+				loadUserVideo(personObject);
+				trackedGuests[i].events.videoCreated = true;
+			}else if(event === "guestLeft") {
+				// Remove the person's UI (or equivalent)
+
+				trackedGuests[i].events.guestChanging = false;
+				trackedGuests[i].events.guestLeft = true;
+			}else if(event === "loadOnPage") {
+				// This is the Front end Calling for the person to be loaded on page
+				if(trackedGuests[i].events.guestChanging) {
+					// Create person UI for a connecting person
+					createLoadingGuest(personObject);
+				}else if(trackedGuests[i].events.gotData && trackedGuests[i].events.guestConnected) {
+					// Create person in full
+					creatFullGuest(personObject);
+				}
+			}
+
+			break;
+		}
+	}
+}
+
+
+
+
+// TODO, when loading an IFrame times out, it needs to regognize that and specify that there is an issue (and possibly remove the lissener)
+// TODO, figure out how to get if someone is sending video or not for the statuses of people's objects, might need to ask steve
+// TODO, need to add protection against the same streamID, because it breaks it
+// TODO, add Multi-Video-Location displaying of a person's video feed, because currently there is only one element allowed

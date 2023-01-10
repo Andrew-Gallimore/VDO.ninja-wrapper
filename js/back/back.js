@@ -33,7 +33,7 @@ function loadIframe(ID){
 
 	// var iframesrc="https://vdo.ninja/alpha/?sendframes?director=" + ID;
 	// var iframesrc="https://vdoninja.netlify.app/?sendframes&salt=vdo.ninja&director=" + ID;
-	var iframesrc="https://vdo.ninja/alpha/?sendframes?director=" + ID;
+	var iframesrc="https://vdo.ninja/?sendframes?director=" + ID;
     console.log(iframesrc.toString())
 	iframe.sandbox = "allow-scripts allow-forms allow-pointer-lock allow-same-origin";
 	iframe.src = iframesrc;
@@ -618,7 +618,7 @@ async function guestLisseners(roomID) {
 					}
 				}
 			}else if(e.source === document.querySelector("._" + data.roomID).contentWindow && e.data.action === "view-connection-info") {
-				// Someone (director or just someone, we don't know) Left, need to manage their object
+				// We got data for someone, and so we need to parse the data
 				console.log("got person data")
 				for (let i = 0; i < peopleObjects.length; i++) {
 					if(peopleObjects[i].streamID === e.data.streamID) {
@@ -756,105 +756,17 @@ function readPersonData(streamID) {
 	}
 }
 
-// function createPersonElement(streamID) {
-// 	var peoplesLocation = document.querySelector(".peopleLocation");
-// 	var guestTemplateQuery = ".personTemplate";
-// 	// var guestPasteLocation = peoplesLocation.querySelector(".peoples");
-
-// 	var labelQuery = ".label";
-// 	var IDQuery = ".id";
-
-// 	console.log(streamID);
-// 	console.log(peopleObjects);
-// 	for (let i = 0; i < peopleObjects.length; i++) {
-// 		if(peopleObjects[i].streamID === streamID) {
-// 			var personObject = peopleObjects[i];
-
-// 			if(!personObject.element) {
-// 				// if(personObject.type === "guest") {
-// 				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .guest").cloneNode(true);
-
-// 				// 	// Setting ID where its needed
-// 				// 	temp.setAttribute("data-streamID", personObject.streamID)
-// 				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
-
-// 				// 	// Setting the person's label if they have one
-// 				// 	if(personObject.label) {
-// 				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
-// 				// 	}else {
-// 				// 		temp.querySelector(labelQuery).innerHTML = "Guest";
-// 				// 		peopleObjects[i].label = "Guest";
-// 				// 	}
-
-// 				// 	// Adding someone's video if they have one
-// 				// 	if(personObject.stream) {
-// 				// 		createPersonVideo(temp, media.streams[streamID])
-// 				// 	}
-// 				// }else if(personObject.type === "director") {
-// 				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .director").cloneNode(true);
-
-// 				// 	// Setting ID where its needed
-// 				// 	temp.setAttribute("data-streamID", personObject.streamID)
-// 				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
-
-// 				// 	// Setting the person's label if they have one
-// 				// 	if(personObject.label) {
-// 				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
-// 				// 	}else {
-// 				// 		temp.querySelector(labelQuery).innerHTML = "Director";
-// 				// 		peopleObjects[i].label = "Director";
-// 				// 	}
-
-// 				// 	// Adding someone's video if they have one
-// 				// 	if(personObject.stream) {
-// 				// 		createPersonVideo(temp, media.streams[streamID])
-// 				// 	}
-// 				// }else if(personObject.type === "screenshare") {
-// 				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .screenshare").cloneNode(true);
-
-// 				// 	// Setting ID where its needed
-// 				// 	temp.setAttribute("data-streamID", personObject.streamID)
-// 				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
-
-// 				// 	// Setting the person's label if they have one
-// 				// 	if(personObject.label) {
-// 				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
-// 				// 	}else {
-// 				// 		temp.querySelector(labelQuery).innerHTML = "Screenshare";
-// 				// 		peopleObjects[i].label = "Screenshare";
-// 				// 	}
-
-// 				// 	// Adding someone's video if they have one
-// 				// 	if(personObject.stream) {
-// 				// 		createPersonVideo(temp, media.streams[streamID])
-// 				// 	}
-// 				// }
-
-// 				// // Putting the created element into the person's object
-// 				// if(temp) {
-// 				// 	guestPasteLocation.appendChild(temp);
-// 				// 	peopleObjects[i].element = temp;
-// 				// }
-
-// 				console.log(personObject)
-// 			}
-// 		}
-// 	}
-// }
-
-// These are end-points for while a person is joining or leaving, these will call functions in the front end
+// These 5 below are end-points for while a person is joining or leaving, these will call functions in the front end
 // This tells the front end that a person is loading in some fassion, be it joining or leaving
 function guestChanging(personObject) {
 	console.log("guestChanging!")
 	MguestChanging(personObject)
 }
-
 // This tells the front end that we have the data for someone who is currently connecting
 function gotGuestData(personObject) {
 	console.log("gotGuestData!")
 	MgotGuestData(personObject)
 }
-
 // This tells the front end that a person has officially connected, and so create their elements
 function guestConnected(personObject) {
 	console.log("guestConnected :)")
@@ -865,12 +777,12 @@ function guestVideoCreated(personObject) {
 	console.log("guestVideoCreated!")
 	MguestVideoCreated(personObject)
 }
-
 // This tells the front end that a person has officially left, and so remove their elements
 function guestLeft(personObject) {
 	console.log("guestLeft :(")
 	MguestLeft(personObject)
 }
+
 
 var loadingLabels = [];
 function loadLabel(streamID, callback, values) {
@@ -1016,6 +928,9 @@ function loadLabel(streamID, callback, values) {
 
 }
 
+
+
+// These are old UI function, these 2 below will need to get changed out for front end ones
 function userButtons(button) {
 	console.log(button)
 	var buttonAction = button.getAttribute("data-action");
