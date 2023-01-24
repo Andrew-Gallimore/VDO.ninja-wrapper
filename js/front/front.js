@@ -172,6 +172,20 @@ var loadedViews = {
         room: null
     }
 };
+var loadedViews2 = {
+    one: {
+        filled: true,
+        type: "room",
+        button: {},
+        data: {
+
+        }
+    },
+    two: {
+        button: null,
+        room: null
+    }
+};
 
 // Controls tab, when you click on a room option to view in on the page
 function viewButtonClickedControls(button) {
@@ -374,7 +388,8 @@ function loadContentInControls(type, id, box="one") {
             
             // Now grabing the template for the type of person (ex: guest, director, screenshare)
             if(personData.type === "guest") {
-                trackGuest(personData); //This function defaults to the UI wanting to add somone, so don't need to add an event
+                // This creates the person if needed, which it is now
+                trackGuest(personData); //This function defaults to the UI wanting to add someone, so don't need to add an event option when calling it
                 // var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
 
                 // // Setting label
@@ -533,8 +548,9 @@ function creatFullGuest(personData) {
                 var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
                 temp.setAttribute("guest-element", personData.streamID);
                 
-                // Putting in the whole video and stuff around it
+                // Putting in the whole element in the page
                 pastLocation.appendChild(temp);
+
                 // Starting the video playing again, because it STOPS when you MOVE IT in dom, AH!
                 if(temp.querySelector(".video video") !== null) temp.querySelector(".video video").play();
                 WHRatioSet();

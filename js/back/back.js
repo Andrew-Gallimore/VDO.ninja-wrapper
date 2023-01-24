@@ -289,34 +289,7 @@ function roomDataLisseners(roomID) {
 }
 
 
-var peopleObjects = [
-	// {
-	// 	room: "538628350test",
-	// 	streamID: "Lgs6v2x",
-	// 	UUID: "a711486a65d944a3b078daff20070711",
-
-	// 	type: "guest",
-
-	// 	label: "Guest",
-
-	// 	stream: "[Some Element]",
-	// 	element: "[Some Element]"
-	// }
-]
-var personUItemplate = {
-	showingMainUI: false,
-	showingButton: false,
-	hasVideo: false,
-	buttonLoading: false,
-	buttonHasDetails: false,
-
-	guestChanging: false,
-	gotGuestData: false,
-	guestConnected: false,
-	guestVideoCreated: false,
-	guestLeft: false
-
-}
+var peopleObjects = [];
 
 var statsSyncTime = 0;
 async function guestLisseners(roomID) {
@@ -418,10 +391,10 @@ async function guestLisseners(roomID) {
 						room: roomID,
 						streamID: e.data.streamID,
 						UUID: e.data.UUID,
-						UI: personUItemplate,
 				
 						type: "director",
 					});
+					log.peopleLog(e.data.streamID, "Director Object Created")
 					// // Adding the person to their rooms' object
 					// for (let i = 0; i < roomDataList.length; i++) {
 					// 	if(roomDataList[i].ID === roomID) {
@@ -430,6 +403,7 @@ async function guestLisseners(roomID) {
 					// 	}
 					// }
 				}
+				log.peopleLog(e.data.streamID, "Director Connected")
 				// TODO: Need to add functionality of what to do when a director connects
 				
 				// This function grabs the labels of the person, before running the callback, which is to create the person element
@@ -462,10 +436,10 @@ async function guestLisseners(roomID) {
 						room: roomID,
 						streamID: e.data.streamID,
 						UUID: e.data.UUID,
-						UI: personUItemplate,
 				
 						type: "guest"
 					});
+					log.peopleLog(e.data.streamID, "Guest Object Created")
 
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
@@ -475,6 +449,7 @@ async function guestLisseners(roomID) {
 						}
 					}
 				}
+				log.peopleLog(e.data.streamID, "Guest Connected")
 
 				// This grabs the labels of the person, before running the callback, which is to then notify that the guest is connected
 				for (let i = 0; i < peopleObjects.length; i++) {
@@ -509,12 +484,12 @@ async function guestLisseners(roomID) {
 						room: roomID,
 						streamID: e.data.streamID,
 						UUID: e.data.UUID,
-						UI: personUItemplate,
 				
 						type: "screenshare",
 				
 						// label: "Guest",
 					});
+					log.peopleLog(e.data.streamID, "Screenshare Object Created")
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
 						if(roomDataList[i].ID === roomID) {
@@ -523,6 +498,7 @@ async function guestLisseners(roomID) {
 						}
 					}
 				}
+				log.peopleLog(e.data.streamID, "Screenshare Connected")
 				// TODO: Handle when someone screen shares, to know what to do on the front end
 
 				// This function grabs the labels of the person, before running the callback, which is to create the person element
@@ -552,8 +528,9 @@ async function guestLisseners(roomID) {
 						room: roomID,
 						streamID: e.data.streamID,
 						UUID: e.data.UUID,
-						UI: personUItemplate,
 					});
+					log.peopleLog(e.data.streamID, "Person Object Created")
+
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
 						if(roomDataList[i].ID === roomID) {
@@ -562,6 +539,7 @@ async function guestLisseners(roomID) {
 						}
 					}
 				}
+				log.peopleLog(e.data.streamID, "View Connection Changing")
 
 				// This notifies that the guest is changing in some way
 				// The changing is either finished when a guest Joins or Leaves.
@@ -591,7 +569,6 @@ async function guestLisseners(roomID) {
 						room: roomID,
 						streamID: e.data.streamID,
 						UUID: e.data.UUID,
-						UI: personUItemplate,
 					});
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
@@ -617,9 +594,13 @@ async function guestLisseners(roomID) {
 						guestLeft(peopleObjects[i])
 					}
 				}
+				log.peopleLog(e.data.value, "Person Left")
+
 			}else if(e.source === document.querySelector("._" + data.roomID).contentWindow && e.data.action === "view-connection-info") {
 				// We got data for someone, and so we need to parse the data
 				console.log("got person data")
+				log.peopleLog(e.data.streamID, "Got person's Data")
+				
 				for (let i = 0; i < peopleObjects.length; i++) {
 					if(peopleObjects[i].streamID === e.data.streamID) {
 						peopleObjects[i].statuses = {};
@@ -774,6 +755,7 @@ function guestConnected(personObject) {
 }
 // This tells the front end that a video is availible, allowing it to dynamically load the video independently from the person's elements
 function guestVideoCreated(personObject) {
+	log.peopleLog(personObject.streamID, "Guest Video Generated")
 	console.log("guestVideoCreated!")
 	MguestVideoCreated(personObject)
 }
@@ -787,6 +769,7 @@ function guestLeft(personObject) {
 var loadingLabels = [];
 function loadLabel(streamID, callback, values) {
 	console.log("Loading Label")
+	log.peopleLog(streamID, "Loading Labels")
 	var iframe;
 	for (let i = 0; i < peopleObjects.length; i++) {
 		if(peopleObjects[i].streamID === streamID) {
@@ -877,6 +860,7 @@ function loadLabel(streamID, callback, values) {
 						// Checking if it is the first room that sent the event & if the event is the right one
 						if(e.source === data.iframe.contentWindow && e.data.streamIDs) {
 							console.log("Collected Labels!!")
+
 							// Adding the label to the element
 							for (let i = 0; i < peopleObjects.length; i++) {
 								if(peopleObjects[i].streamID === data.streamID) {
@@ -884,6 +868,9 @@ function loadLabel(streamID, callback, values) {
 									if(e.data.streamIDs[data.streamID]) {
 										peopleObjects[i].label = e.data.streamIDs[data.streamID];
 									}
+
+									log.peopleLog(data.streamID, "Label: " + e.data.streamIDs[data.streamID])
+
 									break;
 								}
 							}
@@ -920,7 +907,6 @@ function loadLabel(streamID, callback, values) {
 
 				// Actually calling the getStreamIDs to the iframe
 				iframe.contentWindow.postMessage({"getStreamIDs":true}, '*');
-				
 			});
 		}
 

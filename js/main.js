@@ -49,12 +49,7 @@ eventer(messageEvent, function (e) {
 
 
 // Main variables
-var roomDataList = [
-	{
-		name: "testRoom",
-		ID: "ex538628350"
-	}
-];
+var roomDataList = [];
 
 // Main function: makes rooms, starts lisseners, etc.
 async function startMain() {
