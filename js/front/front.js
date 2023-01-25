@@ -174,54 +174,33 @@ var loadedViews = {
 };
 var loadedViews2 = {
     one: {
-        filled: true,
-        type: "room",
-        button: {},
+        filled: false,
+        type: "",
         data: {
-
+            
         }
     },
     two: {
-        button: null,
-        room: null
+        filled: false,
+        type: "",
+        data: {
+            
+        }
     }
 };
+var pocketView = {};
 
 // Controls tab, when you click on a room option to view in on the page
 function viewButtonClickedControls(button) {
-    // Check what type it is, so that it can change any controls needed (like for controling scenes)
-
-    var mainParent = document.querySelector("#main .maga-page.control .page.controls .scroll")
-    var template = mainParent.querySelector(".template .item");
-    var pastParent = mainParent.querySelector(".room-list");
-
-    // Update which button is active
-    var addActive = true;
-    // if(button.parentNode.classList.contains("active")) addActive = false;
-    if(button.parentNode == loadedViews.one.button || button.parentNode == loadedViews.two.button) {
-        addActive = false;
-    }
-
-    
     if(controlViewCount > 1) {
-        // this means there are multiple viewing boxes that the button clicked could go into
-        
-        // Removeing the current active buttons that aren't views currently being displayed
-        var buttonsParent = document.querySelector("#main .maga-page.control .page.controls .scroll");
-        buttonsParent.querySelectorAll(".option.active .mainbox").forEach(element => {
-            if(element !== loadedViews.one.button && element !== loadedViews.two.button) {
-                element.parentNode.classList.remove("active")
-            }
-        })
         // Removing any stray .hover's
+        var buttonsParent = document.querySelector("#main .maga-page.control .page.controls .scroll");
         buttonsParent.querySelectorAll(".option.hover").forEach(element => {
             element.classList.remove("hover")
         })
 
-        // So if the room is alread active in a box, it will just be like you are switching it to another box, or if you are putting it into a new box
-        if(addActive) {
-            button.parentNode.classList.add("hover");
-        }
+        // Adding hover the the current button which will have the dialog
+        button.parentNode.classList.add("hover");
 
         // Making the dialog go in the right direction with how the boxes are layed out
         var offset = 0;
@@ -261,52 +240,23 @@ function viewButtonClickedControls(button) {
                 data.button.parentNode.classList.remove("hover");
 
                 if(data.closeData) {
-                    if(data.closeData === "one") {
-                        // There are two options:
-                        if(loadedViews.one.button !== null) {
-                            // one, they are putting this in place of another one
-                            loadedViews.one.button.parentNode.classList.remove("active")
-                            clearContentInControls(button, "one")
-                        }
-                        if(loadedViews.two.button == button) {
-                            // two, they are moving this to the other slot
-                            loadedViews.two.button.parentNode.classList.remove("active")
-                            loadedViews.two.button = null;
-                            loadedViews.two.room = null;
-                            clearContentInControls(button, "two")
-                            // If there was a place to add the option of loading past options when an empty slot opens up, here it is
-                        }
-                        loadedViews.one.button = button
-                    }else if(data.closeData === "two") {
-                        if(loadedViews.two.button !== null) {
-                            // one, they are putting this in place of another one
-                            loadedViews.two.button.parentNode.classList.remove("active")
-                            clearContentInControls(button, "two")
-                        }
-                        if(loadedViews.one.button == button) {
-                            // two, they are moving this to the other slot
-                            loadedViews.one.button.parentNode.classList.remove("active")
-                            loadedViews.one.button = null;
-                            loadedViews.one.room = null;
-                            clearContentInControls(button, "one")
-                            // If there was a place to add the option of loading past options when an empty slot opens up, here it is
-                        }
-                        loadedViews.two.button = button
+                    // Check if there is another view in the {data.closeData} viewBox
+                    if(loadedViews2[data.closeData].filled) {
+                        // Remove the current view inside the view box we are placing into
+                        clearContentInControls(data.closeData);
                     }
 
-                    if(addActive) {
-                        // Adding active to the button loading the view
-                        button.parentNode.classList.add("active");
-                        // Load view into the box
-                        var type = "";
-                        var id = "";
-                        if(button.getAttribute("data-roomid") !== null) {
-                            type = "room";
-                            id = button.getAttribute("data-roomID");
-                        }
+                    // This would be the place to have any other limiters for loading things in a view
 
-                        loadContentInControls(type, id, data.closeData);
+                    // Load view into the box
+                    if(button.getAttribute("data-roomid") !== null) {
+                        var type = "room";
+                        var id = button.getAttribute("data-roomID");
+                        loadContentInControls(type, {id: id}, data.closeData);
                     }
+                    
+                    // Adding active to the button loading the view through updating the buttons
+                    updateViewButtonsControls();
                 }
             }
         });
@@ -320,27 +270,40 @@ function viewButtonClickedControls(button) {
             element.classList.remove("active")
         })
 
-        console.log(addActive)
+        var addActive = true;
         if(addActive) {
-            // Setting up the button
-            if(loadedViews.one.button !== null) {
-                // This removes the button selection which is currently being viewed in one
-                loadedViews.one.button.parentNode.classList.remove("active")
+            // Check if there is another view in the {data.closeData} viewBox
+            if(loadedViews2.one.filled) {
+                // Remove the current view inside the view box we are placing into
+                clearContentInControls("one");
+            }
+
+            // Load view into the box
+            if(button.getAttribute("data-roomid") !== null) {
+                var type = "room";
+                var id = button.getAttribute("data-roomID");
+                loadContentInControls(type, {id: id}, "one");
+            }
+
+            // // Setting up the button
+            // if(loadedViews.one.button !== null) {
+            //     // This removes the button selection which is currently being viewed in one
+            //     loadedViews.one.button.parentNode.classList.remove("active")
                 
-                loadedViews.one.button = button
-            }
-            if(loadedViews.two.button == button) {
-                // This removed the current view from two if it was in there last
-                loadedViews.two.button.parentNode.classList.remove("hidden2")
-                loadedViews.two.button = null;
-                loadedViews.two.room = null;
-                clearContentInControls(button, "two")
-            }
-            if(loadedViews.two.button !== null) {
-                // This is just hiding the active from the button for the view on the right
-                console.log("Not Null for 2")
-                // loadedViews.two.button.parentNode.classList.add("hidden2")
-            }
+            //     loadedViews.one.button = button
+            // }
+            // if(loadedViews.two.button == button) {
+            //     // This removed the current view from two if it was in there last
+            //     loadedViews.two.button.parentNode.classList.remove("hidden2")
+            //     loadedViews.two.button = null;
+            //     loadedViews.two.room = null;
+            //     clearContentInControls(button, "two")
+            // }
+            // if(loadedViews.two.button !== null) {
+            //     // This is just hiding the active from the button for the view on the right
+            //     console.log("Not Null for 2")
+            //     // loadedViews.two.button.parentNode.classList.add("hidden2")
+            // }
             button.parentNode.classList.add("active");
 
             // Load into the box
@@ -353,67 +316,131 @@ function viewButtonClickedControls(button) {
                 id = button.getAttribute("data-roomID");
             }
 
-            loadContentInControls(type, id);
+            loadContentInControls(type, {id: id});
         }else {
             // Remove from box
         }
     }
 }
 
-// Control tab, loading in the content (ie. guests, directors, room labels, guest count, etc.) into a particular view box
-function loadContentInControls(type, id, box="one") {
-    // TODO, add check to see if it is an actual type or id
-    // console.log(type, id)
-    if(type === "room") {
-        // Setting the current roomID in loadedViews
-        loadedViews[box].room = id;
-
-        // Getting the locations for things
-        var baseLocation = document.querySelector(".maga-page.control .video-section");
-        var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
-        var pastLocation = location.querySelector(".video-section-content .layout-wrapper")
-
-        // Getting room data
-        var data = MgetRoomData(id);
-
-        // Setting the name for the room in the page
-        location.querySelector(".video-menu .center-label h2").innerHTML = data.name
-
-
-        // Getting guests data's
-        for (let i = 0; i < data.guests.length; i++) {
-            // Need to add a case for if there is 0 guests in it
-            
-            var personData = MgetPersonData(data.guests[i]);
-            
-            // Now grabing the template for the type of person (ex: guest, director, screenshare)
-            if(personData.type === "guest") {
-                // This creates the person if needed, which it is now
-                trackGuest(personData); //This function defaults to the UI wanting to add someone, so don't need to add an event option when calling it
-                // var temp = baseLocation.querySelector(".template .item.guest").cloneNode(true);
-
-                // // Setting label
-                // if(person.label) {
-                //     temp.querySelector(".label h3").innerText = person.label;
-                // }else {
-                //     temp.querySelector(".label h3").innerText = "Guest";
-                // }
-                
-                // // Putting in video element to temp
-                // // Need to add option for iframe solo-view feeds, for not-chrome browser option to view people
-                // temp.querySelector(".video").appendChild(person.stream);
-                
-                // // Putting in the whole video and stuff around it
-                // pastLocation.appendChild(temp);
-                // // Starting the video playing again, because it STOPS when you MOVE IT, AH!
-                // temp.querySelector(".video video").play();
-
-            }else {
-                console.warn("[Front.js] Need to add new person type of (" + personData.type + ") to be able to be added to the page when loading a room into the viewing box");
+// Control tab, updating the styles for all the room/scene/guest buttons based on current loaded views
+function updateViewButtonsControls() {
+    // Removeing the current active buttons that aren't views currently being displayed
+    var buttonsParent = document.querySelector("#main .maga-page.control .page.controls .scroll");
+    buttonsParent.querySelectorAll(".option .mainbox").forEach(element => {
+        // if(element !== loadedViews.one.button && element !== loadedViews.two.button) {
+        //     element.parentNode.classList.remove("active")
+        // }
+        // Removing the active class
+        element.parentNode.classList.remove("active");
+        
+        // Checking for rooms if a button is a room that is active, if so, it adds back the active class
+        if(element.getAttribute("data-roomid") !== null) {
+            if(loadedViews2.one.filled && loadedViews2.one.type === "room") {
+                if(loadedViews2.one.data.roomID === element.getAttribute("data-roomid")) element.parentNode.classList.add("active");
+            }
+            if(loadedViews2.two.filled && loadedViews2.two.type === "room") {
+                if(loadedViews2.two.data.roomID === element.getAttribute("data-roomid")) element.parentNode.classList.add("active");
             }
         }
-        if(data.guests.length < 1) {
-            console.log("No Guests in Room")
+    })
+    // Removing any stray .hover's
+    buttonsParent.querySelectorAll(".option.hover").forEach(element => {
+        element.classList.remove("hover")
+    })
+
+    // Need to add the .active to the ones that need it
+}
+
+// Control tab, loading in the content (ie. guests, directors, room labels, guest count, etc.) into a particular view box
+function loadContentInControls(type, data, box="one") {
+    if(type === "room") {
+        // Checking if there is a room in another box we can clone over, or if we will have to generate it now
+        if(data.id.toString() === loadedViews2.one.data.roomID) {
+            // We can clone over the content from the one box
+
+            // Setting the loadedViews2 data for the new room inside it
+            loadedViews2[box].filled = true;
+            loadedViews2[box].type = "room";
+            loadedViews2[box].data.roomID = data.id;
+
+            // Getting the locations for things
+            var baseLocation = document.querySelector(".maga-page.control .video-section");
+            var grabLocation = baseLocation.querySelector(".block.one");
+            var pastLocation = baseLocation.querySelector(".block.two");
+
+            // Swapping the whole video section's, the previous should be blank, othwise it would look like we are swapping rooms
+            var temp = grabLocation.querySelector(".video-section-content");
+            var previous = pastLocation.querySelector(".video-section-content").cloneNode(true)
+            pastLocation.querySelector(".video-section-content").replaceWith(temp);
+            grabLocation.appendChild(previous);
+
+            // Tranfering the label
+            pastLocation.querySelector(".video-menu .center-label h2").innerHTML = grabLocation.querySelector(".video-menu .center-label h2").innerHTML;
+
+            // Remove the content from the one box
+            clearContentInControls("one")
+        }else if(data.id.toString() === loadedViews2.two.data.roomID) {
+            // We can clone over the content from the two box
+
+            // Setting the loadedViews2 data for the new room inside it
+            loadedViews2[box].filled = true;
+            loadedViews2[box].type = "room";
+            loadedViews2[box].data.roomID = data.id;
+
+            // Getting the locations for things
+            var baseLocation = document.querySelector(".maga-page.control .video-section");
+            var grabLocation = baseLocation.querySelector(".block.two");
+            var pastLocation = baseLocation.querySelector(".block.one");
+
+            // Swapping the whole video section's, the previous should be blank, othwise it would look like we are swapping rooms
+            var temp = grabLocation.querySelector(".video-section-content");
+            var previous = pastLocation.querySelector(".video-section-content").cloneNode(true)
+            pastLocation.querySelector(".video-section-content").replaceWith(temp);
+            grabLocation.appendChild(previous);
+
+            // Tranfering the label
+            pastLocation.querySelector(".video-menu .center-label h2").innerHTML = grabLocation.querySelector(".video-menu .center-label h2").innerHTML;
+
+            // Remove the content from the two box
+            clearContentInControls("two")
+        }else {
+            // We need to generate the room fully
+
+            // Setting the loadedViews2 data for the new room inside it
+            loadedViews2[box].filled = true;
+            loadedViews2[box].type = "room";
+            loadedViews2[box].data.roomID = data.id;
+
+            // Getting the locations for things
+            var baseLocation = document.querySelector(".maga-page.control .video-section");
+            var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
+            var pastLocation = location.querySelector(".video-section-content .layout-wrapper")
+
+            // Getting room data
+            var roomData = MgetRoomData(data.id);
+
+            // Setting the name for the room in the page
+            location.querySelector(".video-menu .center-label h2").innerHTML = roomData.name
+
+
+            for (let i = 0; i < roomData.guests.length; i++) {
+                // Getting guests data's
+                var personData = MgetPersonData(roomData.guests[i]);
+
+                if(personData.type === "guest") {
+                    // This creates the person through the tracking-guest's function logic
+                    trackGuest(personData); //This function defaults to the UI wanting to add someone, so don't need to add an event option when calling it
+                }else {
+                    console.warn("[Front.js] Need to add new person type of (" + personData.type + ") to be able to be added to the page when loading a room into the viewing box");
+                }
+            }
+        }
+
+        if(roomData) {
+            if(roomData.guests.length < 1) {
+                console.log("No Guests in Room")
+            }
         }
     }else if(type === "scene") {
 
@@ -422,22 +449,16 @@ function loadContentInControls(type, id, box="one") {
     }
 }
 // Control tab, removing the content from a particular view box
-function clearContentInControls(input, box="one") {
-    // Find type from input
-    var type = "";
-
-    // Defineing type
-    if(input.getAttribute("data-roomid") !== null) type = "room";
+function clearContentInControls(box="one") {
+    // Find type from the data stored for the view
+    var type = loadedViews2[box].type;
     
-    // Need to clear the UI based on the type
+    // Clearing the UI based on the type
     if(type === "room") {
         // Getting the locations for things
         var baseLocation = document.querySelector(".maga-page.control .video-section");
         var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
         var peopleLocation = location.querySelector(".video-section-content .layout-wrapper")
-        
-        // // Getting room data
-        // var data = MgetRoomData(input.getAttribute("data-roomID"));
         
         // Clearing the name for the room to nothing
         location.querySelector(".video-menu .center-label h2").innerHTML = ""
@@ -446,12 +467,16 @@ function clearContentInControls(input, box="one") {
         peopleLocation.querySelectorAll(".item").forEach(element => {
             element.remove();
         });
-
     }else if(type === "scene") {
 
     }else if(type === "person") {
 
     }
+
+    // Clearing the data in the loadedViews2 for the current viewBox
+    loadedViews2[box].filled = false;
+    loadedViews2[box].type = "";
+    loadedViews2[box].data = {};
 }
 
 // Control tab, changing the orientation and count of the view boxes
@@ -466,10 +491,29 @@ function changeBoxesInControls(boxStyle) {
     // Changing Variables
     if(boxStyle === "config-0") {
         controlViewCount = 1
-        if(loadedViews.two.button !== null) loadedViews.two.button.parentNode.classList.add("hidden2")
+
+        if(loadedViews2.two.filled) {
+            if(loadedViews2.one.filled) {
+                pocketView = {...loadedViews2.two};
+                clearContentInControls("two");
+                updateViewButtonsControls();
+            }else {
+                // In this case, there is something in two but not one, so just move two over to one
+                if(loadedViews2.two.type === "room") {
+                    loadContentInControls("room", {id: loadedViews2.two.data.roomID}, "one");
+                    updateViewButtonsControls();
+                }
+            }
+        }
     }else {
         controlViewCount = 2
-        if(loadedViews.two.button !== null) loadedViews.two.button.parentNode.classList.remove("hidden2")
+        if(pocketView !== {}) {
+            if(pocketView.type === "room") {
+                loadContentInControls("room", {id: pocketView.data.roomID}, "two");
+                updateViewButtonsControls();
+            }
+            pocketView = {};
+        }
 
         if(boxStyle === "config-1") {
             controlViewDirection = 2
@@ -477,20 +521,21 @@ function changeBoxesInControls(boxStyle) {
             controlViewDirection = 1
         }
     }
+    WHRatioSet();
 }
 
 
 // Control tab, creating in the 'connecting' ui for a guest
 function createLoadingGuest(personData) {
     console.log("Creating LOADING")
-    // Getting what box the persons video should be in
     // THIS IS NOT PROPPER MULTI-VIDEO-LOCATION LOGIC, NEED TO FIX IN FUTURE
+    // Getting what box the persons video should be in, currently only check for rooms where people would be
     var type;
     var box;
-    if(loadedViews.one.room !== null && loadedViews.one.room.toString() === personData.room.toString()) {
+    if(loadedViews2.one.filled === true && loadedViews2.one.data.roomID.toString() === personData.room.toString()) {
         type = "room";
         box = "one";
-    }else if(loadedViews.two.room !== null && loadedViews.two.room.toString() === personData.room.toString()) {
+    }else if(loadedViews2.two.filled === true && loadedViews2.two.data.roomID.toString() === personData.room.toString()) {
         type = "room";
         box = "two";
     }
@@ -521,14 +566,14 @@ function createLoadingGuest(personData) {
 // Control tab, transitions a person from the connecting status to fully created
 function creatFullGuest(personData) {
     console.log("Creating FULL")
-    // Getting what box the persons video should be in
     // THIS IS NOT PROPPER MULTI-VIDEO-LOCATION LOGIC, NEED TO FIX IN FUTURE
+    // Getting what box the persons video should be in, currently only check for rooms where people would be
     var type;
     var box;
-    if(loadedViews.one.room !== null && loadedViews.one.room.toString() === personData.room.toString()) {
+    if(loadedViews2.one.filled === true && loadedViews2.one.data.roomID.toString() === personData.room.toString()) {
         type = "room";
         box = "one";
-    }else if(loadedViews.two.room !== null && loadedViews.two.room.toString() === personData.room.toString()) {
+    }else if(loadedViews2.two.filled === true && loadedViews2.two.data.roomID.toString() === personData.room.toString()) {
         type = "room";
         box = "two";
     }
@@ -551,10 +596,6 @@ function creatFullGuest(personData) {
                 // Putting in the whole element in the page
                 pastLocation.appendChild(temp);
 
-                // Starting the video playing again, because it STOPS when you MOVE IT in dom, AH!
-                if(temp.querySelector(".video video") !== null) temp.querySelector(".video video").play();
-                WHRatioSet();
-
                 // Re-finding the found variable, now that we created it
                 found = pastLocation.querySelector('[guest-element="' + personData.streamID + '"]')
             }
@@ -566,6 +607,13 @@ function creatFullGuest(personData) {
             if(personData.stream !== undefined) {
                 // Adding the video because its there
                 found.querySelector(".video").appendChild(personData.stream);
+
+                // Starting the video playing again, because it STOPS when you MOVE IT in dom, AH!
+                found.querySelectorAll(".video video").forEach(element => {
+                    element.play();
+                })
+                WHRatioSet();
+
             }else {
                 // Adding the "getting video" element because the videos not there yet
                 found.classList.add("loadingVideo");
@@ -585,14 +633,14 @@ function creatFullGuest(personData) {
 }
 // Control tab, adding the video to the guest's UI
 function loadUserVideo(personData) {
-    // Getting what box the persons video should be in
     // THIS IS NOT PROPPER MULTI-VIDEO-LOCATION LOGIC, NEED TO FIX IN FUTURE
+    // Getting what box the persons video should be in, currently only check for rooms where people would be
     var type;
     var box;
-    if(loadedViews.one.room !== null && loadedViews.one.room.toString() === personData.room.toString()) {
+    if(loadedViews2.one.filled === true && loadedViews2.one.data.roomID.toString() === personData.room.toString()) {
         type = "room";
         box = "one";
-    }else if(loadedViews.two.room !== null && loadedViews.two.room.toString() === personData.room.toString()) {
+    }else if(loadedViews2.two.filled === true && loadedViews2.two.data.roomID.toString() === personData.room.toString()) {
         type = "room";
         box = "two";
     }
@@ -626,6 +674,38 @@ function loadUserVideo(personData) {
 
     // add their video to the page
     // Unlock the buttons for the video now (if they were locked with js)
+}
+// Control tab, remocing the person from the page
+function removeGuest(personData) {
+    console.log("Removing Guest")
+    // THIS IS NOT PROPPER MULTI-VIDEO-LOCATION LOGIC, NEED TO FIX IN FUTURE
+    // Getting what box the persons video should be in, currently only check for rooms where people would be
+    var type;
+    var box;
+    if(loadedViews2.one.filled === true && loadedViews2.one.data.roomID.toString() === personData.room.toString()) {
+        type = "room";
+        box = "one";
+    }else if(loadedViews2.two.filled === true && loadedViews2.two.data.roomID.toString() === personData.room.toString()) {
+        type = "room";
+        box = "two";
+    }
+
+    // The code for actually adding the element
+    if(type === "room") {
+        if(box) {
+            // Getting the locations for things
+            var baseLocation = document.querySelector(".maga-page.control .video-section");
+            var location = (box === "one")? baseLocation.querySelector(".block.one") : baseLocation.querySelector(".block.two");
+            var getLocation = location.querySelector(".video-section-content .layout-wrapper")
+
+            // Checking if they are on the page in the box they should be in
+            var found = getLocation.querySelector('[guest-element="' + personData.streamID + '"]')
+            if(found !== null) {
+                // Removing the person UI element
+                found.remove();
+            }
+        }
+    }
 }
 
 

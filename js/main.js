@@ -77,7 +77,7 @@ async function startMain() {
 		// reserve the room
 		await updateRoomData(room1ID, "reserved", true)
 
-		// loadContentInControls("room", room1ID);
+		// loadContentInControls("room", {id: room1ID});
 
 		// update lisseners to lissen for guest joining events, and leaving, and video, etc.
 		guestLisseners(room1ID);
@@ -224,6 +224,7 @@ function trackGuest(personObject, event="loadOnPage") {
 				trackedGuests[i].events.videoCreated = true;
 			}else if(event === "guestLeft") {
 				// Remove the person's UI (or equivalent)
+				removeGuest(personObject);
 
 				trackedGuests[i].events.guestChanging = false;
 				trackedGuests[i].events.guestLeft = true;

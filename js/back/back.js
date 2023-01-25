@@ -583,10 +583,22 @@ async function guestLisseners(roomID) {
 				console.log("someone Left")
 				for (let i = 0; i < peopleObjects.length; i++) {
 					if(peopleObjects[i].streamID === e.data.value) {
+						// Removing the person from the room's list of people
+						peopleObjects[i].room
+						for (let j = 0; j < roomDataList.length; j++) {
+							roomDataList[i].guests = roomDataList[i].guests.filter(function(item) {
+								return item !== e.data.value
+							})
+						}
+						console.log(roomDataList)
+
 						// Possibly marking or removing the person's object of the person who just left
+						// NOTE: would need to remove the person object after the UI finishes dealing with their elements
 						break;
 					}
 				}
+
+
 
 				// This notifies that the guest has left
 				for (let i = 0; i < peopleObjects.length; i++) {
