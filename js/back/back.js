@@ -11,10 +11,10 @@ This is needed so I can run functions without worrying about their connections t
 
 function getDirectorID() {
 	// Eventually will need to get it from URL params
-	// return "kXfEikzQQ68tySm";
+	return "kXfEikzQQ68tySmtest";
 
 	// Temporaraly
-	return generateRTid()
+	// return generateRTid()
 }
 
 function generateRTid() {
@@ -33,7 +33,7 @@ function loadIframe(ID){
 
 	// var iframesrc="https://vdo.ninja/alpha/?sendframes?director=" + ID;
 	// var iframesrc="https://vdoninja.netlify.app/?sendframes&salt=vdo.ninja&director=" + ID;
-	var iframesrc="https://vdo.ninja/alpha/?sendframes?director=" + ID;
+	var iframesrc="https://vdo.ninja/?sendframes?director=" + ID;
     console.log(iframesrc.toString())
 	iframe.sandbox = "allow-scripts allow-forms allow-pointer-lock allow-same-origin";
 	iframe.src = iframesrc;
@@ -52,6 +52,7 @@ function loadIframe(ID){
 		// Creating backup timeout for 15 seconds
 		setTimeout(() => {
 			resolve("Timed Out")
+			// TODO: Add the removing of other saved ID's like in "loadingIFrames", for example, look at the loadingLabels
 		}, 15000);
 
 		// Setting up remote function to resolve this promise (meaning that the Iframe has loaded)
@@ -288,20 +289,7 @@ function roomDataLisseners(roomID) {
 }
 
 
-var peopleObjects = [
-	// {
-	// 	room: "538628350test",
-	// 	streamID: "Lgs6v2x",
-	// 	UUID: "a711486a65d944a3b078daff20070711",
-
-	// 	type: "guest",
-
-	// 	label: "Guest",
-
-	// 	stream: "[Some Element]",
-	// 	element: "[Some Element]"
-	// }
-]
+var peopleObjects = [];
 
 var statsSyncTime = 0;
 async function guestLisseners(roomID) {
@@ -406,6 +394,7 @@ async function guestLisseners(roomID) {
 				
 						type: "director",
 					});
+					log.peopleLog(e.data.streamID, "Director Object Created")
 					// // Adding the person to their rooms' object
 					// for (let i = 0; i < roomDataList.length; i++) {
 					// 	if(roomDataList[i].ID === roomID) {
@@ -414,6 +403,7 @@ async function guestLisseners(roomID) {
 					// 	}
 					// }
 				}
+				log.peopleLog(e.data.streamID, "Director Connected")
 				// TODO: Need to add functionality of what to do when a director connects
 				
 				// This function grabs the labels of the person, before running the callback, which is to create the person element
@@ -449,6 +439,7 @@ async function guestLisseners(roomID) {
 				
 						type: "guest"
 					});
+					log.peopleLog(e.data.streamID, "Guest Object Created")
 
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
@@ -458,6 +449,7 @@ async function guestLisseners(roomID) {
 						}
 					}
 				}
+				log.peopleLog(e.data.streamID, "Guest Connected")
 
 				// This grabs the labels of the person, before running the callback, which is to then notify that the guest is connected
 				for (let i = 0; i < peopleObjects.length; i++) {
@@ -497,6 +489,7 @@ async function guestLisseners(roomID) {
 				
 						// label: "Guest",
 					});
+					log.peopleLog(e.data.streamID, "Screenshare Object Created")
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
 						if(roomDataList[i].ID === roomID) {
@@ -505,6 +498,7 @@ async function guestLisseners(roomID) {
 						}
 					}
 				}
+				log.peopleLog(e.data.streamID, "Screenshare Connected")
 				// TODO: Handle when someone screen shares, to know what to do on the front end
 
 				// This function grabs the labels of the person, before running the callback, which is to create the person element
@@ -533,8 +527,10 @@ async function guestLisseners(roomID) {
 					peopleObjects.push({
 						room: roomID,
 						streamID: e.data.streamID,
-						UUID: e.data.UUID
+						UUID: e.data.UUID,
 					});
+					log.peopleLog(e.data.streamID, "Person Object Created")
+
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
 						if(roomDataList[i].ID === roomID) {
@@ -543,6 +539,7 @@ async function guestLisseners(roomID) {
 						}
 					}
 				}
+				log.peopleLog(e.data.streamID, "View Connection Changing")
 
 				// This notifies that the guest is changing in some way
 				// The changing is either finished when a guest Joins or Leaves.
@@ -571,7 +568,7 @@ async function guestLisseners(roomID) {
 					peopleObjects.push({
 						room: roomID,
 						streamID: e.data.streamID,
-						UUID: e.data.UUID
+						UUID: e.data.UUID,
 					});
 					// Adding the person to their rooms' object
 					for (let i = 0; i < roomDataList.length; i++) {
@@ -586,10 +583,22 @@ async function guestLisseners(roomID) {
 				console.log("someone Left")
 				for (let i = 0; i < peopleObjects.length; i++) {
 					if(peopleObjects[i].streamID === e.data.value) {
+						// Removing the person from the room's list of people
+						peopleObjects[i].room
+						for (let j = 0; j < roomDataList.length; j++) {
+							roomDataList[i].guests = roomDataList[i].guests.filter(function(item) {
+								return item !== e.data.value
+							})
+						}
+						console.log(roomDataList)
+
 						// Possibly marking or removing the person's object of the person who just left
+						// NOTE: would need to remove the person object after the UI finishes dealing with their elements
 						break;
 					}
 				}
+
+
 
 				// This notifies that the guest has left
 				for (let i = 0; i < peopleObjects.length; i++) {
@@ -597,9 +606,13 @@ async function guestLisseners(roomID) {
 						guestLeft(peopleObjects[i])
 					}
 				}
+				log.peopleLog(e.data.value, "Person Left")
+
 			}else if(e.source === document.querySelector("._" + data.roomID).contentWindow && e.data.action === "view-connection-info") {
-				// Someone (director or just someone, we don't know) Left, need to manage their object
+				// We got data for someone, and so we need to parse the data
 				console.log("got person data")
+				log.peopleLog(e.data.streamID, "Got person's Data")
+				
 				for (let i = 0; i < peopleObjects.length; i++) {
 					if(peopleObjects[i].streamID === e.data.streamID) {
 						peopleObjects[i].statuses = {};
@@ -609,15 +622,8 @@ async function guestLisseners(roomID) {
 					}
 				}
 
-				// // This notifies that there is now data for the guest
-				// for (let i = 0; i < peopleObjects.length; i++) {
-				// 	if(peopleObjects[i].streamID === e.data.streamID) {
-				// 		gotGuestData(peopleObjects[i])
-				// 	}
-				// }
 				// This grabs the labels of the person, before running the callback, which is to then notify that there is now data for the guest
 				for (let i = 0; i < peopleObjects.length; i++) {
-					console.log(peopleObjects[i].loadedLabel)
 					if(peopleObjects[i].streamID === e.data.streamID) {
 						loadLabel(e.data.streamID, gotGuestData, peopleObjects[i]);
 					}
@@ -743,120 +749,39 @@ function readPersonData(streamID) {
 	}
 }
 
-// function createPersonElement(streamID) {
-// 	var peoplesLocation = document.querySelector(".peopleLocation");
-// 	var guestTemplateQuery = ".personTemplate";
-// 	// var guestPasteLocation = peoplesLocation.querySelector(".peoples");
-
-// 	var labelQuery = ".label";
-// 	var IDQuery = ".id";
-
-// 	console.log(streamID);
-// 	console.log(peopleObjects);
-// 	for (let i = 0; i < peopleObjects.length; i++) {
-// 		if(peopleObjects[i].streamID === streamID) {
-// 			var personObject = peopleObjects[i];
-
-// 			if(!personObject.element) {
-// 				// if(personObject.type === "guest") {
-// 				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .guest").cloneNode(true);
-
-// 				// 	// Setting ID where its needed
-// 				// 	temp.setAttribute("data-streamID", personObject.streamID)
-// 				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
-
-// 				// 	// Setting the person's label if they have one
-// 				// 	if(personObject.label) {
-// 				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
-// 				// 	}else {
-// 				// 		temp.querySelector(labelQuery).innerHTML = "Guest";
-// 				// 		peopleObjects[i].label = "Guest";
-// 				// 	}
-
-// 				// 	// Adding someone's video if they have one
-// 				// 	if(personObject.stream) {
-// 				// 		createPersonVideo(temp, media.streams[streamID])
-// 				// 	}
-// 				// }else if(personObject.type === "director") {
-// 				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .director").cloneNode(true);
-
-// 				// 	// Setting ID where its needed
-// 				// 	temp.setAttribute("data-streamID", personObject.streamID)
-// 				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
-
-// 				// 	// Setting the person's label if they have one
-// 				// 	if(personObject.label) {
-// 				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
-// 				// 	}else {
-// 				// 		temp.querySelector(labelQuery).innerHTML = "Director";
-// 				// 		peopleObjects[i].label = "Director";
-// 				// 	}
-
-// 				// 	// Adding someone's video if they have one
-// 				// 	if(personObject.stream) {
-// 				// 		createPersonVideo(temp, media.streams[streamID])
-// 				// 	}
-// 				// }else if(personObject.type === "screenshare") {
-// 				// 	var temp = peoplesLocation.querySelector(guestTemplateQuery + " .screenshare").cloneNode(true);
-
-// 				// 	// Setting ID where its needed
-// 				// 	temp.setAttribute("data-streamID", personObject.streamID)
-// 				// 	temp.querySelector(IDQuery).innerHTML = personObject.streamID;
-
-// 				// 	// Setting the person's label if they have one
-// 				// 	if(personObject.label) {
-// 				// 		temp.querySelector(labelQuery).innerHTML = personObject.label;
-// 				// 	}else {
-// 				// 		temp.querySelector(labelQuery).innerHTML = "Screenshare";
-// 				// 		peopleObjects[i].label = "Screenshare";
-// 				// 	}
-
-// 				// 	// Adding someone's video if they have one
-// 				// 	if(personObject.stream) {
-// 				// 		createPersonVideo(temp, media.streams[streamID])
-// 				// 	}
-// 				// }
-
-// 				// // Putting the created element into the person's object
-// 				// if(temp) {
-// 				// 	guestPasteLocation.appendChild(temp);
-// 				// 	peopleObjects[i].element = temp;
-// 				// }
-
-// 				console.log(personObject)
-// 			}
-// 		}
-// 	}
-// }
-
-// These are end-points for while a person is joining or leaving, these will call functions in the front end
+// These 5 below are end-points for while a person is joining or leaving, these will call functions in the front end
 // This tells the front end that a person is loading in some fassion, be it joining or leaving
 function guestChanging(personObject) {
 	console.log("guestChanging!")
+	MguestChanging(personObject)
 }
-
 // This tells the front end that we have the data for someone who is currently connecting
 function gotGuestData(personObject) {
 	console.log("gotGuestData!")
+	MgotGuestData(personObject)
 }
-
 // This tells the front end that a person has officially connected, and so create their elements
 function guestConnected(personObject) {
 	console.log("guestConnected :)")
+	MguestConnected(personObject)
 }
 // This tells the front end that a video is availible, allowing it to dynamically load the video independently from the person's elements
 function guestVideoCreated(personObject) {
+	log.peopleLog(personObject.streamID, "Guest Video Generated")
 	console.log("guestVideoCreated!")
+	MguestVideoCreated(personObject)
 }
-
 // This tells the front end that a person has officially left, and so remove their elements
 function guestLeft(personObject) {
 	console.log("guestLeft :(")
+	MguestLeft(personObject)
 }
+
 
 var loadingLabels = [];
 function loadLabel(streamID, callback, values) {
 	console.log("Loading Label")
+	log.peopleLog(streamID, "Loading Labels")
 	var iframe;
 	for (let i = 0; i < peopleObjects.length; i++) {
 		if(peopleObjects[i].streamID === streamID) {
@@ -870,23 +795,57 @@ function loadLabel(streamID, callback, values) {
 
 		// If there isn't already a lissener for getting the labels (for the particular streamID), then create one
 		var found = false;
-		for (let i = 0; i < loadingLabels.length; i++) {
-			if(loadingLabels[i].Pid.streamID === streamID) {
-				found = true;
-				break;
-			}
-		}
+		// for (let i = 0; i < loadingLabels.length; i++) {
+		// 	if(loadingLabels[i].Pid === streamID) {
+		// 		found = true;
+		// 		break;
+		// 	}
+		// }
 		if(!found) {
 			var Pid = streamID;
 			var position = loadingLabels.length;
+			var Lid = generateRTid();
 			loadingLabels[position] = {
-				"Pid": Pid
+				"Pid": Pid,
+				"Lid": Lid
 			};
 
 			return loadingLabels[position].Promise = new Promise((resolve, reject) => {
-				// Creating backup timeout for 3 seconds
+				// Creating backup timeout for 10 seconds
 				setTimeout(() => {
-					resolve("Timed Out");
+					// Getting the data from the customEventCallbacks so that I can remove their other saved things
+					for (let i = 0; i < customEventCallbacks.length; i++) {
+						if(customEventCallbacks[i].Eid === Eid) {
+							console.warn("Loading Labels has timed out after 10 seconds");
+							resolve("Timed Out");
+
+							var data = customEventCallbacks[i].data;
+							
+							// resolving the loadingIframe Promise & removing its resolve-function from list
+							for (let i = 0; i < promiseResolve.length; i++) {
+								if(promiseResolve[i].Rid === data.Rid) {
+									promiseResolve[i].resolve("Timed Out")
+									promiseResolve.splice(i, 1);
+								}
+							}
+		
+							// removing the promise itself
+							for (let i = 0; i < loadingLabels.length; i++) {
+								if(loadingLabels[i].Lid === data.Lid) {
+									loadingLabels.splice(i, 1)
+								}
+								
+							}
+							
+						}
+					}
+					// For removing this function callback from the list
+					for (let i = 0; i < customEventCallbacks.length; i++) {
+						if(customEventCallbacks[i].Eid === Eid) {
+							customEventCallbacks.splice(i,1);
+							// console.log("EventCallback: " + i)
+						}
+					}
 				}, 3000);
 
 				// Setting up remote function to resolve this promise (meaning that the Iframe has loaded)
@@ -903,6 +862,7 @@ function loadLabel(streamID, callback, values) {
 					"data": {
 						"Rid": Rid,
 						"Pid": Pid,
+						"Lid": Lid,
 						"streamID": streamID,
 						"callback": callback,
 						"values": values,
@@ -912,6 +872,7 @@ function loadLabel(streamID, callback, values) {
 						// Checking if it is the first room that sent the event & if the event is the right one
 						if(e.source === data.iframe.contentWindow && e.data.streamIDs) {
 							console.log("Collected Labels!!")
+
 							// Adding the label to the element
 							for (let i = 0; i < peopleObjects.length; i++) {
 								if(peopleObjects[i].streamID === data.streamID) {
@@ -919,6 +880,9 @@ function loadLabel(streamID, callback, values) {
 									if(e.data.streamIDs[data.streamID]) {
 										peopleObjects[i].label = e.data.streamIDs[data.streamID];
 									}
+
+									log.peopleLog(data.streamID, "Label: " + e.data.streamIDs[data.streamID])
+
 									break;
 								}
 							}
@@ -936,7 +900,7 @@ function loadLabel(streamID, callback, values) {
 
 							// removing the promise itself
 							for (let i = 0; i < loadingLabels.length; i++) {
-								if(loadingLabels[i].Pid === data.Pid) {
+								if(loadingLabels[i].Lid === data.Lid) {
 									loadingLabels.splice(i, 1)
 								}
 								
@@ -955,7 +919,6 @@ function loadLabel(streamID, callback, values) {
 
 				// Actually calling the getStreamIDs to the iframe
 				iframe.contentWindow.postMessage({"getStreamIDs":true}, '*');
-				
 			});
 		}
 
@@ -963,6 +926,9 @@ function loadLabel(streamID, callback, values) {
 
 }
 
+
+
+// These are old UI function, these 2 below will need to get changed out for front end ones
 function userButtons(button) {
 	console.log(button)
 	var buttonAction = button.getAttribute("data-action");

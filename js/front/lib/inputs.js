@@ -278,3 +278,10 @@ function WHRatioDisplay(value) {
         }
     });
 }
+
+window.addEventListener("DOMContentLoaded", function () {
+    WHRatioSet();
+});
+window.addEventListener("resize", function () {
+    WHRatioSet();
+});
