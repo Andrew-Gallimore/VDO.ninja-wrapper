@@ -11,10 +11,10 @@ This is needed so I can run functions without worrying about their connections t
 
 function getDirectorID() {
 	// Eventually will need to get it from URL params
-	return "kXfEikzQQ68tySmtest";
+// 	return "kXfEikzQQ68tySm";
 
 	// Temporaraly
-	// return generateRTid()
+	return generateRTid()
 }
 
 function generateRTid() {
