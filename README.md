@@ -1,7 +1,12 @@
+<h1 align="center">🔒 This Repo has been ARCHIVED.</h1>
+<p align="center">Due to the project transitioning into a new software called Vidlium, I have decided to archive this repo. I don't plan on continuing development for "VDO.ninja-wrapper", all my efforts are now in https://vidlium.com.</p>
+
+<br>
+
 # VDO.ninja-wrapper
 This is **VDO.ninja-wrapper** *(working title)*, and it allows someone to professionally bring in people's remote video feeds into programs like OBS.
 
-![Image of VDO.ninja-wrapper director page](https://github.com/Andrew-Gallimore/VDO.ninja-wrapper/blob/developement/img/Control-Capture.PNG "VDO.ninja director control page")
+![Image of VDO.ninja-wrapper director page](img/Control-Capture.PNG)
 
 ## Description:
 It is built for professionals and beginers alike, with the controls any livestream director _wishes_ they could have in more traditional video conferencing software, as well as simple controls anyone can use. Examples of the controls directors have are: remotely adjusting the camera settings of a guest, managing what controls guests have control of, tuning the bitrate and filters of both video and audio, and so much more. For end users, _in the most basic format_, it looks like a video conferencing call, and in the future, directors might be able to add custom branding to make the call feel like the stream they are calling into.
